@@ -27,6 +27,13 @@ public class Scifix {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final String MOD_ID = "scifix";
 
+    //TODO:
+    //  Phase 1: finish basic steam generation, basic and intermediate production, world generation, item/fluid/energy storage and transport
+    //      (1.1 create machine upgrade system?)
+    //  Phase 2: finish advanced resource production, wood stuffs, & renewables
+    //  Phase 3: nuclear engineering, portal system, & quantum computers
+    //  Phase 4: bio engineering, nano tech, & particle accelerators (defence?)
+
     public Scifix() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::CommonSetup);

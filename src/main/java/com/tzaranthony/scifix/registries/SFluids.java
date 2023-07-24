@@ -31,13 +31,50 @@ public class SFluids {
     private static final Item.Properties BUCKET = new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(Scifix.TAB);
     private static final BlockBehaviour.Properties LIQUID = BlockBehaviour.Properties.of(Material.LAVA).noCollission().strength(100.0F).noDrops();
 
-    //TODO: oil -- found in largest pools under the ocean or under deserts, can be found in surface pools
-    //TODO: salt brine -- 3 water : 1 brine in a heated mixer
-    //TODO: red mud -- crushed or powdered aluminum ore + sodium hydroxide in a heated mixer or in a blast furnace?
-    //TODO: alumina brine -- fluorite + alumina in a heated mixer
-    //TODO: chlorine gas -- electrolysis of salt brine using carbon electrodes
-    //TODO: carbon monoxide gas -- electrolysis of alumina brine using carbon electrodes
+    //TODO: steam
 
+    //TODO: aluminium refining: check ratios
+    //      100 mb salt brine < 120 heat mixing < 300 mb water
+    //      100 mb chlorine gas < electrolysis < 250 mb salt brine
+    //      600 mb red mud & 4 aluminum hydroxide < 200 heat mixing < any aluminum ore + 400 mb sodium hydroxide
+    //      500 mb molten alumina brine < alloy < fluorite + alumina
+    //      100 mb carbon dioxide gas < electrolysis < molten alumina brine
+
+    // might make multi-stage catalyst reactors to cut down on these. Maybe as an upgrade --- config for simple petroleum refining?
+    //TODO: oil -- found in largest pools under the ocean or under deserts, can be found in surface pools:
+    //      Crude has different densities based on biome?
+    //      Hydrogen sulfide (1%) & ammonia (3%) & purified crude (96%) < crude + hydrogen at high temperature
+    //      3% Nat Gas (>25 heat) & 18% (>60 heat) light naphtha & 16% (>140 heat) heavy naphtha & 11% (>232 heat) Kerosene & 21% (>296 heat) light fuel oil & 22% (>373 heat) heavy fuel oil & 9% (>467 heat) residual oil < fractional distillation < purified crude
+    //      32% (low temp) 60% (high temp) ethylene & 40% (low temp) 17% (high temp) propylene & 15% butadiene & 4% benzene & 4% residual oils < steam cracking < naphtha (either)
+    //      45% natural gas & 29% Cyclopentane (refrigerant), Cyclohexane (if nylon) & 14% xylene & 9% benzene & 3% residual oils < catalytic reaction (Hydrogen Gas (medium) + Platinum Chloride (catalyst)) < heavy naphtha
+    //      19% fuel gas & 32% (low temp) 54% (high temp) ethylene & 34% (low temp) 12% (high temp) propylene & 11% hydrogen & 4% benzene < steam cracking < natural gas
+    //      150 mb ethylene oxide < catalytic reaction (ground silver) < 50 mb ethylene + 100 mb oxygen
+    //      100 mb ethylene glycol < catalytic reaction (any acid) < 50 water + 50 ethylene oxide
+    //      100 mb methanol < catalytic reaction (powdered copper-alumina) < 100 mb carbon monoxide + 250 mb hydrogen
+    //      100 mb acetic acid < catalytic reaction (powdered nickel tetracarbonyl) < 150 mb carbon monoxide + 100 mb methanol
+    //      200 mb terephthalic acid + 100 mb water < catalytic reaction (powdered cobalt) < 150 mb xylene + 150 mb acetic acid
+    //      400 mb acrylonitrile + 100 mb water < catalytic reaction (gallium-antimony oxide) < 710 mb propylene + 290 mb ammonia + 100 mb oxygen (gas)
+    //      100 mb carbon monoxide + 100 mb hydrogen < catalytic reaction (powdered nickle) < 100 mb fuel gas + 100 mb water
+    //      150 mb carbon dioxide + 50 mb hydrogen < catalytic reaction (crushed iron ore) < 100 mb carbon monoxide + 100 mb water
+    //      300 mb hydrogen + 1 graphite powder < catalytic reaction (powdered nickle & alumina) < 500 mb fuel gas
+    //      200 mb ethylbenzene < catalytic reaction (aluminum chloride) < 270 mb ethylene (gas) + 100 mb benzene
+    //      100 mb styrene & 50 mb hydrogen < catalytic reaction (crushed iron ore) < 100 mb ethylbenzen
+    //      100 mb acrylic acid & 100 mb water < steam cracking < 100 mb propylene
+    //      100 mb hydroxyethyl acrylate & 100 mb water < catalytic reaction (ground titanium) < 50 mb acrylic acid + 50 mb ethylene oxide
+
+    //TODO: Beryllium refining:
+    //      300 mb Hydrofluoric acid < 265 heat mixer < fluorite + 100 mb sulfuric acid + 100 mb water
+    //      200 mb Hexafluorosilicic acid & 160 mb water < 150 mixer < 500 mb Hydrofluoric acid + 1 Silicon dioxide (ground quartz)
+    //      100 mb Sodium hexafluorosilicate & 100 mb HCl < unheated mixer < 2 salt + 100 mb Hexafluorosilicic acid
+    //      1b fluoridated water (4 sodium fluoride) < unheated mixer < 1b water + 4 sodium hydroxide + Sodium Tetrafluoroberyllate
+    //      200 mb beryllium chloride & 100 mb carbon monoxide < alloy < 100 mb chlorine gas + Beryllium hydroxide + graphite
+
+    //TODO: Lithium brine: main source of lithium, slow to process in machine better to make brine pool for evaporation (must have sky access and be day and not raining)?
+
+    //TODO: Ammonia production
+    //      liquid air < pressurize with cooling < nothing?
+    //      78% nitrogen & 21% oxygen & 1% argon? & 1% water < fractional distillation < liquid air
+    //      100 mb ammonia < catalytic reaction (powdered iron ore) < 210 mb hydrogen (gas) + 100 mb nitrogen
 
 
 //    public static final RegistryObject<FlowingFluid> MUNDANE_FLUID = reg.register("mundane_potion",  () -> new ForgeFlowingFluid.Source(SFluids.MUNDANE_PROPERTIES));
