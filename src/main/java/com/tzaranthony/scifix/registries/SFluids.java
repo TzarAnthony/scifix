@@ -62,7 +62,12 @@ public class SFluids {
     //      100 mb acrylic acid & 100 mb water < steam cracking < 100 mb propylene
     //      100 mb hydroxyethyl acrylate & 100 mb water < catalytic reaction (ground titanium) < 50 mb acrylic acid + 50 mb ethylene oxide
 
-    //TODO: Beryllium refining:
+    //TODO: Ammonia production
+    //      liquid air < pressurize with cooling < nothing?
+    //      78% nitrogen & 21% oxygen & 1% argon? & 1% water < fractional distillation < liquid air
+    //      100 mb ammonia < catalytic reaction (powdered iron ore) < 210 mb hydrogen (gas) + 100 mb nitrogen
+
+    //TODO: Beryllium refining: (Adv Production / Nuclear Expansion)
     //      300 mb Hydrofluoric acid < 265 heat mixer < fluorite + 100 mb sulfuric acid + 100 mb water
     //      200 mb Hexafluorosilicic acid & 160 mb water < 150 mixer < 500 mb Hydrofluoric acid + 1 Silicon dioxide (ground quartz)
     //      100 mb Sodium hexafluorosilicate & 100 mb HCl < unheated mixer < 2 salt + 100 mb Hexafluorosilicic acid
@@ -71,10 +76,6 @@ public class SFluids {
 
     //TODO: Lithium brine: main source of lithium, slow to process in machine better to make brine pool for evaporation (must have sky access and be day and not raining)?
 
-    //TODO: Ammonia production
-    //      liquid air < pressurize with cooling < nothing?
-    //      78% nitrogen & 21% oxygen & 1% argon? & 1% water < fractional distillation < liquid air
-    //      100 mb ammonia < catalytic reaction (powdered iron ore) < 210 mb hydrogen (gas) + 100 mb nitrogen
 
 
 //    public static final RegistryObject<FlowingFluid> MUNDANE_FLUID = reg.register("mundane_potion",  () -> new ForgeFlowingFluid.Source(SFluids.MUNDANE_PROPERTIES));

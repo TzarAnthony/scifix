@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "scifix:manual"
+    },
+    "title": {
+      "translate": "advancements.scifix.root.title"
+    },
+    "description": {
+      "translate": "advancements.scifix.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/end.png"
+  },
+  "criteria": {
+    "scifix": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "scifix:manual"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "scifix"
+    ]
+  ]
+}

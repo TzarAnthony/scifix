@@ -1,14 +1,16 @@
 package com.tzaranthony.scifix.registries;
 
 import com.tzaranthony.scifix.Scifix;
+import com.tzaranthony.scifix.core.blocks.OreCrusherBlock;
+import com.tzaranthony.scifix.core.blocks.OreGrinderBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,6 +20,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Supplier;
 
 public class SBlocks {
@@ -48,52 +52,83 @@ public class SBlocks {
         return false;
     }
 
-    // Minerals
+    // Minerals --- maybe i'll add an option for a total overhaul of ore generation or at least for my ores
     public static final RegistryObject<Block> GRAPHITE = registerBlockAndFireProofItem("graphite", () -> new Block(ROCK.sound(SoundType.BASALT).strength(0.8F))); // drops 4 graphite chunks, no fortune, like clay
-    public static final RegistryObject<Block> FLUORITE_CLUSTER = registerBlockAndItem("fluorite", () -> new Block(CRYSTAL));
+    public static final RegistryObject<Block> FLUORITE_CLUSTER = registerBlockAndItem("fluorite_cluster", () -> new Block(CRYSTAL));
     // Monazite to give thorium and neodymium and lanthanum?
     // Ores
-    //TODO: generates in standard clusters deep underground
-    public static final RegistryObject<Block> LEAD_ORE = registerBlockAndItem("lead_ore", () -> new Block(STONE)); // found near zinc (if added)
-    public static final RegistryObject<Block> DEEPSLATE_LEAD_ORE = registerBlockAndItem("deepslate_lead_ore", () -> new Block(DEEPSLATE));
     //TODO: generates in large formations, generates more frequently in hot biomes, especially badlands and jungles
     public static final RegistryObject<Block> ALUMINUM_ORE = registerBlockAndItem("aluminium_ore", () -> new Block(STONE)); // uncommon, but large veins, near the surface
     public static final RegistryObject<Block> DEEPSLATE_ALUMINUM_ORE = registerBlockAndItem("deepslate_aluminium_ore", () -> new Block(DEEPSLATE)); // ????
     //TODO: where to find this? -- https://en.wikipedia.org/wiki/Rutile || https://en.wikipedia.org/wiki/Ilmenite
     public static final RegistryObject<Block> TITANIUM_ORE = registerBlockAndItem("titanium_ore", () -> new Block(STONE));
     public static final RegistryObject<Block> DEEPSLATE_TITANIUM_ORE = registerBlockAndItem("deepslate_titanium_ore", () -> new Block(DEEPSLATE));
-    //TODO: https://en.wikipedia.org/wiki/Carnotite (also provides vanadium for high strength steel) --
+    //TODO: generates in standard clusters deep underground
+    public static final RegistryObject<Block> LEAD_ORE = registerBlockAndItem("lead_ore", () -> new Block(STONE));
+    public static final RegistryObject<Block> DEEPSLATE_LEAD_ORE = registerBlockAndItem("deepslate_lead_ore", () -> new Block(DEEPSLATE));
+    //TODO: https://en.wikipedia.org/wiki/Carnotite (also provides vanadium for high strength steel)
     public static final RegistryObject<Block> URANIUM_ORE = registerBlockAndItem("uranium_ore", () -> new Block(STONE));
     public static final RegistryObject<Block> DEEPSLATE_URANIUM_ORE = registerBlockAndItem("deepslate_uranium_ore", () -> new Block(DEEPSLATE));
 
 
     // Processing Machines!
-    // Basic Ore Refining
-    //TODO: Upgradable? turns raw ore into 2 crushed ores, can output secondary crushed ores (smashes ore between plates of metal) --- requires 2 metal plates (add durability) to increase efficiency (config?) --- needs electricity
-    public static final RegistryObject<Block> ORE_CRUSHER = registerBlockAndItem("ore_crusher", () -> new Block(HEAVY_MACHINE)); // #X#,YZY,W W -- # = copper wiring, X = hopper, Y = piston, Z = chassis 0, W = iron plate
-    //TODO: Upgradable? turns crushed ore into 2 powdered ore, can output secondary powdered ores (grinds the top ore, drops it below) --- requires 4 gears (add durability) to increase efficiency efficiency (config?) --- needs electricity
-    public static final RegistryObject<Block> ROTARY_GRINDER = registerBlockAndItem("rotary_grinder", () -> new Block(HEAVY_MACHINE)); // #X#,YZY,WVW -- # = steel plate, X = hopper, Y = diamond, Z = chassis 1, W = motor, V = gearbox
-    //TODO: Upgradable? burns stuff --- needs heating coils (add durability) to function (config?) --- needs electricity
-    public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlockAndItem("electric_furnace", () -> new Block(MACHINE)); // ###,XYX,ZZZ -- # = copper wiring, X = redstone, Y = chassis 0, Z = graphite
-
-    // Intermediate Processing Machines
-    //TODO: holds liquids (idk how much. 16k mb?)
-    public static final RegistryObject<Block> VAT = registerBlockAndItem("vat", () -> new Block(MACHINE)); // #,X -- # = chassis 0, X = cauldron
+    // Basic Production
+    public static final RegistryObject<Block> ORE_CRUSHER_MK0 = registerBlockAndItem("ore_crusher_mk0", () -> new OreCrusherBlock(HEAVY_MACHINE, 0)); // #X#,YZY,W W -- # = copper wiring, X = hopper, Y = piston, Z = chassis 0, W = iron plate
+    public static final RegistryObject<Block> ORE_CRUSHER_MK1 = registerBlockAndItem("ore_crusher_mk1", () -> new OreCrusherBlock(HEAVY_MACHINE, 1)); // steel plate
+    public static final RegistryObject<Block> ORE_CRUSHER_MK2 = registerBlockAndItem("ore_crusher_mk2", () -> new OreCrusherBlock(HEAVY_MACHINE, 2)); // hardened steel plate
+    public static final RegistryObject<Block> ORE_CRUSHER_MK3 = registerBlockAndItem("ore_crusher_mk3", () -> new OreCrusherBlock(HEAVY_MACHINE, 4)); // tungsten plate
+    //TODO: Speed and and processing size upgrades. turns crushed ore into 2 powdered ore, can output secondary powdered ores (grinds the top ore, drops it below) --- needs electricity
+    public static final RegistryObject<Block> ORE_GRINDER_MK0 = registerBlockAndItem("ore_grinder_mk0", () -> new OreGrinderBlock(HEAVY_MACHINE, 0)); // #X#,YZY,WVW -- # = steel plate, X = hopper, Y = steel gear, Z = chassis 1, W = motor, V = gearbox 1
+    public static final RegistryObject<Block> ORE_GRINDER_MK1 = registerBlockAndItem("ore_grinder_mk1", () -> new OreGrinderBlock(HEAVY_MACHINE, 2));
+    public static final RegistryObject<Block> ORE_GRINDER_MK2 = registerBlockAndItem("ore_grinder_mk2", () -> new OreGrinderBlock(HEAVY_MACHINE, 4));
+    //TODO: Speed and and processing size upgrades --- needs electricity (can I make this "in world")
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK0 = registerBlockAndItem("electric_furnace_mk0", () -> new Block(MACHINE)); // #X#,YZY,WWW -- # = heating coil, X = cable, Y = redstone, Z = chassis 0, W = graphite
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK1 = registerBlockAndItem("electric_furnace_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK2 = registerBlockAndItem("electric_furnace_mk2", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK3 = registerBlockAndItem("electric_furnace_mk3", () -> new Block(MACHINE));
+    //TODO: holds liquids (idk how much. 16k mb?), size upgrades
+    public static final RegistryObject<Block> VAT_MK0 = registerBlockAndItem("vat_mk0", () -> new Block(MACHINE)); // #,X -- # = chassis 0, X = cauldron
+    public static final RegistryObject<Block> VAT_MK1 = registerBlockAndItem("vat_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> VAT_MK2 = registerBlockAndItem("vat_mk2", () -> new Block(MACHINE));
     //TODO: accepts multiple liquids and solids to output a liquid brine or some other mixture. Sometimes will require heat provided from some source (config for heat tolerance?)
-    public static final RegistryObject<Block> MIXING_VAT = registerBlockAndItem("mixing_vat", () -> new Block(MACHINE)); // use a mixer on a vat --- needs to hold enough to fill at least 1 cast, probably several
+    public static final RegistryObject<Block> MIXING_VAT_MK0 = registerBlockAndItem("mixing_vat_mk0", () -> new Block(MACHINE)); // use a mixer on a vat --- needs to hold enough to fill at least 1 cast, probably several
+    public static final RegistryObject<Block> MIXING_VAT_MK1 = registerBlockAndItem("mixing_vat_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> MIXING_VAT_MK2 = registerBlockAndItem("mixing_vat_mk2", () -> new Block(MACHINE));
     //TODO: accepts a liquid and returns multiple solids. Place a condenser above to collect gases
-    public static final RegistryObject<Block> ELECTROLYTIC_VAT = registerBlockAndItem("electrolytic_vat", () -> new Block(MACHINE)); // use an electrolysis apparatus on a vat
+    public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK0 = registerBlockAndItem("electrolytic_vat_mk0", () -> new Block(MACHINE)); // use an electrolysis apparatus on a vat
+    public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK1 = registerBlockAndItem("electrolytic_vat_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK2 = registerBlockAndItem("electrolytic_vat_mk2", () -> new Block(MACHINE));
+
+    // Intermediate Production --- these currently can't be sped up, should they be able to be sped up?
     //TODO: makes plates or tubes or cables or rods from ingots given a specified mold (automatically matches conveyor direction? must be placed above a conveyor?)
-    public static final RegistryObject<Block> MILLING_MACHINE = registerBlockAndItem("milling_machine", () -> new Block(MACHINE)); // #X#,YZY,WWW -- # = aluminum ingot, X = electric furnace, Y = piston, Z = chassis 0, W = steel ingot
+    public static final RegistryObject<Block> MILLING_MACHINE = registerBlockAndItem("milling_machine", () -> new Block(MACHINE)); // #X#,YZY,WWW -- # = aluminum ingot, X = electric furnace, Y = piston, Z = chassis 1, W = steel ingot
     // Fluid injector to inject fluids into buckets and what not...
     //TODO: compresses gasses and liquids
     public static final RegistryObject<Block> COMPRESSOR = registerBlockAndItem("compressor", () -> new Block(MACHINE)); //
     //TODO: evaporates composite liquids into gases to be collected by condensers. Optionally, water can be added to crack the oils
-    public static final RegistryObject<Block> FRACTIONATOR = registerBlockAndItem("fractinator", () -> new Block(MACHINE)); //
+    public static final RegistryObject<Block> FRACTIONATOR = registerBlockAndItem("fractinator", () -> new Block(MACHINE)); // lots of steel
     //TODO: can react various liquids, gases, and solids over a catalyst to produce solids, and liquids (gases must be captured with condensors) (require pressue and heat setting?)
     public static final RegistryObject<Block> CATALYTIC_REACTOR = registerBlockAndItem("catalytic_reactor", () -> new Block(MACHINE));
+
+    // Wood Production
+    // sawmill?
+    // wood chips -- chipwood, plywood, particle board -- mulch? Fertilizer?
+    // engineered wood planks and plastic (glue) (doesn't burn?)
+    // wood pulp, paper, and cardboard
+    // Flour and bread?
+
+    // Advanced Production
+    // Chip production
+    //      silicon refining: https://en.wikipedia.org/wiki/Silicon
+    //      CDV for advance circuit and material manufacturing, maybe needs a redstone blueprint design? -- semi-conductor manufacturing https://en.wikipedia.org/wiki/Semiconductor
+    //      Lithograph?
+    // https://en.wikipedia.org/wiki/Diamond_anvil_cell (useful if we're making lonsdaleite)??
+    // Laser / water etching for tiny components? like micro gears or redstone or intermediate circuits? (CNC - requires computers to work?)
+    // Assembly line autocrafting -- makes welding / hammering noises? (deconstruct a crafting recipe to be linear then go through an assembly line) -- need to fill in blanks with something
+    // oil/ore exploration computers: https://en.wikipedia.org/wiki/Hydrocarbon_exploration#Exploration_methods (also scans for ores??, need some way to display a map if its a total read, otherwise just display targeted ores
+
     //TODO: Foundry: multiblock -- default organized by density?, will alloy liquids automatically. Make a tag for valid furnace bricks. include graphite and maybe regular bricks? Need heat ratings?
-    //      Furnace Heat -- Must get to 1000 heat per block volume to work, heat can be provided to the bottom or sides
+    //      Furnace Heat -- Must get to 1400+ heat per base block to work, heat can be provided to the bottom or sides (can inject preheated gases to increase heat?)
     //      Special Furnaces:
     //          Electric arc: fastest in large batch bursts, but needs to replace electrodes over time, electrodes must be cooled --- need something to plug the electrodes into
     //          Electromagnetic induction coils: fastest for consistent use, has a warm up time, coils must be cooled, needs semi-conductive bricks (quartz and graphite)
@@ -101,9 +136,9 @@ public class SBlocks {
     public static final RegistryObject<Block> FURNACE_PORT = registerBlockAndFireProofItem("furnace_port", () -> new Block(MACHINE)); // #,# #,### -- graphite chunk (or brick)
     //TODO: used to input liquids or gasses for alloying
     public static final RegistryObject<Block> FURNACE_INJECTOR = registerBlockAndFireProofItem("furnace_injector", () -> new Block(MACHINE)); // ###,YXY,### -- # = graphite chunk (or brick), X = valve, Y = pipe
-    //TODO: outputs molten metal into containers from the furnace when given a redstone signal, can be have more than one, but they must be in the bottom layer
+    //TODO: outputs molten metal into containers from the furnace when given a redstone signal, can be more than one, but they must be in the bottom layer
     public static final RegistryObject<Block> FURNACE_TAP = registerBlockAndFireProofItem("furnace_tap", () -> new Block(MACHINE)); // ###,#X#,# # -- # = graphite chunk (or brick), X = valve
-    //TODO: for catching and outputting slag
+    //TODO: for catching and outputting slag and other solids
     public static final RegistryObject<Block> SLAG_PAN = registerBlockAndFireProofItem("slag_pan", () -> new Block(MACHINE)); // ###,XXX -- # = graphite chunk (or brick), X = iron ingot
     //TODO: used to store molten liquids without them cooling
     public static final RegistryObject<Block> INSULATED_VAT = registerBlockAndFireProofItem("insulated_vat", () -> new Block(MACHINE)); // ###,#X#,# # -- # = graphite chunk (or brick), X = vat
@@ -112,43 +147,43 @@ public class SBlocks {
     //TODO: stores furnace data, can be upgraded to a furnace controller
     public static final RegistryObject<Block> FURNACE_CORE = registerBlockAndFireProofItem("furnace_core", () -> new Block(MACHINE));
     //TODO: allows viewing -- requires computers
-    public static final RegistryObject<Block> FURNACE_CONTROLLER = registerBlockAndFireProofItem("furnace_temperature_controller", () -> new Block(MACHINE));
-
-    // Wood Production
-    // sawmill?
-    // wood chips -- chipwood, plywood, particle board -- mulch? Fertilizer?
-    // engineered wood planks and plastic (glue) (doesn't burn?)
-    // Flour and bread?
-
-    // Advanced Production
-    // Chip production
-    //      silicon refining: https://en.wikipedia.org/wiki/Silicon
-    //      CDV for advance circuit and material manufacturing, maybe needs a redstone blueprint design? -- semi-conductor manufacturing https://en.wikipedia.org/wiki/Semiconductor
-    //      Lithograph?
-    // Laser / water etching for tiny components? like micro gears or redstone or intermediate circuits? (CNC - requires computers to work?)
-    // Assembly line autocrafting -- makes welding / hammering noises? (deconstruct a crafting recipe to be linear then go through an assembly line) -- need to fill in blanks with something
-    // oil/ore exploration computers: https://en.wikipedia.org/wiki/Hydrocarbon_exploration#Exploration_methods (also scans for ores??, need some way to display a map if its a total read, otherwise just display targeted ores
+    public static final RegistryObject<Block> FURNACE_CONTROLLER = registerBlockAndFireProofItem("furnace_controller", () -> new Block(MACHINE));
 
 
     // Electricity Generation
     // Heat Generators (hot, do not touch (or stand in the solar beam)) -- need a tag or interface or both for these
-    //TODO: Upgradable - chassis, heat exchanger. generates 150 base heat to adjacent blocks, accepts any furnace fuel.
-    public static final RegistryObject<Block> SOLID_FUEL_HEATER = registerBlockAndItem("solid_fuel_heater", () -> new Block(MACHINE)); // #X#,#Y#,ZZZ -- # = copper plate, X = furnace, Y = chassis 0, Z = graphite
-    //TODO: Upgradable - chassis, heat exchanger. generates 80 base heat to adjacent blocks. Only accepts Blaze and Lava buckets (make tag to add other mods). Fuel last 4x. 1b == 100k rf
-    public static final RegistryObject<Block> CONVECTION_HEATER = registerBlockAndItem("convection_heater", () -> new Block(MACHINE)); // ###,XYX,ZZZ -- # = copper plate, X = iron plate, Y = chassis 0, Z = graphite
-    //TODO: Upgradable - chassis, heat exchanger, tank size
+    //TODO: generates 150 base heat to adjacent blocks, accepts any furnace fuel.
+    public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK0 = registerBlockAndItem("solid_fuel_heater_mk0", () -> new Block(MACHINE)); // #X#,#Y#,ZZZ -- # = copper plate, X = furnace, Y = chassis 0, Z = graphite
+    public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK1 = registerBlockAndItem("solid_fuel_heater_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK2 = registerBlockAndItem("solid_fuel_heater_mk2", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK3 = registerBlockAndItem("solid_fuel_heater_mk3", () -> new Block(MACHINE));
+    //TODO: generates 80 base heat to adjacent blocks. Only accepts Blaze and Lava buckets (make tag to add other mods). Fuel last 4x. 1b == 100k rf
+    public static final RegistryObject<Block> CONVECTION_HEATER_MK0 = registerBlockAndItem("convection_heater_mk0", () -> new Block(MACHINE)); // ###,XYX,ZZZ -- # = copper plate, X = iron plate, Y = chassis 0, Z = graphite
+    public static final RegistryObject<Block> CONVECTION_HEATER_MK1 = registerBlockAndItem("convection_heater_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> CONVECTION_HEATER_MK2 = registerBlockAndItem("convection_heater_mk2", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> CONVECTION_HEATER_MK3 = registerBlockAndItem("convection_heater_mk3", () -> new Block(MACHINE));
+    //TODO: Different sizes have different tank sizes
     //      Natural Gas: generates 500 base heat per 100 mb, lasts .5x
     //      Light Fuel: generates 340 base heat per 100 mb, lasts 1x
     //      Heavy Fuel: generates 270 base heat per 100 mb, lasts 2x
-    public static final RegistryObject<Block> LIQUID_FUEL_HEATER = registerBlockAndItem("liquid_fuel_heater", () -> new Block(MACHINE)); // ###,XYX,ZWZ -- # = cupro-nickle plate, X = tank, Y = solid_fuel_heater, Z = steel plate, W = chassis 1
+    public static final RegistryObject<Block> LIQUID_FUEL_HEATER_MK0 = registerBlockAndItem("liquid_fuel_heater_mk0", () -> new Block(MACHINE)); // ###,XYX,ZWZ -- # = cupro-nickle plate, X = tank, Y = solid_fuel_heater, Z = steel plate, W = chassis 1
+    public static final RegistryObject<Block> LIQUID_FUEL_HEATER_MK1 = registerBlockAndItem("liquid_fuel_heater_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> LIQUID_FUEL_HEATER_MK2 = registerBlockAndItem("liquid_fuel_heater_mk2", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> LIQUID_FUEL_HEATER_MK3 = registerBlockAndItem("liquid_fuel_heater_mk3", () -> new Block(MACHINE));
     //TODO: Upgradable - chassis, heat exchanger, heating coil. inefficient for making steam (negative electricity), but convenient to heat things that you don't want to take fuel to
-    public static final RegistryObject<Block> RESISTANCE_HEATER = registerBlockAndItem("resistance_heater", () -> new Block(MACHINE)); // #X#,XYX,ZZZ -- # = cupro-nickle plate 1, X = copper wiring, Y = chassis 1, Z = aluminum plate
+    public static final RegistryObject<Block> RESISTANCE_HEATER_MK0 = registerBlockAndItem("resistance_heater_mk0", () -> new Block(MACHINE)); // #X#,XYX,ZZZ -- # = cupro-nickle plate 1, X = copper wiring, Y = chassis 1, Z = aluminum plate
+    public static final RegistryObject<Block> RESISTANCE_HEATER_MK1 = registerBlockAndItem("resistance_heater_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> RESISTANCE_HEATER_MK2 = registerBlockAndItem("resistance_heater_mk2", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> RESISTANCE_HEATER_MK3 = registerBlockAndItem("resistance_heater_mk3", () -> new Block(MACHINE));
     //TODO: Upgradable - chassis, mirror. Targets generate heat at linked block with a heat beam. Beyond 6 blocks away from the target, heat will dissipate at 5 heat per block. Must have sky access, and must not be raining. Only works during the day.
-    public static final RegistryObject<Block> SOLAR_REFLECTOR = registerBlockAndItem("solar_reflector", () -> new Block(MACHINE)); // ###,XXX, Y  -- # = mirror, X = , Y = chassis
-    //TODO: induction heater, much more efficient tha regular electric heater but only works on specific things. Generates 320 heat. You can touch this one (if you're not cybernetic)
-    public static final RegistryObject<Block> INDUCTION_COIL_MK0 = registerBlockAndItem("induction_coil_mk0", () -> new Block(MACHINE)); // #X#,#Y#,#X# -- # = electromagnet, X = aluminum plate, Y = chassis 2
-    public static final RegistryObject<Block> INDUCTION_COIL_MK1 = registerBlockAndItem("induction_coil_mk1", () -> new Block(MACHINE));
-    public static final RegistryObject<Block> INDUCTION_COIL_MK2 = registerBlockAndItem("induction_coil_mk2", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> SOLAR_REFLECTOR_MK0 = registerBlockAndItem("solar_reflector_mk0", () -> new Block(MACHINE)); // ###,XXX, Y  -- # = mirror, X = cable, Y = chassis
+    public static final RegistryObject<Block> SOLAR_REFLECTOR_MK1 = registerBlockAndItem("solar_reflector_mk1", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> SOLAR_REFLECTOR_MK2 = registerBlockAndItem("solar_reflector_mk2", () -> new Block(MACHINE));
+    //TODO: much more efficient tha regular electric heater but only works on furnaces. Generates 320 heat. You can touch this one (if you're not cybernetic)
+    public static final RegistryObject<Block> ELECTROMAGNET_MK0 = registerBlockAndItem("electromagnet_mk0", () -> new Block(MACHINE)); // #X#,#Y#,#X# -- # = aluminum plate, X = nanoperm?, permalloy (4 Ni : 1 Fe),?, Y = chassis 2
+    public static final RegistryObject<Block> ELECTROMAGNET_MK1 = registerBlockAndItem("electromagnet_mk1", () -> new Block(MACHINE)); // Niobium–titanium coil
+    public static final RegistryObject<Block> ELECTROMAGNET_MK2 = registerBlockAndItem("electromagnet_mk2", () -> new Block(MACHINE)); // ????
+
     ///// geothermal?????
     // Steam Generators
     //TODO: Requires water and heat to generate steam, will explode if it gets too hot. Fires/Campfires below generate 120 heat, soul fire/campfire generates 240 heat, other heaters see heat generator section. Hot biomes give a base of 40 heat
@@ -165,7 +200,7 @@ public class SBlocks {
     public static final RegistryObject<Block> STEAM_GENERATOR_MK4 = registerBlockAndItem("steam_generator_mk4", () -> new Block(MACHINE));
     // Turbine Housing
     //TODO: Generates electricity when it has a turbine inserted and is provided steam (steam can only enter and exit from the top or bottom). Different levels allow for different stack heights of turbines to generate power
-    // or just allow more turbines to be inserted? power output depends on the turbine weight and amount of steam generated. Must be directly above a steam generator
+    // or just allow more turbines to be inserted? power output depends on the turbine weight and amount of steam generated. Must be directly above a steam generator... CO2 Turbines?
     //      formulae:
     //          Power Generation: e = sum(tw) -- https://www.powerplantandcalculations.com/2020/08/how-do-you-calculate-power-generation-in-steam-Turbines.html -- https://www.researchgate.net/post/how-to-calculate-the-power-produced-by-large-steam-turbines
     //          New Steam Pressure:
@@ -184,8 +219,7 @@ public class SBlocks {
     public static final RegistryObject<Block> CONDENSER_MK0 = registerBlockAndItem("condenser_mk0", () -> new Block(MACHINE)); // ###,#Y#,#X# -- # = copper ingot, X = iron trapdoor, Y = chassis 0
     public static final RegistryObject<Block> CONDENSER_MK1 = registerBlockAndItem("condenser_mk1", () -> new Block(MACHINE)); // ###,#Y#,#X# -- # = cupro-nickel ingot, X = steel trapdoor, Y = chassis 1
     public static final RegistryObject<Block> CONDENSER_MK2 = registerBlockAndItem("condenser_mk2", () -> new Block(MACHINE)); // ###,#Y#,#X# -- # = diamond, X = aluminum trapdoor, Y = chassis 2
-    //TODO: steam vent: allows steam to freely pass through to a higher block without loss of heat
-    public static final RegistryObject<Block> STEAM_VENT = registerBlockAndItem("steam_vent", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> CONDENSER_MK3 = registerBlockAndItem("condenser_mk3", () -> new Block(MACHINE));
 
     // Direct Electricity Generation Machines
     // Wind
@@ -206,13 +240,16 @@ public class SBlocks {
 
     // Moving Stuff
     // Fluid transport & storage
+    //TODO: allows steam to freely pass through to a higher block without loss of heat
+    public static final RegistryObject<Block> STEAM_DUCT = registerBlockAndItem("steam_duct", () -> new Block(MACHINE));
     //TODO: pipes, different held volume and transfer rate
     public static final RegistryObject<Block> PIPE_MK0 = registerBlockAndItem("pipe_mk0", () -> new Block(LIGHT_MACHINE)); // ### -- # = copper tube
     public static final RegistryObject<Block> PIPE_MK1 = registerBlockAndItem("pipe_mk1", () -> new Block(LIGHT_MACHINE)); // steel
     public static final RegistryObject<Block> PIPE_MK2 = registerBlockAndItem("pipe_mk2", () -> new Block(LIGHT_MACHINE)); // extruded plastic or 6 plastic sheets?
     public static final RegistryObject<Block> PIPE_MK3 = registerBlockAndItem("pipe_mk3", () -> new Block(LIGHT_MACHINE)); // idk, something high pressure
-    public static final RegistryObject<Block> PIPE_MK4 = registerBlockAndFireProofItem("pipe_mk4", () -> new Block(LIGHT_MACHINE)); // idk, something even higher pressure
-    public static final RegistryObject<Block> PIPE_MK5 = registerBlockAndFireProofItem("pipe_mk5", () -> new Block(LIGHT_MACHINE)); // idk, something even greater higher pressure
+    public static final RegistryObject<Block> PIPE_MK4 = registerBlockAndItem("pipe_mk4", () -> new Block(LIGHT_MACHINE)); // idk, something even higher pressure
+    public static final RegistryObject<Block> PIPE_MK5 = registerBlockAndItem("pipe_mk5", () -> new Block(LIGHT_MACHINE)); // idk, something even greater higher pressure
+    //TODO: fluid tanks?
     //TODO: pump, different tiers? slurry injectors for fracking?
 
     // Item transport & storage
@@ -222,18 +259,21 @@ public class SBlocks {
     public static final RegistryObject<Block> CONVEYOR_BELT_MK2 = registerBlockAndItem("conveyor_belt_mk2", () -> new Block(LIGHT_MACHINE)); // 2x ###,XXX,YZY -- # = thermal rubber, X = aluminum plate, Y = titanium rod, z = motor 2
     //TODO: cardboard boxes if i'm taking it from the other mod...
     public static final RegistryObject<Block> CARDBOARD_BOX = registerBlockAndItem("cardboard_box", () -> new Block(PAPER));
+    public static final RegistryObject<Block> SHIPPING_PALLET = registerBlockAndItem("shipping_pallet", () -> new Block(PAPER));
     //TODO: Plastic storage containers (fluids too?): plastic sheets + other stuff
     public static final RegistryObject<Block> PLASTIC_BOX = registerBlockAndItem("plastic_box", () -> new Block(PLASTIC));
     //TODO: singularity storage -- stores an infinite amount of 4 types of items, can set specific output sides for each, no NBT allowed, requires energy to extract items
     public static final RegistryObject<Block> SINGULARITY_STORAGE = registerBlockAndFireProofItem("singularity_storage", () -> new Block(HEAVY_MACHINE));
 
     // Energy transport & storage
-    //TODO: create cable capacity limits -- need cables that can handle millions of rf/t. I think ima make these like satisfacotry where they need connectors and hang -- # cables^2 >= dist^2
-    public static final RegistryObject<Block> CALBE_MK0 = reg.register("cable_mk0", () -> new Block(LIGHT_MACHINE)); // 6 copper wires horizontally
-    public static final RegistryObject<Block> CALBE_MK1 = reg.register("cable_mk1", () -> new Block(LIGHT_MACHINE)); // ###,XXX,### -- # = plastic / rubber, X = copper cable
-    public static final RegistryObject<Block> CALBE_MK2 = reg.register("cable_mk2", () -> new Block(LIGHT_MACHINE)); // 9 wire 2
-    public static final RegistryObject<Block> CALBE_MK3 = reg.register("cable_mk3", () -> new Block(LIGHT_MACHINE)); // 9 wire 3
-    public static final RegistryObject<Block> CALBE_MK4 = reg.register("cable_mk4", () -> new Block(LIGHT_MACHINE)); // wires + coolant
+    //TODO: create cable capacity limits -- need cables that can handle millions of rf/t. I think ima make these like satisfacotry where they need connectors and hang -- # cables^2 >= dist^2 -- create render like create rails
+    public static final RegistryObject<Block> CABLE_MK0 = reg.register("cable_mk0", () -> new Block(LIGHT_MACHINE)); // 6 wire mk 0 horizontally
+    public static final RegistryObject<Block> CABLE_MK0_5 = reg.register("cable_mk0_5", () -> new Block(LIGHT_MACHINE)); // ###,XXX,### -- # = plastic / rubber, X = cable 0
+    public static final RegistryObject<Block> CABLE_MK1 = reg.register("cable_mk1", () -> new Block(LIGHT_MACHINE)); // 6 wires mk 1 horizontally
+    public static final RegistryObject<Block> CABLE_MK1_5 = reg.register("cable_mk1_5", () -> new Block(LIGHT_MACHINE)); // ###,XXX,### -- # = plastic / rubber, X = cable 1
+    public static final RegistryObject<Block> CABLE_MK2 = reg.register("cable_mk2", () -> new Block(LIGHT_MACHINE)); // 9 wire 2
+    public static final RegistryObject<Block> CABLE_MK3 = reg.register("cable_mk3", () -> new Block(LIGHT_MACHINE)); // 9 wire 3
+    public static final RegistryObject<Block> CABLE_MK4 = reg.register("cable_mk4", () -> new Block(LIGHT_MACHINE)); // wires + coolant
     //TODO: batteries -- slow input, slow output, much larger overall storage --- lead-acid -> lithium ion & nickle hydrogen (platinum)?
     public static final RegistryObject<Block> BATTERY_BANK_MK0 = registerBlockAndItem("battery_bank_mk0", () -> new Block(LIGHT_MACHINE)); // ###, X ,### -- # = battery, X = frame
     public static final RegistryObject<Block> BATTERY_BANK_MK1 = registerBlockAndItem("battery_bank_mk1", () -> new Block(LIGHT_MACHINE));
@@ -360,7 +400,7 @@ public class SBlocks {
 
 
     // Bioengineering -- needs config
-    // hydroponics -- efficient plant growing? can auto harvest?
+    // hydroponics -- efficient plant growing? rail auto harvesters?
     // add a block to fossils that can be used for cloning?
     // gene sequencer: sequences gene samples from mobs or fossils or plants or fungi
     // need dry ice or liquid nitrogen to store biological / gene samples
@@ -372,8 +412,9 @@ public class SBlocks {
     //      Mob cell -- cloning GM mobs
     // Gene Therapy: used to modify living mobs and plants and fungi. Can also be used to modify players
     // bioengineer organs?
-    // Mycelium bricks
+    // Mycelium bricks -- grow a tall mushroom next to an ingot mold (can be checkerboard pattern)
     // Bio engineer plants to produce mob drops
+    // Something to clean up radiation
 
 
     // Cybernetics -- needs config
@@ -389,7 +430,7 @@ public class SBlocks {
 
 
     // misc
-    // programmable mining / harvesting drones
+    // programmable mining / harvesting drones (more programmable if you have CC Tweaked?)
     // core drill -- pulls ores out of the planet's core, must have access to bedrock below y -60 (maybe lava on bedrock)
     // ender pearl / chorus fruits > quantessence or some quantum thing > quantum computers, black holes and other particle accelerator stuff ?????
 
@@ -411,9 +452,26 @@ public class SBlocks {
     public static final RegistryObject<Block> LAMINATED_ALUMINUM_GLASS = registerBlockAndItem("laminated_aluminum_glass", () -> new Block(GLASS.strength(10.0F, 1200.0F))); // #X#,X#X,#X# -- # = aluminum glass pane, X = plastic
 
 
+    // building bocks
+    //TODO: emits particles most will be based on the block/item provided: bubbles, portal, reverse portal, spore blossom, lava pops... Probably won't need rf
+    public static final RegistryObject<Block> AMBIENT_PARTICLE_GENERATOR = registerBlockAndItem("ambient_particle_generator", () -> new Block(STONE));
+    public static final RegistryObject<Block> ASPHALT = registerBlockAndItem("asphalt", () -> new Block(STONE)); //2x - #X,X# -- # = bitumen, X = gravel or X#X,X#X,X#X X = slag
+    //TODO: freezes stuff, hurts on contact
+    public static final RegistryObject<Block> DRY_ICE = registerBlockAndItem("dry_ice", () -> new Block(ROCK.sound(SoundType.CALCITE))); // carbon dioxide in a chilled pressure chamber
+    public static final RegistryObject<Block> POLISHED_GRAPHITE = registerBlockAndFireProofItem("polished_graphite", () -> new Block(ROCK.sound(SoundType.BASALT))); // stone cut graphtie || 4 graphite in table -- probably other textures too
+    public static final RegistryObject<Block> GRAPHITE_BRICKS = registerBlockAndFireProofItem("graphite_bricks", () -> new Block(MACHINE)); // ##,## -- graphite chunk --- stone cutting graphite
+    // maybe also zirconium (zirconia) bricks? Boron Nitride bricks (and heat exchangers)?
+    // LED Stuff? Lanterns? Strips? Floodlights?
+    // Shelving for items / Shelving for books
+
+    // merge deco mod as a config? if I do, i'm making slabs, stairs, walls, fences, etc. a generic block the can render any texture like the architecture things
+    // replace fluorescent light with LED?
+    // Stained-glass of lead + stained-glass = new stained-glass with glazed terracotta patterns
+    // display stand? like a pedestal?
+
+
     // Compacted Blocks
     public static final RegistryObject<Block> BLOCK_FLUORITE = registerBlockAndItem("block_fluorite", () -> new Block(CRYSTAL));
-    public static final RegistryObject<Block> BLOCK_RAW_ZINC = registerBlockAndItem("block_raw_zinc", () -> new Block(ORE)); // ?
     public static final RegistryObject<Block> BLOCK_RAW_LEAD = registerBlockAndItem("block_raw_lead", () -> new Block(ORE));
     public static final RegistryObject<Block> BLOCK_RAW_ALUMINUM = registerBlockAndItem("block_raw_aluminum", () -> new Block(ORE));
     public static final RegistryObject<Block> BLOCK_RAW_TITANIUM = registerBlockAndItem("block_raw_titanium", () -> new Block(ORE)); // ?
@@ -424,7 +482,6 @@ public class SBlocks {
 
     public static final RegistryObject<Block> BLOCK_NICKEL = registerBlockAndItem("block_nickel", () -> new Block(METAL));
     public static final RegistryObject<Block> BLOCK_COBALT = registerBlockAndItem("block_cobalt", () -> new Block(METAL));
-    public static final RegistryObject<Block> BLOCK_ZINC = registerBlockAndItem("block_zinc", () -> new Block(METAL)); // ?
     public static final RegistryObject<Block> BLOCK_LEAD = registerBlockAndItem("block_lead", () -> new Block(HEAVY_METAL));
     public static final RegistryObject<Block> BLOCK_ALUMINUM = registerBlockAndItem("block_aluminum", () -> new Block(LIGHT_METAL));
     public static final RegistryObject<Block> BLOCK_GALLIUM = registerBlockAndItem("block_gallium", () -> new Block(LIGHT_METAL));
@@ -443,23 +500,75 @@ public class SBlocks {
     public static final RegistryObject<Block> BLOCK_TUNGSTEN_CARBIDE = registerBlockAndFireProofItem("block_tungsten_carbide", () -> new Block(METAL));
 
 
-    // building bocks
-    //TODO: emits particles most will be based on the block/item provided: bubbles, portal, reverse portal, spore blossom, lava pops
-    public static final RegistryObject<Block> AMBIENT_PARTICLE_GENERATOR = registerBlockAndItem("ambient_particle_generator", () -> new Block(STONE));
-    public static final RegistryObject<Block> ASPHALT = registerBlockAndItem("asphalt", () -> new Block(STONE)); // #X,X# -- # = bitumen, X = gravel
-    //TODO: freezes stuff, hurts on contact
-    public static final RegistryObject<Block> DRY_ICE = registerBlockAndItem("dry_ice", () -> new Block(ROCK.sound(SoundType.CALCITE))); // carbon dioxide in a chilled pressure chamber
-    public static final RegistryObject<Block> POLISHED_GRAPHITE = registerBlockAndFireProofItem("polished_graphite", () -> new Block(ROCK.sound(SoundType.BASALT))); // stone cut graphtie || 4 graphite in table -- probably other textures too
-    public static final RegistryObject<Block> GRAPHITE_BRICKS = registerBlockAndFireProofItem("graphite_bricks", () -> new Block(MACHINE)); // ##,## -- graphite chunk --- stone cutting graphite
-    // maybe also zirconium (zirconia) bricks?
+    public static final HashMap<String, Boolean> metalsList = new HashMap<>() {{
+        put("copper", false);
+        put("gold", false);
+        put("netherite", true);
+        put("nickel", false);
+        put("cobalt", false);
+        put("aluminum", false);
+        put("gallium", false);
+        put("platinum", true);
+        put("steel", false);
+        put("cupro-nickel", true);
+        put("titanium", false);
+        put("zirconium", true);
+        put("tungsten", true);
+        put("niobium", true);
+        put("beryllium", false);
+        put("tungsten_carbide", true);
+        put("lead", false);
+    }};
 
-    // merge deco mod as a config? if I do, i'm making slabs, stairs, walls, fences, etc. a generic block the can render any texture like the architecture things
-    // replace fluorescent light with LED?
+    public static final ArrayList<String> colorList = new ArrayList<>() {{
+        add("blue");
+        add("black");
+        add("brown");
+        add("cyan");
+        add("gray");
+        add("green");
+        add("light_blue");
+        add("light_gray");
+        add("lime");
+        add("magenta");
+        add("orange");
+        add("pink");
+        add("purple");
+        add("red");
+        add("white");
+        add("yellow");
+    }};
+
+    public static final RegistryObject<Block> SIDING_COPPER = registerBlockAndItem("siding_copper", () -> new Block(HEAVY_METAL));
+    public static final RegistryObject<Block> SIDING_NICKEL = registerBlockAndItem("siding_nickel", () -> new Block(HEAVY_METAL));
+    public static final RegistryObject<Block> SIDING_ALUMINUM = registerBlockAndItem("siding_aluminum", () -> new Block(HEAVY_METAL));
+//    static {
+//        initTrapdoors();
+//        initCompactIronPlates();
+//        initCompactSteelPlates();
+//    }
+
+//    private static void initTrapdoors() {
+//        for (String metal: metalsList.keySet()) {
+//            registerBlockAndItem("trapdoor_" + metal, () -> new Block(HEAVY_METAL), metalsList.get(metal), Rarity.COMMON);
+//        }
+//    }
+//
+//    private static void initCompactIronPlates() {
+//        final RegistryObject<Block> SIDING_IRON = registerBlockAndItem("siding_iron", () -> new Block(HEAVY_METAL));
+//        for (String metal: colorList) {
+//            registerBlockAndItem("siding_iron_" + metal, () -> new Block(HEAVY_METAL));
+//        }
+//    }
+//
+//    private static void initCompactSteelPlates() {
+//        final RegistryObject<Block> SIDING_STEEL = registerBlockAndItem("siding_steel", () -> new Block(HEAVY_METAL));
+//        for (String metal: colorList) {
+//            registerBlockAndItem("siding_steel_" + metal, () -> new Block(HEAVY_METAL));
+//        }
+//    }
 
 
-
-
-    
 
     public static RegistryObject<Block> registerBlockAndItem(String name, Supplier<Block> block) {
         return registerBlockAndItem(name, block, false, Rarity.COMMON);
@@ -474,9 +583,13 @@ public class SBlocks {
     }
 
     public static RegistryObject<Block> registerBlockAndItem(String name, Supplier<Block> block, boolean fireResistant, Rarity rare) {
-        RegistryObject<Block> blockObj = registerBlockAndItem(name, block);
+        return registerBlockAndItem(name, block, Scifix.TAB, fireResistant, rare);
+    }
 
-        Item.Properties props = new Item.Properties().tab(Scifix.TAB).rarity(rare);
+    public static RegistryObject<Block> registerBlockAndItem(String name, Supplier<Block> block, CreativeModeTab tab, boolean fireResistant, Rarity rare) {
+        RegistryObject<Block> blockObj = reg.register(name, block);
+
+        Item.Properties props = new Item.Properties().tab(tab).rarity(rare);
         if (fireResistant) {
             props = props.fireResistant();
         }

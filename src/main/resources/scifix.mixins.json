@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.tzaranthony.scifix.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "spellbook.refmap.json",
+  "refmap": "scifix.refmap.json",
   "mixins": [
   ],
   "client": [

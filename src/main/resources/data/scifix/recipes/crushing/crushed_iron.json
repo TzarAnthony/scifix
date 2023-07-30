@@ -1,0 +1,27 @@
+{
+  "type": "scifix:crushing",
+  "rfPerTick": 50,
+  "ingredient": {
+    "item": "minecraft:raw_iron"
+  },
+  "result": {
+    "output": {
+      "count": 2,
+      "item": "scifix:crushed_iron"
+    },
+    "secondary" : [
+      {
+        "prob": 0.20,
+        "output": {
+          "item": "scifix:crushed_nickel"
+        }
+      },
+      {
+        "prob": 0.30,
+        "output": {
+          "item": "minecraft:gravel"
+        }
+      }
+    ]
+  }
+}

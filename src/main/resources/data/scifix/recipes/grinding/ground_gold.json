@@ -1,0 +1,27 @@
+{
+  "type": "scifix:grinding",
+  "rfPerTick": 70,
+  "ingredient": {
+    "item": "scifix:crushed_gold"
+  },
+  "result": {
+    "output": {
+      "count": 2,
+      "item": "scifix:ground_gold"
+    },
+    "secondary" : [
+      {
+        "prob": 0.20,
+        "output": {
+          "item": "scifix:ground_silver"
+        }
+      },
+      {
+        "prob": 0.30,
+        "output": {
+          "item": "minecraft:sand"
+        }
+      }
+    ]
+  }
+}
