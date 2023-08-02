@@ -1,4 +1,4 @@
-package com.tzaranthony.scifix.core.container.handlers;
+package com.tzaranthony.scifix.api.handlers;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;

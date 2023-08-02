@@ -9,6 +9,8 @@ import net.minecraft.world.item.Item;
 public class SItemTags {
     public static final TagKey<Item> CRUSHABLE = registerItemTag("crushable");
     public static final TagKey<Item> GRINDABLE = registerItemTag("grindable");
+    public static final TagKey<Item> INGOTS = registerItemTag("ingots");
+    public static final TagKey<Item> CONVECTION_FUEL = registerItemTag("convection_fuel");
 
     private static TagKey<Item> registerItemTag(String name) {
         return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Scifix.MOD_ID, name));

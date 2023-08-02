@@ -36,12 +36,14 @@ public class Scifix {
     //  Do I wan Patchouli or make my own book....
 
     //TODO:
-    //  Phase 1: finish basic steam generation, basic and intermediate production, world generation, item/fluid/energy storage and transport
-    //      (1.1 create machine upgrade system?)
-    //  Phase 2: finish advanced resource production, wood stuffs, & renewables
-    //  Phase 3: nuclear engineering, portal system, & quantum computers
-    //  Phase 4: bio engineering, nano tech, & particle accelerators (defence?)
-    //  Phase 5: HSR & Maglevs for create
+    //  Base Game:
+    //      Phase 1: steam & energy generation, ore refining, electrolysis, world generation, item/fluid/energy storage and transport, wood stuffs
+    //      Phase 2: advanced production / automation, photovoltaics and wind (maybe water too)
+    //  Expansion 0: decoration additions
+    //  Expansion 1: nuclear engineering, particle accelerators, portal system, & quantum computers
+    //  Expansion 2: bio engineering, cybernetics, nano tech (& defence?)
+    //  Expansion 3: defense
+    //  Compatibility: HSR & Maglevs for create, programmable drones for CC Tweaked, Tinker's multi-casting (seems kinda useless to me since tinkers doesn't work on an industrial scale)
 
     public Scifix() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

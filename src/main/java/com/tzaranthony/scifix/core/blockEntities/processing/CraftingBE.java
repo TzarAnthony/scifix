@@ -1,5 +1,6 @@
-package com.tzaranthony.scifix.core.blockEntities;
+package com.tzaranthony.scifix.core.blockEntities.processing;
 
+import com.tzaranthony.scifix.api.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -42,8 +43,8 @@ public abstract class CraftingBE extends BlockEntity {
         super.load(tag);
         this.progress = tag.getInt(PROG);
         this.maxTime = tag.getInt(MAX_TM);
-        if (itemHandler != null) {
-            itemHandler.deserializeNBT(tag.getCompound(ITEM_INV));
+        if (this.itemHandler != null) {
+            this.itemHandler.deserializeNBT(tag.getCompound(ITEM_INV));
         }
     }
 
@@ -51,8 +52,8 @@ public abstract class CraftingBE extends BlockEntity {
         super.saveAdditional(tag);
         tag.putInt(PROG, this.progress);
         tag.putInt(MAX_TM, this.maxTime);
-        if (itemHandler != null) {
-            tag.put(ITEM_INV, itemHandler.serializeNBT());
+        if (this.itemHandler != null) {
+            tag.put(ITEM_INV, this.itemHandler.serializeNBT());
         }
     }
 
@@ -74,7 +75,7 @@ public abstract class CraftingBE extends BlockEntity {
     }
 
     protected LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> itemHandler);
-    protected Map<Direction, LazyOptional<SidedItemHandler>> itemDirectionHandler;
+    protected Map<Direction, LazyOptional<BlockEntityUtils.SidedItemHandler>> itemDirectionHandler;
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
@@ -87,82 +88,13 @@ public abstract class CraftingBE extends BlockEntity {
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        itemCap.invalidate();
+        this.itemCap.invalidate();
     }
 
     @Override
     public void reviveCaps() {
         super.reviveCaps();
         this.itemCap = LazyOptional.of(() -> itemHandler);
-    }
-
-    public static class SidedItemHandler implements IItemHandlerModifiable {
-        protected final ItemStackHandler inv;
-        protected final List<Integer> insertSlots;
-        protected final List<Integer> extractSlots;
-
-        public SidedItemHandler(ItemStackHandler inv, List<Integer> insertSlots, List<Integer> extractSlots) {
-            this.inv = inv;
-            this.insertSlots = insertSlots;
-            this.extractSlots = extractSlots;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
-            SidedItemHandler that = (SidedItemHandler) o;
-            return inv.equals(that.inv);
-        }
-
-        @Override
-        public int hashCode() {
-            return inv.hashCode();
-        }
-
-        @Override
-        public int getSlots() {
-            return inv.getSlots();
-        }
-
-        @Override
-        @Nonnull
-        public ItemStack getStackInSlot(int slot) {
-            return inv.getStackInSlot(slot);
-        }
-
-        @Override
-        @Nonnull
-        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-            if (!insertSlots.contains(slot))
-                return ItemStack.EMPTY;
-            return inv.insertItem(slot, stack, simulate);
-        }
-
-        @Override
-        public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-            inv.setStackInSlot(slot, stack);
-        }
-
-        @Override
-        @Nonnull
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (!extractSlots.contains(slot))
-                return ItemStack.EMPTY;
-            return inv.extractItem(slot, amount, simulate);
-        }
-
-        @Override
-        public int getSlotLimit(int slot) {
-            return inv.getSlotLimit(slot);
-        }
-
-        @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-            return inv.isItemValid(slot, stack);
-        }
     }
 
     public Container createContainer() {

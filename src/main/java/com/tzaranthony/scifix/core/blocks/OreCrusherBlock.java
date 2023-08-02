@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class OreCrusherBlock extends CraftingBlock {
+public class OreCrusherBlock extends BaseBEBlock {
     protected final int tier;
 
     public OreCrusherBlock(Properties properties, int tier) {

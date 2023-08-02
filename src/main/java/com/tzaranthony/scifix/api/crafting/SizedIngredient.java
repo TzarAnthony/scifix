@@ -1,4 +1,4 @@
-package com.tzaranthony.scifix.core.crafting.helpers;
+package com.tzaranthony.scifix.api.crafting;
 
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;

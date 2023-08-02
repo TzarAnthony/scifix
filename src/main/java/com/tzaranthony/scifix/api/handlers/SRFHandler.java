@@ -1,4 +1,4 @@
-package com.tzaranthony.scifix.core.container.handlers;
+package com.tzaranthony.scifix.api.handlers;
 
 import net.minecraftforge.energy.EnergyStorage;
 
@@ -10,29 +10,31 @@ public class SRFHandler extends EnergyStorage {
     @Override
     public int receiveEnergy(int maxInputAmt, boolean simulate) {
         int i = super.receiveEnergy(maxInputAmt, simulate);
-        if (i != 0) onEnergyChange();
+        if (i != 0) this.onEnergyChange();
         return i;
     }
 
     @Override
     public int extractEnergy(int maxOutputAmt, boolean simulate) {
         int i = super.extractEnergy(maxOutputAmt, simulate);
-        if (i != 0) onEnergyChange();
+        if (i != 0) this.onEnergyChange();
         return i;
     }
 
-    /*
+    /**
     * For consuming energy via machine processes.
     * */
-    public int useEnergy(int maxOutputAmt, boolean simulate) {
-        int rfUsed = Math.min(this.energy, maxOutputAmt);
+    public int useEnergy(int consumeAmt, boolean simulate) {
+        int rfUsed = Math.min(this.energy, consumeAmt);
         if (!simulate)
             this.energy -= rfUsed;
+            this.onEnergyChange();
         return rfUsed;
     }
 
     public int setEnergy(int rf) {
         this.energy = rf;
+        this.onEnergyChange();
         return this.energy;
     }
 

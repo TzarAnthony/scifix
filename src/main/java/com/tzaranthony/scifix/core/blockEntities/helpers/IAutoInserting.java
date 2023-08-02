@@ -8,6 +8,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
 
 public interface IAutoInserting {
+    /**
+     * For inserting items using Forge ItemHandlers
+     * */
     default ItemStack doForgeInsert(ItemStack stack, Level level, BlockPos pos, Direction dir) {
         return VanillaInventoryCodeHooks.getItemHandler(level, pos.getX(), pos.getY(), pos.getZ(), dir)
                 .map(destinationResult -> {

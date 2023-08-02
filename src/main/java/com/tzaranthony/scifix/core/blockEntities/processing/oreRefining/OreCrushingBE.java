@@ -1,6 +1,6 @@
 package com.tzaranthony.scifix.core.blockEntities.processing.oreRefining;
 
-import com.tzaranthony.scifix.core.container.handlers.SRFHandler;
+import com.tzaranthony.scifix.api.handlers.SRFHandler;
 import com.tzaranthony.scifix.core.crafting.CrushingRecipe;
 import com.tzaranthony.scifix.core.crafting.RfRecipe;
 import com.tzaranthony.scifix.core.util.tags.SItemTags;
@@ -56,7 +56,7 @@ public class OreCrushingBE extends OreRefiningBE {
         this.cachedRecipes = Arrays.asList((new RfRecipe[capacity]));
 
         this.rfHandler = new SRFHandler(40000 + 10000 * tier, 500 + 500 * tier, 0);
-        this.rfHandler.setEnergy(this.rfHandler.getMaxEnergyStored());
+        this.rfHandler.setEnergy(this.rfHandler.getMaxEnergyStored()); //TODO: remove this after testing
 
         //TODO: does this work without this?
 //        List<Integer> slots = IntStream.range(0, capacity).boxed().collect(Collectors.toList());

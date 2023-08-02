@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "scifix:hydrogen",
+    "scifix:methane",
+    "scifix:kerosene",
+    "scifix:light_fuel",
+    "scifix:heavy_fuel"
+  ]
+}

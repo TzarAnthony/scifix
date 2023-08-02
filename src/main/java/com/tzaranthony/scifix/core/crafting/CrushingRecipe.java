@@ -2,7 +2,7 @@ package com.tzaranthony.scifix.core.crafting;
 
 import com.google.gson.JsonObject;
 import com.tzaranthony.scifix.Scifix;
-import com.tzaranthony.scifix.core.crafting.helpers.CraftingHelper;
+import com.tzaranthony.scifix.api.crafting.CraftingHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;

@@ -43,10 +43,6 @@ public class SItems {
     public static final RegistryObject<Item> SODIUM_HYDROXIDE = reg.register("sodium_hydroxide", () -> new Item(STANDARD)); // < electrolysis < 250 mb salt brine
     public static final RegistryObject<Item> ALUMINUM_HYDROXIDE = reg.register("aluminum_hydroxide", () -> new Item(STANDARD)); // 4x < 200 heat mixing < any aluminum ore + sodium hydroxide
     public static final RegistryObject<Item> ALUMINUM_OXIDE = reg.register("aluminum_oxide", () -> new Item(STANDARD)); // .5x (alumina) < furnace < aluminum hydroxide
-    // Beryllium Production (Adv Production / Nuclear Expansion)
-    public static final RegistryObject<Item> CALCIUM_SULFATE = reg.register("calcium_sulfate", () -> new Item(STANDARD)); // 300 mb Hydrofluoric acid & Calcium Sulfate < 265 heat mixer < fluorite + 100 mb sulfuric acid + 100 mb water
-    public static final RegistryObject<Item> SODIUM_TETRAFLUOROBERYLLATE = reg.register("sodium_tetrafluoroberyllate", () -> new Item(STANDARD)); // 3 Sodium Tetrafluoroberyllate & 2 Alumina & 1 Powdered Quartz < alloy < 3 powdered emerald & 400 mb Sodium hexafluorosilicate
-    public static final RegistryObject<Item> BERYLLIUM_HYDROXIDE = reg.register("beryllium_hydroxide", () -> new Item(STANDARD)); // Beryllium hydroxide & 1b fluoridated water (4 sodium fluoride) < 150 heat mixer < 1b water + 4 sodium hydroxide + Sodium Tetrafluoroberyllate
     // blaze for sulfur, ghast tears for Potassium Salt & Salt, ender pearls for ???, phantom membranes for ???, ---- netherrack for sulfur/potassium?
 
 
@@ -64,17 +60,18 @@ public class SItems {
     public static final RegistryObject<Item> PLASTIC_TUBE = reg.register("plastic_tube", () -> new Item(STANDARD)); // extrude plastic sheet
     public static final RegistryObject<Item> RUBBER = reg.register("rubber", () -> new Item(STANDARD)); // catalytic reaction (potassium persulfate (catalyst) + iron salt (catalyst)) < 100 mb butadiene + 50 mb styrene
     public static final RegistryObject<Item> THERMAL_RUBBER = reg.register("thermal_rubber", () -> new Item(STANDARD)); // catalytic reaction (potassium persulfate (catalyst) + iron salt (catalyst)) < 100 mb butadiene + 50 mb styrene + 1 aluminum hydroxide
-    // Polyester / Nylon fabric ?
+    // rubber sheet needed for presses
+    // Polyester / Nylon fabric ? -- could make backpacks
     // Kerosene lubricant? graphite lubricant?
 
     // Mold --- maybe change this to be 1 item with NBT data
     public static final RegistryObject<Item> MOLD = reg.register("mold", () -> new Item(FIRE_RESISTANT)); // 2x #XY,#ZY,#XY -- # = steel plate, X = sand, Y = graphite powder, Z = PAN resin
     public static final RegistryObject<Item> MOLD_INGOT = reg.register("mold_ingot", () -> new Item(FIRE_RESISTANT)); // mold + ingot
-    public static final RegistryObject<Item> MOLD_PLATE = reg.register("mold_plate", () -> new Item(FIRE_RESISTANT)); // mold + plate
-    public static final RegistryObject<Item> MOLD_ROD = reg.register("mold_rod", () -> new Item(FIRE_RESISTANT)); // mold + rod
+    public static final RegistryObject<Item> MOLD_SHEET = reg.register("mold_sheet", () -> new Item(FIRE_RESISTANT)); // mold + pressure plate
+    public static final RegistryObject<Item> MOLD_BEAM = reg.register("mold_beam", () -> new Item(FIRE_RESISTANT)); // mold + beam (larger than a rod)
     public static final RegistryObject<Item> MOLD_TUBE = reg.register("mold_tube", () -> new Item(FIRE_RESISTANT)); // mold + tube
     public static final RegistryObject<Item> MOLD_GEAR = reg.register("mold_gear", () -> new Item(FIRE_RESISTANT)); // mold + gear
-    public static final RegistryObject<Item> MOLD_BLOCK = reg.register("mold_block", () -> new Item(FIRE_RESISTANT)); // mold + gear
+    public static final RegistryObject<Item> MOLD_BLOCK = reg.register("mold_block", () -> new Item(FIRE_RESISTANT)); // mold + block
 
 
     // Mechanical Components
@@ -86,24 +83,24 @@ public class SItems {
     // should I make a chassis assembly unit that can do "large" crafting for the higher tier chassis????
 
     //TODO: these need durability and different speed/pressure maximums
-    public static final RegistryObject<Item> TURBINE_MK0 = reg.register("turbine_mk0", () -> new Item(STANDARD)); //  # ,#X#, #  -- # = iron plate, X = iron rod
-    public static final RegistryObject<Item> TURBINE_MK1 = reg.register("turbine_mk1", () -> new Item(STANDARD)); //  # ,XYX, #  -- # = steel plate, X = nickle plate, Y = steel rod
-    public static final RegistryObject<Item> TURBINE_MK2 = reg.register("turbine_mk2", () -> new Item(STANDARD)); //  # ,###, #  -- # = aluminum plate
-    public static final RegistryObject<Item> TURBINE_MK3 = reg.register("turbine_mk3", () -> new Item(STANDARD)); //  # ,###, #  -- # = titanium plate //Alloy?
-    public static final RegistryObject<Item> TURBINE_MK4 = reg.register("turbine_mk4", () -> new Item(STANDARD)); //  # ,#X#, #  -- # = Hardened Steel plate, X = titanium ingot
+    public static final RegistryObject<Item> TURBINE_MK0 = reg.register("turbine_mk0", () -> new Item(STANDARD)); // #X#,#Y#,#X# -- # = iron plate, X = iron gear, Y = iron rod
+    public static final RegistryObject<Item> TURBINE_MK1 = reg.register("turbine_mk1", () -> new Item(STANDARD)); // #X#,#Y#,#X# -- # = nickel plate, X = steel gear, Y = steel rod
+    public static final RegistryObject<Item> TURBINE_MK2 = reg.register("turbine_mk2", () -> new Item(STANDARD)); // #X#,#Y#,#X# -- # = stainless steel plate, X = stainless steel gear, Y = stainless steel rod
+    public static final RegistryObject<Item> TURBINE_MK3 = reg.register("turbine_mk3", () -> new Item(STANDARD)); // #X#,#Y#,#X# -- # = chromium-nickel plate, X = stainless steel gear, Y = stainless steel rod
+    public static final RegistryObject<Item> TURBINE_MK4 = reg.register("turbine_mk4", () -> new Item(STANDARD)); // #X#,#Y#,#X# -- # = chromium-nickel plate, X = chromium-nickel gear, Y = stainless steel rod
 
     //TODO: I might need to give these thermal conductivity ratings
-    public static final RegistryObject<Item> HEAT_EXCHANGER_MK0 = reg.register("heat_exchanger_mk0", () -> new Item(STANDARD)); // #X,#X,#X -- # = copper plates, X = copper tube
-    public static final RegistryObject<Item> HEAT_EXCHANGER_MK1 = reg.register("heat_exchanger_mk1", () -> new Item(STANDARD)); // X#X,X#X,X#X -- # = cupro-nickel plate, X = cupro-nickel tube
+    public static final RegistryObject<Item> HEAT_EXCHANGER_MK0 = reg.register("heat_exchanger_mk0", () -> new Item(STANDARD)); // #X,#X,#X -- # = copper plate, X = copper tube
+    public static final RegistryObject<Item> HEAT_EXCHANGER_MK1 = reg.register("heat_exchanger_mk1", () -> new Item(STANDARD)); // X#X,X#X,X#X -- # = copper plate, X = cupro-nickel tube
     public static final RegistryObject<Item> HEAT_EXCHANGER_MK2 = reg.register("heat_exchanger_mk2", () -> new Item(STANDARD)); // #X#,YYY,#X# -- # = thermal gasket, X = cupro-nickel tube, Y = heat exchanger 1
-    public static final RegistryObject<Item> HEAT_EXCHANGER_MK3 = reg.register("heat_exchanger_mk3", () -> new Item(STANDARD)); // #X#,#X#,#X# -- # = diamond, X = heat exchanger 2
+    public static final RegistryObject<Item> HEAT_EXCHANGER_MK3 = reg.register("heat_exchanger_mk3", () -> new Item(STANDARD)); // #X#,#X#,#X# -- # = dymalloy, X = heat exchanger 2
 
     public static final RegistryObject<Item> GEAR_BOX_MK0 = reg.register("gear_box_mk0", () -> new Item(STANDARD)); // #X#,X#,YYY -- # = gear, X = rod, Y = plate
     public static final RegistryObject<Item> GEAR_BOX_MK1 = reg.register("gear_box_mk1", () -> new Item(STANDARD));
     public static final RegistryObject<Item> GEAR_BOX_MK2 = reg.register("gear_box_mk2", () -> new Item(STANDARD));
 
-    public static final RegistryObject<Item> GASKET = reg.register("gasket", () -> new Item(STANDARD)); // X#X,# #,X#X -- # = rubber, X = aluminum plate
-    public static final RegistryObject<Item> THERMAL_GASKET = reg.register("thermal_gasket", () -> new Item(STANDARD)); // X#X,# #,X#X -- # = thermal rubber, X = aluminum plate
+    public static final RegistryObject<Item> GASKET = reg.register("gasket", () -> new Item(STANDARD)); // X#X,# #,X#X -- # = rubber, X = aluminum plate -- can be done cheaper in a 3 stage press, aluminum, rubber, combiner
+    public static final RegistryObject<Item> THERMAL_GASKET = reg.register("thermal_gasket", () -> new Item(STANDARD)); // X#X,# #,X#X -- # = thermal rubber, X = aluminum plate --- can be pressed as above
     public static final RegistryObject<Item> VALVE = reg.register("valve", () -> new Item(STANDARD)); // # , X ,ZYZ -- # = motor, X = ??? rod, Y = gasket, Z = ??? pipe/tube
     public static final RegistryObject<Item> THERMAL_VALVE = reg.register("thermal_valve", () -> new Item(STANDARD)); // # , X ,ZYZ -- # = motor, X = ??? rod, Y = thermal gasket, Z = ??? pipe/tube
 
@@ -135,9 +132,11 @@ public class SItems {
     public static final RegistryObject<Item> SOLENOID_MK3 = reg.register("solenoid_nano", () -> new Item(STANDARD));
     public static final RegistryObject<Item> SOLENOID_MK4 = reg.register("solenoid_super", () -> new Item(STANDARD));
 
-    // https://en.wikipedia.org/wiki/Refractory
+    // https://en.wikipedia.org/wiki/Joule_heating#Materials_synthesis,_recovery_and_processing
+    // https://en.wikipedia.org/wiki/Resistance_wire
+    // https://en.wikipedia.org/wiki/Heating_element
     public static final RegistryObject<Item> HEATING_COIL_MK0 = reg.register("heating_coil_mk0", () -> new Item(STANDARD)); // copper ingot + graphite + copper ingot = 2
-    public static final RegistryObject<Item> HEATING_COIL_MK1 = reg.register("heating_coil_mk1", () -> new Item(STANDARD)); // cupro-nickel
+    public static final RegistryObject<Item> HEATING_COIL_MK1 = reg.register("heating_coil_mk1", () -> new Item(STANDARD)); // cupronickel
     public static final RegistryObject<Item> HEATING_COIL_MK2 = reg.register("heating_coil_mk2", () -> new Item(STANDARD)); // silicon carbide
     public static final RegistryObject<Item> HEATING_COIL_MK3 = reg.register("heating_coil_mk3", () -> new Item(STANDARD)); // tungsten
 
@@ -146,6 +145,8 @@ public class SItems {
     public static final RegistryObject<Item> MOTOR_MK2 = reg.register("motor_mk2", () -> new Item(STANDARD));
     public static final RegistryObject<Item> MOTOR_MK3 = reg.register("motor_mk3", () -> new Item(STANDARD));
 
+    public static final RegistryObject<Item> ELECTRODES_COPPER = reg.register("electrodes_copper", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> ELECTRODES_GOLD = reg.register("electrodes_gold", () -> new Item(STANDARD));
     public static final RegistryObject<Item> ELECTRODES_CARBON = reg.register("electrodes_carbon", () -> new Item(STANDARD));
 
     public static final RegistryObject<Item> ELECTROMAGNET_COIL_MK0 = reg.register("electromagnet_coil_mk0", () -> new Item(STANDARD));
@@ -159,9 +160,8 @@ public class SItems {
 
     // Ores
     public static final RegistryObject<Item> RAW_ALUMINUM = reg.register("raw_aluminum", () -> new Item(STANDARD));
-    public static final RegistryObject<Item> RAW_TITANIUM = reg.register("raw_titanium", () -> new Item(STANDARD));
-    // Nuclear Expansion
-    public static final RegistryObject<Item> RAW_URANIUM = reg.register("raw_uranium", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> RAW_CHROMIUM = reg.register("raw_chromium", () -> new Item(STANDARD));
+
 
     // 30% chance of gravel
     // coal ore > coal
@@ -176,62 +176,46 @@ public class SItems {
     public static final RegistryObject<Item> CRUSHED_NICKEL = reg.register("crushed_nickel", () -> new Item(STANDARD)); // 30% change from crushing iron
     public static final RegistryObject<Item> CRUSHED_SILVER = reg.register("crushed_silver", () -> new Item(STANDARD)); // 20% chance from crushing gold
     public static final RegistryObject<Item> CRUSHED_ALUMINUM = reg.register("crushed_aluminum", () -> new Item(STANDARD));
-    // Adv Production Expansion
-    public static final RegistryObject<Item> CRUSHED_TITANIUM = reg.register("crushed_titanium", () -> new Item(STANDARD));
-    public static final RegistryObject<Item> CRUSHED_ZIRCONIUM = reg.register("crushed_zirconium", () -> new Item(STANDARD));
-    // Nuclear Expansion
-    public static final RegistryObject<Item> CRUSHED_LEAD = reg.register("crushed_lead", () -> new Item(STANDARD)); // can also give arsenic? silver? bismuth? antimony?
+    public static final RegistryObject<Item> CRUSHED_CHROMIUM = reg.register("crushed_chromium", () -> new Item(STANDARD));
+
 
     // Ground Ores -- 30% chance of sand -- I need to make all of these non-reservable, like aluminum ingot can't be turned back into ground aluminum
     //  Can I still include them in the dusts tag? (probably not)
     //  Do I need to make a separate thing for ground ingots? (probably yes)
     //  Should I instead make the grinder add an NBT tag if its a ore vs an ingot?
     // gravel > sand, blaze rods > blaze powder, glowstone > glowstone dust, crushed redstone > redstone dust
-    //TODO: add these to the dusts tag
     public static final RegistryObject<Item> GROUND_CHARCOAL = reg.register("ground_charcoal", () -> new Item(STANDARD));
     public static final RegistryObject<Item> GROUND_COAL = reg.register("ground_coal", () -> new Item(STANDARD));
     public static final RegistryObject<Item> GROUND_IRON = reg.register("ground_iron", () -> new Item(STANDARD));
     public static final RegistryObject<Item> GROUND_COPPER = reg.register("ground_copper", () -> new Item(STANDARD));
     public static final RegistryObject<Item> GROUND_GOLD = reg.register("ground_gold", () -> new Item(STANDARD));
     public static final RegistryObject<Item> GROUND_EMERALD = reg.register("ground_emerald", () -> new Item(STANDARD)); // does not double?
-    public static final RegistryObject<Item> GROUND_QUARTZ = reg.register("ground_quartz", () -> new Item(STANDARD)); // does not double?
-    public static final RegistryObject<Item> GROUND_GRAPHITE = reg.register("ground_graphite", () -> new Item(STANDARD)); // from graphite chunk
+    public static final RegistryObject<Item> GROUND_QUARTZ = reg.register("ground_quartz", () -> new Item(STANDARD)); // does not double? maybe allow for amethyst too and call this SiO2?
+    public static final RegistryObject<Item> GROUND_GRAPHITE = reg.register("ground_graphite", () -> new Item(STANDARD)); // from graphite chunk -- why? Lubrication? Doesn't work when exposed to air...
     public static final RegistryObject<Item> GROUND_NICKEL = reg.register("ground_nickel", () -> new Item(STANDARD)); // 30% chance from powdering iron
     public static final RegistryObject<Item> GROUND_COBALT = reg.register("ground_cobalt", () -> new Item(STANDARD)); // 5% chance from electrolyzing ground copper in solution (returns the same amount of copper) -- https://en.wikipedia.org/wiki/Cobalt_extraction#Recovery_from_copper-cobalt_sulfide_concentrates
     public static final RegistryObject<Item> GROUND_SILVER = reg.register("ground_silver", () -> new Item(STANDARD)); // 20% chance from crushing gold
     public static final RegistryObject<Item> GROUND_ALUMINUM = reg.register("ground_aluminum", () -> new Item(STANDARD));
-    // Adv Production Expansion
-    public static final RegistryObject<Item> GROUND_TITANIUM = reg.register("ground_titanium", () -> new Item(STANDARD));
-    public static final RegistryObject<Item> GROUND_ZIRCONIUM = reg.register("ground_zirconium", () -> new Item(STANDARD));
-    // Nuclear Expansion
-    public static final RegistryObject<Item> GROUND_LEAD = reg.register("ground_lead", () -> new Item(STANDARD)); // can also give arsenic? silver? bismuth? antimony?
+    public static final RegistryObject<Item> GROUND_CHROMIUM = reg.register("ground_chromium", () -> new Item(STANDARD));
 
     // Ingots
     // iron -- co & co2
     // copper -- so2 --- can further refine to get other metals? https://en.wikipedia.org/wiki/Copper_extraction#Electrolysis
     // gold -- co2?
     public static final RegistryObject<Item> INGOT_NICKEL = reg.register("ingot_nickel", () -> new Item(STANDARD)); // co & co2 & so2
-    public static final RegistryObject<Item> INGOT_COBALT = reg.register("ingot_cobalt", () -> new Item(STANDARD)); // from copper
+    public static final RegistryObject<Item> INGOT_COBALT = reg.register("ingot_cobalt", () -> new Item(STANDARD)); // commonly from copper / nickel electrorefining
     public static final RegistryObject<Item> INGOT_SILVER = reg.register("ingot_silver", () -> new Item(STANDARD)); // 20% chance from crushing gold
     public static final RegistryObject<Item> INGOT_ALUMINUM = reg.register("ingot_aluminum", () -> new Item(STANDARD)); // alloy any aluminium ore with coal or 2x < electrolysis < molten alumina brine
     public static final RegistryObject<Item> INGOT_GALLIUM = reg.register("ingot_gallium", () -> new Item(STANDARD)); // electrolysis of red mud using carbon electrodes
-    public static final RegistryObject<Item> INGOT_PLATINUM = reg.register("ingot_platinum", () -> new Item(FIRE_RESISTANT)); //need production process (rarely from iron / copper https://en.wikipedia.org/wiki/Platinum#Occurrence)
-    public static final RegistryObject<Item> INGOT_STEEL = reg.register("ingot_steel", () -> new Item(STANDARD)); // 1 iron, 2 coal or 1 petcoke -- add an inefficent way for electric furnaces 2 iron 2 coal for 1 steel -- co & co2 & so2
-    // vanadium steel for strength, stainless steel (+nickel and chromium (would need an ore)) for water resistance?
-    public static final RegistryObject<Item> INGOT_CUPRO_NICKEL = reg.register("ingot_cupro_nickel", () -> new Item(FIRE_RESISTANT)); // 3x alloy 2 copper and nickel
-    // Adv Production Expansion
-    public static final RegistryObject<Item> INGOT_TITANIUM = reg.register("ingot_titanium", () -> new Item(STANDARD)); // https://en.wikipedia.org/wiki/Titanium#Production
-    public static final RegistryObject<Item> INGOT_ZIRCONIUM = reg.register("ingot_zirconium", () -> new Item(FIRE_RESISTANT)); // secondary output from titanium (used for reactor shielding and heat shielding)
-    // Nuclear ?
-    public static final RegistryObject<Item> INGOT_TUNGSTEN = reg.register("ingot_tungsten", () -> new Item(FIRE_RESISTANT)); // need production process ??????
-    public static final RegistryObject<Item> INGOT_NIOBIUM = reg.register("ingot_niobium", () -> new Item(FIRE_RESISTANT)); // need production process ???????
-    public static final RegistryObject<Item> INGOT_BERYLLIUM = reg.register("ingot_beryllium", () -> new Item(STANDARD)); // beryllium ingot & 100 mb chlorine gas & 100 mb water < electrolysis < 200 mb Beryllium chloride
-    public static final RegistryObject<Item> TUNGSTEN_CARBIDE = reg.register("tungsten_carbide", () -> new Item(FIRE_RESISTANT)); // alloy tungsten ingot with 2 graphite chunks --- fuel cells need this?
-    // Nuclear Expansion
-    public static final RegistryObject<Item> INGOT_LEAD = reg.register("ingot_lead", () -> new Item(STANDARD));
-    public static final RegistryObject<Item> INGOT_URANIUM = reg.register("ingot_uranium", () -> new Item(STANDARD)); // need production process
-    public static final RegistryObject<Item> INGOT_THORIUM = reg.register("ingot_thorium", () -> new Item(FIRE_RESISTANT)); // need production process
-    public static final RegistryObject<Item> INGOT_PLUTONIUM = reg.register("ingot_plutonium", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> INGOT_CHROMIUM = reg.register("ingot_chromium", () -> new Item(STANDARD)); // https://en.wikipedia.org/wiki/Chromium#Production
+    // magnesium?
+    public static final RegistryObject<Item> INGOT_PLATINUM = reg.register("ingot_platinum", () -> new Item(FIRE_RESISTANT)); //need production process (rarely from copper / nickel electrorefining https://en.wikipedia.org/wiki/Platinum#Occurrence)
+    public static final RegistryObject<Item> INGOT_STEEL = reg.register("ingot_steel", () -> new Item(STANDARD)); // 1 iron, 2 coal or 1 petcoke -- add an inefficient way for electric furnaces 2 iron 2 coal for 1 steel -- co & co2 & so2
+    public static final RegistryObject<Item> INGOT_STAINLESS_STEEL = reg.register("ingot_stainless_steel", () -> new Item(STANDARD)); // 7:2:1 steel:chromium:nickel
+    // silicon steel for magnets (motors/generators)
+    public static final RegistryObject<Item> INGOT_CUPRONICKEL = reg.register("ingot_cupronickel", () -> new Item(FIRE_RESISTANT)); // alloy 7:3 copper:nickel
+    // https://en.wikipedia.org/wiki/Aluminium%E2%80%93silicon_alloys#Applications
+    public static final RegistryObject<Item> INGOT_DYMALLOY = reg.register("ingot_dymalloy", () -> new Item(FIRE_RESISTANT)); // 6:4 synth diamond dust:CuSil (1:4 copper:silver) (deoxygenated atmosphere)
 
 
     public static final HashMap<String, Item.Properties> metalsList = new HashMap<>() {{
@@ -243,51 +227,85 @@ public class SItems {
         put("cobalt", STANDARD);
         put("aluminum", STANDARD);
         put("gallium", STANDARD);
+        put("chromium", STANDARD);
         put("platinum", FIRE_RESISTANT);
         put("steel", STANDARD);
-        put("cupro-nickel", FIRE_RESISTANT);
-        put("titanium", STANDARD);
-        put("zirconium", FIRE_RESISTANT);
-        put("tungsten", FIRE_RESISTANT);
-        put("niobium", FIRE_RESISTANT);
-        put("beryllium", STANDARD);
-        put("tungsten_carbide", FIRE_RESISTANT);
-        put("lead", STANDARD);
+        put("stainless_steel", FIRE_RESISTANT);
+        put("cupronickel", FIRE_RESISTANT);
+        put("dymalloy", FIRE_RESISTANT);
+//        Nuclear
+//        put("tungsten", FIRE_RESISTANT);
+//        put("niobium", FIRE_RESISTANT);
+//        put("beryllium", STANDARD);
+//        put("tungsten_carbide", FIRE_RESISTANT);
+//        put("lead", STANDARD);
+//        Bio & Cyber
+//        put("titanium", STANDARD);
+//        put("zirconium", FIRE_RESISTANT);
     }};
 
     // Basic Parts --- maybe I will add a metal working kit to craft these -- also I'll probably change this to make a function create these
     static {
-        initPlates();
-        initRods();
-        initTubes();
-        initGears();
+        initParts();
     }
 
-    private static void initPlates() {
-        //TODO: rolled ingot || hammer
+    private static void initParts() {
         for (String metal: metalsList.keySet()) {
-            reg.register("plate_" + metal, () -> new Item(metalsList.get(metal)));
+            reg.register("plate_" + metal, () -> new Item(metalsList.get(metal))); // rolled ingot || hammer
+            reg.register("rod_" + metal, () -> new Item(metalsList.get(metal))); // extruded ingot || saw
+            reg.register("tube_" + metal, () -> new Item(metalsList.get(metal))); // rolled plate || rod
+            reg.register("gear_" + metal, () -> new Item(metalsList.get(metal))); // 2 extruded ingots || # ,# #, #
+            reg.register("sheet_" + metal, () -> new Item(metalsList.get(metal))); // casting
+            reg.register("heavy_plate_" + metal, () -> new Item(metalsList.get(metal))); // casting
+            reg.register("beam_" + metal, () -> new Item(metalsList.get(metal))); // casting
         }
     }
 
-    private static void initRods() {
-        //TODO: extruded ingot || saw
-        for (String metal: metalsList.keySet()) {
-            reg.register("rod_" + metal, () -> new Item(metalsList.get(metal)));
-        }
-    }
 
-    private static void initTubes() {
-        //TODO: rolled plate || rod
-        for (String metal: metalsList.keySet()) {
-            reg.register("tube_" + metal, () -> new Item(metalsList.get(metal)));
-        }
-    }
+    // NUCLEAR ENGINEERING & QUANTUM PHYSICS
+    public static final RegistryObject<Item> CALCIUM_SULFATE = reg.register("calcium_sulfate", () -> new Item(STANDARD)); // 300 mb Hydrofluoric acid & Calcium Sulfate < 265 heat mixer < fluorite + 100 mb sulfuric acid + 100 mb water
+    public static final RegistryObject<Item> SODIUM_TETRAFLUOROBERYLLATE = reg.register("sodium_tetrafluoroberyllate", () -> new Item(STANDARD)); // 3 Sodium Tetrafluoroberyllate & 2 Alumina & 1 Powdered Quartz < alloy < 3 powdered emerald & 400 mb Sodium hexafluorosilicate
+    public static final RegistryObject<Item> BERYLLIUM_HYDROXIDE = reg.register("beryllium_hydroxide", () -> new Item(STANDARD)); // Beryllium hydroxide & 1b fluoridated water (4 sodium fluoride) < 150 heat mixer < 1b water + 4 sodium hydroxide + Sodium Tetrafluoroberyllate
 
-    private static void initGears() {
-        //TODO: 2 pressed ingots || # ,# #, #
-        for (String metal: metalsList.keySet()) {
-            reg.register("gear_" + metal, () -> new Item(metalsList.get(metal)));
-        }
-    }
+    public static final RegistryObject<Item> MOLD_HEAVY_PLATE = reg.register("mold_heavy_plate", () -> new Item(FIRE_RESISTANT)); // mold + heavy plate -- for reactor shielding
+
+    public static final RegistryObject<Item> RAW_TUNGSTEN = reg.register("raw_tungsten", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> RAW_LEAD = reg.register("raw_lead", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> RAW_URANIUM = reg.register("raw_uranium", () -> new Item(STANDARD));
+
+    public static final RegistryObject<Item> CRUSHED_LEAD = reg.register("crushed_lead", () -> new Item(STANDARD)); // can also give arsenic? silver? bismuth? antimony?
+
+    public static final RegistryObject<Item> GROUND_LEAD = reg.register("ground_lead", () -> new Item(STANDARD)); // can also give arsenic? silver? bismuth? antimony?
+
+    public static final RegistryObject<Item> INGOT_TUNGSTEN = reg.register("ingot_tungsten", () -> new Item(FIRE_RESISTANT)); // need production process ??????
+    public static final RegistryObject<Item> INGOT_NIOBIUM = reg.register("ingot_niobium", () -> new Item(FIRE_RESISTANT)); // need production process ???????
+    public static final RegistryObject<Item> INGOT_BERYLLIUM = reg.register("ingot_beryllium", () -> new Item(STANDARD)); // beryllium ingot & 100 mb chlorine gas & 100 mb water < electrolysis < 200 mb Beryllium chloride
+    // https://en.wikipedia.org/wiki/Magnox_(alloy)
+    public static final RegistryObject<Item> TUNGSTEN_CARBIDE = reg.register("tungsten_carbide", () -> new Item(FIRE_RESISTANT)); // alloy tungsten ingot with 2 graphite chunks --- fuel cells need this?
+    public static final RegistryObject<Item> INGOT_LEAD = reg.register("ingot_lead", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> INGOT_URANIUM = reg.register("ingot_uranium", () -> new Item(STANDARD)); // need production process
+    public static final RegistryObject<Item> INGOT_THORIUM = reg.register("ingot_thorium", () -> new Item(FIRE_RESISTANT)); // need production process
+    public static final RegistryObject<Item> INGOT_PLUTONIUM = reg.register("ingot_plutonium", () -> new Item(STANDARD));
+    // Vanadium steel -- replaces nickel at 2%:10% vanadium:nickel conversion
+
+
+
+
+    // CYBERNETICS & BIOENGINEERING
+    public static final RegistryObject<Item> RAW_TITANIUM = reg.register("raw_titanium", () -> new Item(STANDARD));
+
+    public static final RegistryObject<Item> CRUSHED_TITANIUM = reg.register("crushed_titanium", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> CRUSHED_ZIRCONIUM = reg.register("crushed_zirconium", () -> new Item(STANDARD));
+
+    public static final RegistryObject<Item> GROUND_TITANIUM = reg.register("ground_titanium", () -> new Item(STANDARD));
+    public static final RegistryObject<Item> GROUND_ZIRCONIUM = reg.register("ground_zirconium", () -> new Item(STANDARD));
+
+    public static final RegistryObject<Item> INGOT_TITANIUM = reg.register("ingot_titanium", () -> new Item(STANDARD)); // https://en.wikipedia.org/wiki/Titanium#Production ---- might remove this until the bio expansion
+    public static final RegistryObject<Item> INGOT_ZIRCONIUM = reg.register("ingot_zirconium", () -> new Item(FIRE_RESISTANT)); // secondary output from titanium (used for reactor shielding and heat shielding)
+
+
+
+
+    // DEFENSE INITIATIVE
+    // https://en.wikipedia.org/wiki/Lockalloy
 }

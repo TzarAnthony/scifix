@@ -1,7 +1,6 @@
 package com.tzaranthony.scifix.core.blockEntities.processing;
 
-import com.tzaranthony.scifix.core.blockEntities.CraftingBE;
-import com.tzaranthony.scifix.core.container.handlers.SRFHandler;
+import com.tzaranthony.scifix.api.handlers.SRFHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +13,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 
 public abstract class EnergyCraftingBE extends CraftingBE {
     protected SRFHandler rfHandler;
@@ -27,15 +25,23 @@ public abstract class EnergyCraftingBE extends CraftingBE {
     public void load(CompoundTag tag) {
         super.load(tag);
         if (this.rfHandler != null) {
-            this.rfHandler.setEnergy(tag.getInt(RF_INV));
+            this.rfHandler.deserializeNBT(tag.getCompound(RF_INV));
         }
     }
 
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         if (this.rfHandler != null) {
-            tag.putInt(RF_INV, this.rfHandler.getEnergyStored());
+            tag.put(RF_INV, this.rfHandler.serializeNBT());
         }
+    }
+
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        if (this.rfHandler != null) {
+            tag.put(RF_INV, this.rfHandler.serializeNBT());
+        }
+        return super.getUpdateTag();
     }
 
 
