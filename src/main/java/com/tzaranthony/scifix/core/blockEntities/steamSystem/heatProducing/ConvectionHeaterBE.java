@@ -1,6 +1,6 @@
 package com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing;
 
-import com.tzaranthony.scifix.api.mathAndPhysics.Constants;
+import com.tzaranthony.scifix.api.helpers.Constants;
 import com.tzaranthony.scifix.api.properties.ThermalProperties;
 import com.tzaranthony.scifix.core.util.tags.SItemTags;
 import com.tzaranthony.scifix.registries.SBlockEntities;

@@ -1,6 +1,6 @@
 package com.tzaranthony.scifix.core.blockEntities.processing;
 
-import com.tzaranthony.scifix.api.BlockEntityUtils;
+import com.tzaranthony.scifix.api.helpers.BlockEntityUtils;
 import com.tzaranthony.scifix.api.handlers.SFluidTankHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

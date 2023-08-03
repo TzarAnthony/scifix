@@ -1,6 +1,6 @@
 package com.tzaranthony.scifix.api.handlers;
 
-import com.tzaranthony.scifix.api.mathAndPhysics.Constants;
+import com.tzaranthony.scifix.api.helpers.Constants;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.util.INBTSerializable;

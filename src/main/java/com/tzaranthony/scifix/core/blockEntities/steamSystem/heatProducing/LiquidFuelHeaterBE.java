@@ -1,7 +1,7 @@
 package com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing;
 
-import com.tzaranthony.scifix.api.BlockEntityUtils;
-import com.tzaranthony.scifix.api.mathAndPhysics.Constants;
+import com.tzaranthony.scifix.api.helpers.BlockEntityUtils;
+import com.tzaranthony.scifix.api.helpers.Constants;
 import com.tzaranthony.scifix.api.properties.ThermalProperties;
 import com.tzaranthony.scifix.core.util.tags.SFluidTags;
 import com.tzaranthony.scifix.registries.SBlockEntities;
@@ -102,7 +102,7 @@ public class LiquidFuelHeaterBE extends HeatProducingBE {
 
     public static int getBurnTime(FluidStack stack) {
         // Hydrogen
-        // Natural Gas
+        // Methane
         // Jet Fuel / Kerosene?
         // Light Fuel
         // Heavy Fuel

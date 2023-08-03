@@ -159,7 +159,7 @@ public class SBlocks {
     public static final RegistryObject<Block> CONVECTION_HEATER_MK3 = registerBlockAndItem("convection_heater_mk3", () -> new ConvectionHeaterBlock(MACHINE, ThermalProperties.TIER_3_EXCHANGER));
     //TODO: Different sizes have different tank sizes
     //      Hydrogen: generates 2200 base heat per 100 mb, lasts .5x
-    //      Natural Gas: generates 1900 base heat per 100 mb, lasts .5x
+    //      Methane: generates 1900 base heat per 100 mb, lasts .5x
     //      Kerosene: generates 2000 base heat per 100 mb, lasts .5x
     //      Light Fuel: generates 2100 base heat per 100 mb, lasts 1x
     //      Heavy Fuel: generates 2100 base heat per 100 mb, lasts 2x
@@ -354,9 +354,11 @@ public class SBlocks {
     public static final RegistryObject<Block> URANIUM_ORE = registerBlockAndItem("uranium_ore", () -> new Block(STONE));
     public static final RegistryObject<Block> DEEPSLATE_URANIUM_ORE = registerBlockAndItem("deepslate_uranium_ore", () -> new Block(DEEPSLATE));
 
-    //TODO: singularity storage (items & fluids) -- stores an infinite amount of 4 types of items, can set specific output sides for each, no NBT allowed, requires energy to extract items
+    //TODO: singularity storage configured to store an infinite amount of up to 4 items, 1 fluid, or energy -- can set specific output sides for each, no NBT allowed, requires energy to extract items/fluids
     public static final RegistryObject<Block> SINGULARITY_STORAGE = registerBlockAndFireProofItem("singularity_storage", () -> new Block(HEAVY_MACHINE));
-    // probably need steam pressurized pipes? Definitely needs coolant systems
+    // something to keep the singularity in place
+    // antimatter capacitor
+    // probably need heat exchanging pressurized pipes? Definitely needs coolant systems
 
     // fission reactors:
     //      Management Computer: sets and monitors control rod insertion, fuel status, coolant temperatures, power generation, and waste generation
@@ -542,6 +544,7 @@ public class SBlocks {
         put("cobalt", false);
         put("aluminum", false);
         put("gallium", false);
+        put("chromium", true);
         put("platinum", true);
         put("steel", false);
         put("cupronickel", true);

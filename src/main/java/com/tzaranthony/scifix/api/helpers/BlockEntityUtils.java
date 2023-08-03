@@ -1,4 +1,4 @@
-package com.tzaranthony.scifix.api;
+package com.tzaranthony.scifix.api.helpers;
 
 import com.tzaranthony.scifix.api.handlers.SFluidTankHandler;
 import net.minecraft.core.BlockPos;

@@ -1,16 +1,13 @@
 package com.tzaranthony.scifix.core.blocks;
 
-import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.HeatProducingBE;
 import com.tzaranthony.scifix.core.util.damage.SDamageSource;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class HeatBlock extends BaseEntityBlock {

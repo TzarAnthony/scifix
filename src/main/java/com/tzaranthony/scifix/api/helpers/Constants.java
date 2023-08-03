@@ -1,7 +1,6 @@
-package com.tzaranthony.scifix.api.mathAndPhysics;
+package com.tzaranthony.scifix.api.helpers;
 
 import net.minecraft.core.Direction;
-import org.stringtemplate.v4.misc.Misc;
 
 import java.util.ArrayList;
 
@@ -70,6 +69,7 @@ public class Constants {
     public static final float bWater = 0.03049F;
 
     // Other Gas Properties
+    public static final float CO2DensityPerBlock = 1562F;
     public static final float CO2GramsPerMole = 44.009F;
     public static final float aCO2 = 3.640F;
     public static final float bCO2 = 0.04267F;

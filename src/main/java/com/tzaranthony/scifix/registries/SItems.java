@@ -47,7 +47,8 @@ public class SItems {
 
 
     // Petroleum Products
-    public static final RegistryObject<Item> PET_PELLETS = reg.register("pet_pellets", () -> new Item(STANDARD)); // 3 PET pellets & 50 mb Water < catalytic reaction (titanium chloride) < 200 mb ethylene glycol + 200 mb terephthalic acid (liquid)
+    public static final RegistryObject<Item> TEREPHTHALIC_ACID = reg.register("terephthalic_acid", () -> new Item(STANDARD)); // terephthalic acid + 100 mb water < catalytic reaction (powdered cobalt) < 150 mb xylene + 150 mb acetic acid
+    public static final RegistryObject<Item> PET_PELLETS = reg.register("pet_pellets", () -> new Item(STANDARD)); // 3 PET pellets & 50 mb Water < catalytic reaction (titanium chloride) < 200 mb ethylene glycol + terephthalic acid
     public static final RegistryObject<Item> PP_PELLETS = reg.register("pp_pellets", () -> new Item(STANDARD)); // PP pellets < catalytic reaction (titanium sheet) < 300 mb propylene
     public static final RegistryObject<Item> URETHANE_ACRYLIC_RESIN = reg.register("urethane_acrylic_resin", () -> new Item(STANDARD)); // < mixing < 300 mb ethylene glycol + 200 mb acrylonitrile + 500 mb hydroxyethyl acrylate
     public static final RegistryObject<Item> PAN_RESIN = reg.register("pan_resin", () -> new Item(STANDARD)); // PAN resin + 1.5 b methanol < 50 heat mixing < 1 b acrylonitrile + 2 b methanol
@@ -207,7 +208,7 @@ public class SItems {
     public static final RegistryObject<Item> INGOT_SILVER = reg.register("ingot_silver", () -> new Item(STANDARD)); // 20% chance from crushing gold
     public static final RegistryObject<Item> INGOT_ALUMINUM = reg.register("ingot_aluminum", () -> new Item(STANDARD)); // alloy any aluminium ore with coal or 2x < electrolysis < molten alumina brine
     public static final RegistryObject<Item> INGOT_GALLIUM = reg.register("ingot_gallium", () -> new Item(STANDARD)); // electrolysis of red mud using carbon electrodes
-    public static final RegistryObject<Item> INGOT_CHROMIUM = reg.register("ingot_chromium", () -> new Item(STANDARD)); // https://en.wikipedia.org/wiki/Chromium#Production
+    public static final RegistryObject<Item> INGOT_CHROMIUM = reg.register("ingot_chromium", () -> new Item(FIRE_RESISTANT)); // https://en.wikipedia.org/wiki/Chromium#Production
     // magnesium?
     public static final RegistryObject<Item> INGOT_PLATINUM = reg.register("ingot_platinum", () -> new Item(FIRE_RESISTANT)); //need production process (rarely from copper / nickel electrorefining https://en.wikipedia.org/wiki/Platinum#Occurrence)
     public static final RegistryObject<Item> INGOT_STEEL = reg.register("ingot_steel", () -> new Item(STANDARD)); // 1 iron, 2 coal or 1 petcoke -- add an inefficient way for electric furnaces 2 iron 2 coal for 1 steel -- co & co2 & so2

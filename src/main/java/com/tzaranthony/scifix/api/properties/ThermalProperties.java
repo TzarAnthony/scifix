@@ -1,7 +1,7 @@
 package com.tzaranthony.scifix.api.properties;
 
-import com.tzaranthony.scifix.api.mathAndPhysics.Constants;
-import com.tzaranthony.scifix.api.mathAndPhysics.Maths;
+import com.tzaranthony.scifix.api.helpers.Constants;
+import com.tzaranthony.scifix.api.helpers.Maths;
 
 public enum ThermalProperties {
     TIER_0_EXCHANGER(0, Maths.mean(new float[]{Constants.CopperOxideThermalConductivity, Constants.CopperThermalConductivity})

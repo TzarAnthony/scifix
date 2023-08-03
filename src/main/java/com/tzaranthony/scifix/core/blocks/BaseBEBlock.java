@@ -1,22 +1,15 @@
 package com.tzaranthony.scifix.core.blocks;
 
-import com.tzaranthony.scifix.api.BlockEntityUtils;
-import com.tzaranthony.scifix.core.blockEntities.processing.CraftingBE;
+import com.tzaranthony.scifix.api.helpers.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.Optional;
 
 public abstract class BaseBEBlock extends BaseEntityBlock {
     protected BaseBEBlock(Properties properties) {
