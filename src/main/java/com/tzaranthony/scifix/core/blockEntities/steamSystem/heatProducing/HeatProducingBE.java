@@ -1,6 +1,6 @@
 package com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing;
 
-import com.tzaranthony.scifix.api.handlers.HeatExchanger;
+import com.tzaranthony.scifix.api.handlers.HeatHandler;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.HeatExchangingBE;
 import com.tzaranthony.scifix.api.properties.ThermalProperties;
 import net.minecraft.core.BlockPos;
@@ -57,7 +57,7 @@ public abstract class HeatProducingBE extends HeatExchangingBE {
         if (this.level != null) {
             this.refreshAtmosphericData();
         }
-        this.heatManager = new HeatExchanger(properties.getThermalConductivity(), properties.getSpecificHeat(), this.atmosphericTemp);
+        this.heatManager = new HeatHandler(properties.getThermalConductivity(), properties.getSpecificHeat(), this.atmosphericTemp);
     }
 
     public void load(CompoundTag tag) {

@@ -1,18 +1,14 @@
 package com.tzaranthony.scifix.api.helpers;
 
-import com.tzaranthony.scifix.api.handlers.SFluidTankHandler;
+import com.tzaranthony.scifix.api.handlers.FluidHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -22,55 +18,12 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockEntityUtils {
-    public static void transferToTankMultiple(ItemStackHandler handler, SFluidTankHandler tanks, int slotBucket, int slotRemainder) {
-        ItemStack stack = handler.getStackInSlot(slotBucket);
-        if (!stack.isEmpty() && stack.getItem() instanceof BucketItem) {
-            if (stack.is(Items.BUCKET)) {
-                for (int i = 0; i < tanks.getTanks(); ++i) {
-                    FluidTank tank = tanks.getTank(i);
-                    FluidStack currFStack = tank.getFluid();
-                    if (!currFStack.isEmpty() && currFStack.getAmount() >= 1000) {
-                        ItemStack stackOut = FluidUtil.getFilledBucket(currFStack);
-                        handler.extractItem(slotBucket, 1, false);
-                        tank.drain(1000, IFluidHandler.FluidAction.EXECUTE);
-                        handler.insertItem(slotRemainder, stackOut, false);
-                        break;
-                    }
-                }
-            } else {
-                FluidStack fluidIn = new FluidStack(((BucketItem) stack.getItem()).getFluid(), 1000);
-                for (int i = 0; i < tanks.getTanks(); ++i) {
-                    FluidTank tank = tanks.getTank(i);
-                    if (tank.isFluidValid(0, fluidIn) && tank.getSpace() >= 1000) {
-                        handler.extractItem(slotBucket, 1, false);
-                        tank.fill(fluidIn, IFluidHandler.FluidAction.EXECUTE);
-                        handler.insertItem(slotRemainder, new ItemStack(Items.BUCKET), false);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    public static void transferToTank(ItemStackHandler handler, FluidTank tank, int slotBucket, int slotRemainder) {
-        ItemStack stack = handler.getStackInSlot(slotBucket);
-        if (!stack.isEmpty() && stack.getItem() instanceof BucketItem) {
-            if (stack.is(Items.BUCKET)) {
-                FluidStack currFStack = tank.getFluid();
-                if (!currFStack.isEmpty() && currFStack.getAmount() >= 1000) {
-                    ItemStack stackOut = FluidUtil.getFilledBucket(currFStack);
-                    handler.extractItem(slotBucket, 1, false);
-                    tank.drain(1000, IFluidHandler.FluidAction.EXECUTE);
-                    handler.insertItem(slotRemainder, stackOut, false);
-                }
-            } else {
-                FluidStack fluidIn = new FluidStack(((BucketItem) stack.getItem()).getFluid(), 1000);
-                if (tank.isFluidValid(0, fluidIn) && tank.getSpace() >= 1000) {
-                    handler.extractItem(slotBucket, 1, false);
-                    tank.fill(fluidIn, IFluidHandler.FluidAction.EXECUTE);
-                    handler.insertItem(slotRemainder, new ItemStack(Items.BUCKET), false);
-                }
-            }
+    public static void transferToTank(ItemStackHandler itemHandler, FluidHandler fluidHandler, int inputSlot, int outputSlot, int tankSlot) {
+        ItemStack inputStack = itemHandler.getStackInSlot(inputSlot);
+        ItemStack outputStack = fluidHandler.fillOrEmptyItemUsingTank(inputStack, tankSlot);
+        if (inputStack.sameItem(outputStack)) {
+            itemHandler.extractItem(inputSlot, 1, false);
+            itemHandler.insertItem(outputSlot, outputStack, false);
         }
     }
 
@@ -83,7 +36,7 @@ public class BlockEntityUtils {
     }
 
 
-    public static void dropFluidMultiple(SFluidTankHandler tanks, Level level, BlockPos pos) {
+    public static void dropFluidMultiple(FluidHandler tanks, Level level, BlockPos pos) {
         int maxFluid = -1;
         FluidStack current = FluidStack.EMPTY;
         for (int i = 0; i < tanks.getTanks(); i++) {
@@ -96,10 +49,6 @@ public class BlockEntityUtils {
         if (!current.isEmpty()) {
             dropFluid(current, level, pos);
         }
-    }
-
-    public static void dropFluid(FluidTank tank, Level level, BlockPos pos) {
-        dropFluid(tank.getFluid(), level, pos);
     }
 
     public static void dropFluid(FluidStack stack, Level level, BlockPos pos) {
@@ -179,7 +128,7 @@ public class BlockEntityUtils {
     }
 
 
-    //TODO: fix this with the fluid handler implementation
+    //TODO: since we now have fluid tanks with a specified input/output direction, do we need this? I don't think so
     public static class SidedFluidHandler implements IFluidTank {
 
         @NotNull

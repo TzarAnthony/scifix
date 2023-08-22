@@ -1,4 +1,4 @@
-package com.tzaranthony.scifix.core.blockEntities.helpers;
+package com.tzaranthony.scifix.api.helpers;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

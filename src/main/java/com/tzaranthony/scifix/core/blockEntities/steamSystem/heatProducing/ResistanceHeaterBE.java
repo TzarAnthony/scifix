@@ -1,6 +1,6 @@
 package com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing;
 
-import com.tzaranthony.scifix.api.handlers.SRFHandler;
+import com.tzaranthony.scifix.api.handlers.EnergyHandler;
 import com.tzaranthony.scifix.api.helpers.Constants;
 import com.tzaranthony.scifix.api.properties.ThermalProperties;
 import com.tzaranthony.scifix.registries.SBlockEntities;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ResistanceHeaterBE extends HeatProducingBE {
-    protected SRFHandler rfHandler;
+    protected EnergyHandler rfHandler;
     protected static final String RF_INV = "SCIFIX_RF";
 
     public ResistanceHeaterBE(BlockPos pos, BlockState state) {
@@ -45,7 +45,7 @@ public class ResistanceHeaterBE extends HeatProducingBE {
             }
         };
 
-        this.rfHandler = new SRFHandler(40000 + properties.getTier() * 10000, 5000 + properties.getTier() * 5000, 0);
+        this.rfHandler = new EnergyHandler(40000 + properties.getTier() * 10000, 5000 + properties.getTier() * 5000, 0);
     }
 
     public void load(CompoundTag tag) {

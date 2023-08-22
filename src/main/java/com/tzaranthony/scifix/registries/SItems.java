@@ -91,7 +91,7 @@ public class SItems {
     public static final RegistryObject<Item> TURBINE_MK4 = reg.register("turbine_mk4", () -> new Item(STANDARD)); // #X#,#Y#,#X# -- # = chromium-nickel plate, X = chromium-nickel gear, Y = stainless steel rod
 
     //TODO: I might need to give these thermal conductivity ratings
-    public static final RegistryObject<Item> HEAT_EXCHANGER_MK0 = reg.register("heat_exchanger_mk0", () -> new Item(STANDARD)); // #X,#X,#X -- # = copper plate, X = copper tube
+    public static final RegistryObject<Item> HEAT_EXCHANGER_MK0 = reg.register("heat_exchanger_mk0", () -> new Item(STANDARD)); // #X,#X -- # = copper plate, X = copper tube
     public static final RegistryObject<Item> HEAT_EXCHANGER_MK1 = reg.register("heat_exchanger_mk1", () -> new Item(STANDARD)); // X#X,X#X,X#X -- # = copper plate, X = cupro-nickel tube
     public static final RegistryObject<Item> HEAT_EXCHANGER_MK2 = reg.register("heat_exchanger_mk2", () -> new Item(STANDARD)); // #X#,YYY,#X# -- # = thermal gasket, X = cupro-nickel tube, Y = heat exchanger 1
     public static final RegistryObject<Item> HEAT_EXCHANGER_MK3 = reg.register("heat_exchanger_mk3", () -> new Item(STANDARD)); // #X#,#X#,#X# -- # = dymalloy, X = heat exchanger 2
@@ -309,4 +309,6 @@ public class SItems {
 
     // DEFENSE INITIATIVE
     // https://en.wikipedia.org/wiki/Lockalloy
+    // guns?
+    //laser sword like star wars or doom
 }

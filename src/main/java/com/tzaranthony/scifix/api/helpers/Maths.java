@@ -7,6 +7,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 
 public class Maths {
     public static float MCTemperatureToC(Level level, BlockPos pos) {
+        //TODO: should I add configs for these base values
         if (level.dimensionType().ultraWarm()) {
             return 70;
         }

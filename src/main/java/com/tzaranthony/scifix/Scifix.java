@@ -1,10 +1,7 @@
 package com.tzaranthony.scifix;
 
 import com.mojang.logging.LogUtils;
-import com.tzaranthony.scifix.registries.SBlockEntities;
-import com.tzaranthony.scifix.registries.SBlocks;
-import com.tzaranthony.scifix.registries.SItems;
-import com.tzaranthony.scifix.registries.SRecipes;
+import com.tzaranthony.scifix.registries.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potions;
@@ -33,17 +30,23 @@ public class Scifix {
     //  Cool GUI vs Vanilla GUI
     //  See Items
     //  See Blocks
-    //  Do I wan Patchouli or make my own book....
+    //  Do I want Patchouli or make my own book....
 
     //TODO:
     //  Base Game:
-    //      Phase 1: steam & energy generation, ore refining, electrolysis, world generation, item/fluid/energy storage and transport, wood stuffs
-    //      Phase 2: advanced production / automation, photovoltaics and wind (maybe water too)
-    //  Expansion 0: decoration additions
-    //  Expansion 1: nuclear engineering, particle accelerators, portal system, & quantum computers
-    //  Expansion 2: bio engineering, cybernetics, nano tech (& defence?)
-    //  Expansion 3: defense
-    //  Compatibility: HSR & Maglevs for create, programmable drones for CC Tweaked, Tinker's multi-casting (seems kinda useless to me since tinkers doesn't work on an industrial scale)
+    //      Phase 1: steam & energy generation, ore refining, intermediate production, world generation
+    //      Phase 2: item/fluid/energy storage and transport networks
+    //      Phase 3: wood stuffs, advanced production / automation, photovoltaics and wind (maybe water too)
+    //  Expansion 0 (Scifix Decorations): decoration additions
+    //  Expansion 1 (Scifix Nuclear Engineering Plus): nuclear engineering, particle accelerators, portal system, & quantum computers, nano tech?
+    //  Expansion 2 (Scifix Biomodding): bio engineering, cybernetics, nano tech?
+    //  Expansion 3 (Scifix Intergalatic (Rockets sold separately)): space elevator for trading with alien species (energy and assembled products for exotic materials)
+    //  Expansion 4 (Scifix Military Industrial Complex): defense
+    //  Compatibility:
+    //      Create: HSR & Maglevs, direct SU generation from turbines, heat compatibility, add ponders
+    //      CC Tweaked: programmable drones for
+    //      Tinker's: multi-casting (seems kinda useless to me since tinkers doesn't work on an industrial scale)
+    //      Mekanism: gas compatibility? Who knows it may happen (i doubt it)
 
     public Scifix() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -66,9 +69,7 @@ public class Scifix {
     }
 
     private void CommonSetup(final FMLCommonSetupEvent event) {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        SPackets.registerPackets();
     }
 
     private void ClientSetup(final FMLClientSetupEvent event) {

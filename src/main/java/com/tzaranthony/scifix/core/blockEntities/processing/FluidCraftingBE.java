@@ -1,7 +1,7 @@
 package com.tzaranthony.scifix.core.blockEntities.processing;
 
+import com.tzaranthony.scifix.api.handlers.FluidHandler;
 import com.tzaranthony.scifix.api.helpers.BlockEntityUtils;
-import com.tzaranthony.scifix.api.handlers.SFluidTankHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 public abstract class FluidCraftingBE extends CraftingBE {
-    protected SFluidTankHandler fluidHandler;
+    protected FluidHandler fluidHandler;
     protected final String FLUID_INV = "SCIFIX_Fluids";
 
     public FluidCraftingBE(BlockEntityType<?> type, BlockPos pos, BlockState state, RecipeType recipeType) {
@@ -45,7 +45,7 @@ public abstract class FluidCraftingBE extends CraftingBE {
         return tag;
     }
 
-    protected LazyOptional<? extends SFluidTankHandler> fluidCap = LazyOptional.of(() -> this.fluidHandler);
+    protected LazyOptional<? extends FluidHandler> fluidCap = LazyOptional.of(() -> this.fluidHandler);
     protected Map<Direction, LazyOptional<BlockEntityUtils.SidedFluidHandler>> fluidDirectionHandler;
 
     @Override

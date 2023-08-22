@@ -1,5 +1,6 @@
 package com.tzaranthony.scifix.core.blocks;
 
+import com.tzaranthony.scifix.core.blockEntities.processing.ElectricFurnaceBE;
 import com.tzaranthony.scifix.core.blockEntities.processing.oreRefining.OreCrushingBE;
 import com.tzaranthony.scifix.core.blockEntities.processing.oreRefining.OreRefiningBE;
 import com.tzaranthony.scifix.core.util.tags.SItemTags;
@@ -17,22 +18,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class OreCrusherBlock extends BaseBEBlock {
+public class ElectricFurnaceBlock extends BaseBEBlock {
     protected final int tier;
 
-    public OreCrusherBlock(Properties properties, int tier) {
+    public ElectricFurnaceBlock(Properties properties, int tier) {
         super(properties);
         this.tier = tier;
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        OreRefiningBE crusher = new OreCrushingBE(pos, state, this.tier);
-        return crusher;
+        ElectricFurnaceBE furnace = new ElectricFurnaceBE(pos, state, this.tier);
+        return furnace;
     }
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, SBlockEntities.CRUSHER.get(), level.isClientSide ? OreRefiningBE::clientTick : OreRefiningBE::serverTick);
+        return createTickerHelper(type, SBlockEntities.E_FURNACE.get(), level.isClientSide ? ElectricFurnaceBE::clientTick : ElectricFurnaceBE::serverTick);
     }
 }

@@ -15,12 +15,6 @@
         "output": {
           "item": "scifix:ground_silver"
         }
-      },
-      {
-        "prob": 0.30,
-        "output": {
-          "item": "minecraft:sand"
-        }
       }
     ]
   }

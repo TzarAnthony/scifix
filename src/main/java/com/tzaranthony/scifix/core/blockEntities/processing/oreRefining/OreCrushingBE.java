@@ -1,6 +1,8 @@
 package com.tzaranthony.scifix.core.blockEntities.processing.oreRefining;
 
-import com.tzaranthony.scifix.api.handlers.SRFHandler;
+import com.tzaranthony.scifix.api.handlers.EnergyHandler;
+import com.tzaranthony.scifix.api.handlers.IDirectional;
+import com.tzaranthony.scifix.api.handlers.ItemHandler;
 import com.tzaranthony.scifix.core.crafting.CrushingRecipe;
 import com.tzaranthony.scifix.core.crafting.RfRecipe;
 import com.tzaranthony.scifix.core.util.tags.SItemTags;
@@ -22,45 +24,8 @@ public class OreCrushingBE extends OreRefiningBE {
 
     public OreCrushingBE(BlockPos pos, BlockState state, int tier) {
         super(SBlockEntities.CRUSHER.get(), pos, state, CrushingRecipe.TYPE, tier);
-    }
-
-    public void setTier(int tier) {
-        this.tier = tier;
-        this.maxTime = 200 - getTierMaxTimeReduction(tier);
-        int capacity = getTierCapacity(tier);
-        this.itemHandler = new ItemStackHandler(capacity) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.is(SItemTags.CRUSHABLE);
-            }
-
-            @Override
-            protected void onContentsChanged(int slot) {
-                setChanged();
-                if(!level.isClientSide()) {
-//                    SPackets.sendToClients(new ItemS2CPacket(this, worldPosition));
-                }
-            }
-
-            @Override
-            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                ItemStack result = super.extractItem(slot, amount, simulate);
-                if (!simulate && this.getStackInSlot(slot).isEmpty() && cachedRecipes.size() > slot) {
-                    cachedRecipes.set(slot, null);
-                    progressList.set(slot, 0);
-                }
-                return result;
-            }
-        };
-        this.progressList = NonNullList.withSize(capacity, 0);
-        this.cachedRecipes = Arrays.asList((new RfRecipe[capacity]));
-
-        this.rfHandler = new SRFHandler(40000 + 10000 * tier, 500 + 500 * tier, 0);
-        this.rfHandler.setEnergy(this.rfHandler.getMaxEnergyStored()); //TODO: remove this after testing
-
-        //TODO: does this work without this?
-//        List<Integer> slots = IntStream.range(0, capacity).boxed().collect(Collectors.toList());
-//        itemCap = LazyOptional.of(() -> new SidedItemHandler(itemHandler, slots, List.of()));
+        this.itemHandler = this.itemHandler.setAllValidators(stack -> stack.is(SItemTags.GRINDABLE));
+        this.itemHandler = this.itemHandler.setAllDirections(IDirectional.Direction.INPUT);
     }
 
     public boolean isValidItem(ItemStack item) {

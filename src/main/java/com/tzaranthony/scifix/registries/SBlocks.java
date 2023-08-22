@@ -35,11 +35,12 @@ public class SBlocks {
     public static final BlockBehaviour.Properties CRYSTAL = BlockBehaviour.Properties.of(Material.AMETHYST).noOcclusion().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F);
     public static final BlockBehaviour.Properties METAL_BASE = BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops();
     public static final BlockBehaviour.Properties LIGHT_METAL = METAL_BASE.strength(3.0F, 3.0F).sound(SoundType.COPPER);
-    public static final BlockBehaviour.Properties METAL = METAL_BASE.strength(5.0F, 6.0F).sound(SoundType.NETHERITE_BLOCK);
+    public static final BlockBehaviour.Properties METAL = METAL_BASE.strength(5.0F, 6.0F).sound(SoundType.LANTERN);
     public static final BlockBehaviour.Properties HEAVY_METAL = METAL_BASE.strength(8.0F, 6.0F).sound(SoundType.NETHERITE_BLOCK);
     public static final BlockBehaviour.Properties LIGHT_MACHINE = METAL_BASE.sound(SoundType.COPPER).strength(2.0F, 2.0F);
-    public static final BlockBehaviour.Properties MACHINE = METAL_BASE.sound(SoundType.ANVIL).strength(5.0F, 5.0F);
-    public static final BlockBehaviour.Properties HEAVY_MACHINE = METAL_BASE.sound(SoundType.NETHERITE_BLOCK).strength(8.0F, 6.0F);
+    public static final BlockBehaviour.Properties MACHINE = METAL_BASE.sound(SoundType.LANTERN).strength(5.0F, 5.0F);
+    public static final BlockBehaviour.Properties ADV_MACHINE = METAL_BASE.sound(SoundType.NETHERITE_BLOCK).strength(5.0F, 5.0F);
+    public static final BlockBehaviour.Properties HEAVY_MACHINE = METAL_BASE.sound(SoundType.ANVIL).strength(8.0F, 6.0F);
     public static final BlockBehaviour.Properties GLASS = BlockBehaviour.Properties.of(Material.GLASS).sound(SoundType.GLASS).noOcclusion()
             .isValidSpawn(SBlocks::never).isRedstoneConductor(SBlocks::never).isSuffocating(SBlocks::never).isViewBlocking(SBlocks::never);
     public static final BlockBehaviour.Properties PAPER = BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD);
@@ -75,11 +76,11 @@ public class SBlocks {
     public static final RegistryObject<Block> ORE_GRINDER_MK0 = registerBlockAndItem("ore_grinder_mk0", () -> new OreGrinderBlock(HEAVY_MACHINE, 0)); // #X#,YZY,WVW -- # = steel plate, X = hopper, Y = steel gear, Z = chassis 1, W = motor, V = gearbox 1
     public static final RegistryObject<Block> ORE_GRINDER_MK1 = registerBlockAndItem("ore_grinder_mk1", () -> new OreGrinderBlock(HEAVY_MACHINE, 2));
     public static final RegistryObject<Block> ORE_GRINDER_MK2 = registerBlockAndItem("ore_grinder_mk2", () -> new OreGrinderBlock(HEAVY_MACHINE, 4));
-    //TODO: Speed and and processing size upgrades --- needs electricity (can I make this "in world")
-    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK0 = registerBlockAndItem("electric_furnace_mk0", () -> new Block(MACHINE)); // #X#,YZY,WWW -- # = heating coil, X = cable, Y = redstone, Z = chassis 0, W = graphite
-    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK1 = registerBlockAndItem("electric_furnace_mk1", () -> new Block(MACHINE));
-    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK2 = registerBlockAndItem("electric_furnace_mk2", () -> new Block(MACHINE));
-    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK3 = registerBlockAndItem("electric_furnace_mk3", () -> new Block(MACHINE));
+
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK0 = registerBlockAndItem("electric_furnace_mk0", () -> new ElectricFurnaceBlock(MACHINE, 0)); // #X#,YZY,WWW -- # = heating coil, X = cable, Y = redstone, Z = chassis 0, W = graphite
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK1 = registerBlockAndItem("electric_furnace_mk1", () -> new ElectricFurnaceBlock(MACHINE, 1));
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK2 = registerBlockAndItem("electric_furnace_mk2", () -> new ElectricFurnaceBlock(MACHINE, 2));
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK3 = registerBlockAndItem("electric_furnace_mk3", () -> new ElectricFurnaceBlock(MACHINE, 3));
     //TODO: holds liquids (idk how much. 16k mb?), size upgrades
     public static final RegistryObject<Block> VAT_MK0 = registerBlockAndItem("vat_mk0", () -> new Block(MACHINE)); // #,X -- # = chassis 0, X = cauldron
     public static final RegistryObject<Block> VAT_MK1 = registerBlockAndItem("vat_mk1", () -> new Block(MACHINE));
@@ -95,14 +96,14 @@ public class SBlocks {
 
     // Intermediate Production --- these currently can't be sped up, should they be able to be sped up?
     //TODO: makes plates or tubes or cables or rods from ingots given a specified mold (automatically matches conveyor direction? must be placed above a conveyor?)
-    public static final RegistryObject<Block> MILLING_MACHINE = registerBlockAndItem("milling_machine", () -> new Block(MACHINE)); // #X#,YZY,WWW -- # = aluminum ingot, X = electric furnace, Y = piston, Z = chassis 1, W = steel ingot
+    public static final RegistryObject<Block> MILLING_MACHINE = registerBlockAndItem("milling_machine", () -> new Block(ADV_MACHINE)); // #X#,YZY,WWW -- # = aluminum ingot, X = electric furnace, Y = piston, Z = chassis 1, W = steel ingot
     // Fluid injector to inject fluids into buckets and what not...
     //TODO: compresses gasses and liquids
-    public static final RegistryObject<Block> COMPRESSOR = registerBlockAndItem("compressor", () -> new Block(MACHINE)); //
+    public static final RegistryObject<Block> COMPRESSOR = registerBlockAndItem("compressor", () -> new Block(ADV_MACHINE)); //
     //TODO: evaporates composite liquids into gases to be collected by condensers. Optionally, water can be added to crack the oils
-    public static final RegistryObject<Block> FRACTIONATOR = registerBlockAndItem("fractinator", () -> new Block(MACHINE)); // lots of steel
+    public static final RegistryObject<Block> FRACTIONATOR = registerBlockAndItem("fractinator", () -> new Block(ADV_MACHINE)); // lots of steel
     //TODO: can react various liquids, gases, and solids over a catalyst to produce solids, and liquids (gases must be captured with condensors) (require pressue and heat setting?)
-    public static final RegistryObject<Block> CATALYTIC_REACTOR = registerBlockAndItem("catalytic_reactor", () -> new Block(MACHINE));
+    public static final RegistryObject<Block> CATALYTIC_REACTOR = registerBlockAndItem("catalytic_reactor", () -> new Block(ADV_MACHINE));
 
     // Wood Production
     // sawmill?
@@ -118,7 +119,7 @@ public class SBlocks {
     //      Lithograph?
     // https://en.wikipedia.org/wiki/Diamond_anvil_cell (useful if we're making lonsdaleite or synth diamond)?? https://en.wikipedia.org/wiki/Synthetic_diamond#Manufacturing_technologies
     // Laser / water etching for tiny components? like micro gears or redstone or intermediate circuits? (CNC - requires computers to work?)
-    // Assembly line autocrafting -- makes welding / hammering noises? (deconstruct a crafting recipe to be linear then go through an assembly line) -- need to fill in blanks with something
+    // Assembly line autocrafting -- makes welding / hammering noises? needs a CPU to control then an assembler for each item in the recipe (hold 1 type each), assemblers must be in-line, make a custom recipe, outputs from the last assembler (deconstruct a crafting recipe to be linear then go through an assembly line, ignore blanks) --- (provide a way for other large crafting recipes to be converted?)
     // oil/ore exploration computers: https://en.wikipedia.org/wiki/Hydrocarbon_exploration#Exploration_methods (also scans for ores??, need some way to display a map if its a total read, otherwise just display targeted ores
 
     //TODO: Foundry: multiblock -- default organized by density?, will alloy liquids automatically. Make a tag for valid furnace bricks. include graphite and maybe regular bricks? Need heat ratings?
@@ -148,12 +149,12 @@ public class SBlocks {
 
     // Electricity Generation
     // Heat Generators (hot, do not touch (or stand in the solar beam)) -- need a tag or interface or both for these
-    public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK0 = registerBlockAndItem("solid_fuel_heater_mk0", () -> new SolidFuelHeaterBlock(MACHINE, ThermalProperties.TIER_0_EXCHANGER)); // #X#,#Y#,ZZZ -- # = copper plate, X = furnace, Y = chassis 0, Z = graphite
+    public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK0 = registerBlockAndItem("solid_fuel_heater_mk0", () -> new SolidFuelHeaterBlock(MACHINE, ThermalProperties.TIER_0_EXCHANGER)); // #X#,#Y#,ZZZ -- # = copper heat exchanger, X = furnace, Y = chassis 0, Z = graphite
     public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK1 = registerBlockAndItem("solid_fuel_heater_mk1", () -> new SolidFuelHeaterBlock(MACHINE, ThermalProperties.TIER_1_EXCHANGER));
     public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK2 = registerBlockAndItem("solid_fuel_heater_mk2", () -> new SolidFuelHeaterBlock(MACHINE, ThermalProperties.TIER_2_EXCHANGER));
     public static final RegistryObject<Block> SOLID_FUEL_HEATER_MK3 = registerBlockAndItem("solid_fuel_heater_mk3", () -> new SolidFuelHeaterBlock(MACHINE, ThermalProperties.TIER_3_EXCHANGER));
 
-    public static final RegistryObject<Block> CONVECTION_HEATER_MK0 = registerBlockAndItem("convection_heater_mk0", () -> new ConvectionHeaterBlock(MACHINE, ThermalProperties.TIER_0_EXCHANGER)); // ###,XYX,ZZZ -- # = copper plate, X = iron plate, Y = chassis 0, Z = graphite
+    public static final RegistryObject<Block> CONVECTION_HEATER_MK0 = registerBlockAndItem("convection_heater_mk0", () -> new ConvectionHeaterBlock(MACHINE, ThermalProperties.TIER_0_EXCHANGER)); // ###,XYX,ZZZ -- # = copper heat exchanger, X = iron plate, Y = chassis 0, Z = graphite
     public static final RegistryObject<Block> CONVECTION_HEATER_MK1 = registerBlockAndItem("convection_heater_mk1", () -> new ConvectionHeaterBlock(MACHINE, ThermalProperties.TIER_1_EXCHANGER));
     public static final RegistryObject<Block> CONVECTION_HEATER_MK2 = registerBlockAndItem("convection_heater_mk2", () -> new ConvectionHeaterBlock(MACHINE, ThermalProperties.TIER_2_EXCHANGER));
     public static final RegistryObject<Block> CONVECTION_HEATER_MK3 = registerBlockAndItem("convection_heater_mk3", () -> new ConvectionHeaterBlock(MACHINE, ThermalProperties.TIER_3_EXCHANGER));
@@ -183,14 +184,15 @@ public class SBlocks {
 
     ///// geothermal?????
     // Steam Generators
-    //TODO: Requires water and heat to generate steam, will explode if it gets too hot. Fires/Campfires below generate 120 heat, soul fire/campfire generates 240 heat, other heaters see heat generator section. Hot biomes give a base of 40 heat
+    //TODO: Requires water and heat to generate steam, will explode if it gets too hot. Fires/Campfires below generate 12 heat per tick, soul fire/campfire generates 24 heat per tick
     //      mk0: holds 4k mb water
     //      mk1: holds 8k mb water
     //      mk2: holds 16k mb water
     //      mk3: holds 32k mb water
     // Formula for pressure -- 0.61078 * e^((17.27 * x) / (x + 237.3)) = kPa (maybe make this function smoother) -- can only output steam from the top
-    public static final RegistryObject<Block> STEAM_BOILER_MK0 = registerBlockAndItem("steam_boiler_mk0", () -> new Block(MACHINE)); // WXW,YZY,### -- # = copper plate, X = iron trapdoor, Y = redstone, Z = chassis 0, W = cauldron
-    public static final RegistryObject<Block> STEAM_BOILER_MK1 = registerBlockAndItem("steam_boiler_mk1", () -> new Block(MACHINE)); // #X#,YZY,### -- # = cupronickel plate, X = steel trapdoor, Y = redstone, Z = chassis 1
+    // I kinda wanna make these a multiblock
+    public static final RegistryObject<Block> STEAM_BOILER_MK0 = registerBlockAndItem("steam_boiler_mk0", () -> new Block(MACHINE)); // WXW,YZY,### -- # = heat exchanger, X = iron trapdoor, Y = redstone, Z = chassis 0, W = cauldron
+    public static final RegistryObject<Block> STEAM_BOILER_MK1 = registerBlockAndItem("steam_boiler_mk1", () -> new Block(MACHINE)); // #X#,YZY,### -- # = cupronickel heat exchanger, X = steel trapdoor, Y = redstone, Z = chassis 1
     public static final RegistryObject<Block> STEAM_BOILER_MK2 = registerBlockAndItem("steam_boiler_mk2", () -> new Block(MACHINE));
     public static final RegistryObject<Block> STEAM_BOILER_MK3 = registerBlockAndItem("steam_boiler_mk3", () -> new Block(MACHINE));
     // Turbine Housing
@@ -213,9 +215,9 @@ public class SBlocks {
     //TODO: turns gas back into liquid, output will be any side not acting as an input. Without this, the water from a steam generator must be replaced. Can be supplied with snow, ice, or heat exchangers to increase efficiency
     // can be stacked on top of each other since each will only create a fixed amount of condensate per tick. More faster in cold biomes. Excess steam will be vented. Can add trays to catch condensed fluids instead of passing them down
     // can capture other gas outputs like from fractional distillation or smelter gasses
-    public static final RegistryObject<Block> CONDENSER_MK0 = registerBlockAndItem("condenser_mk0", () -> new Block(MACHINE)); // ###,#Y#,#X# -- # = copper ingot, X = iron trapdoor, Y = chassis 0
-    public static final RegistryObject<Block> CONDENSER_MK1 = registerBlockAndItem("condenser_mk1", () -> new Block(MACHINE)); // ###,#Y#,#X# -- # = cupronickel ingot, X = steel trapdoor, Y = chassis 1
-    public static final RegistryObject<Block> CONDENSER_MK2 = registerBlockAndItem("condenser_mk2", () -> new Block(MACHINE)); // ###,#Y#,#X# -- # = diamond, X = aluminum trapdoor, Y = chassis 2
+    public static final RegistryObject<Block> CONDENSER_MK0 = registerBlockAndItem("condenser_mk0", () -> new Block(MACHINE)); // #X#,#Y#,#X# -- # = copper heat exchanger, X = iron trapdoor, Y = chassis 0
+    public static final RegistryObject<Block> CONDENSER_MK1 = registerBlockAndItem("condenser_mk1", () -> new Block(MACHINE)); // #X#,#Y#,#X# -- # = cupronickel heat exchanger, X = steel trapdoor, Y = chassis 1
+    public static final RegistryObject<Block> CONDENSER_MK2 = registerBlockAndItem("condenser_mk2", () -> new Block(MACHINE)); // #X#,#Y#,#X# -- # = diamond heat exchanger, X = aluminum trapdoor, Y = chassis 2
     public static final RegistryObject<Block> CONDENSER_MK3 = registerBlockAndItem("condenser_mk3", () -> new Block(MACHINE));
 
     // Direct Electricity Generation Machines
@@ -243,6 +245,7 @@ public class SBlocks {
     // Fluid transport & storage
     //TODO: allows steam to freely pass through to a higher block without loss of heat
     public static final RegistryObject<Block> STEAM_DUCT = registerBlockAndItem("steam_duct", () -> new Block(MACHINE));
+    //TODO: some place to store gases
     //TODO: pipes, different held volume and transfer rate
     public static final RegistryObject<Block> PIPE_MK0 = registerBlockAndItem("pipe_mk0", () -> new Block(LIGHT_MACHINE)); // ### -- # = copper tube
     public static final RegistryObject<Block> PIPE_MK1 = registerBlockAndItem("pipe_mk1", () -> new Block(LIGHT_MACHINE)); // steel

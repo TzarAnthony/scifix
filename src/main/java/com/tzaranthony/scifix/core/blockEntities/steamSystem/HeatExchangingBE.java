@@ -1,7 +1,7 @@
 package com.tzaranthony.scifix.core.blockEntities.steamSystem;
 
-import com.tzaranthony.scifix.api.handlers.HeatExchanger;
-import com.tzaranthony.scifix.api.handlers.IHeatExchanger;
+import com.tzaranthony.scifix.api.handlers.HeatHandler;
+import com.tzaranthony.scifix.api.handlers.IHeatHandler;
 import com.tzaranthony.scifix.api.handlers.SCapabilities;
 import com.tzaranthony.scifix.api.helpers.Constants;
 import com.tzaranthony.scifix.api.helpers.Maths;
@@ -21,7 +21,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nullable;
 
 public abstract class HeatExchangingBE extends BlockEntity {
-    protected HeatExchanger heatManager;
+    protected HeatHandler heatManager;
     protected static final String TEMPERATURE_C = "SCIFIX_Heat";
     protected float atmosphericTemp = 25F;
     protected static final String TEMPERATURE_ATMOSPHERE = "SCIFIX_Biome_Heat";
@@ -71,9 +71,9 @@ public abstract class HeatExchangingBE extends BlockEntity {
             }
             BlockEntity be = level.getBlockEntity(pos);
             if (be != null) {
-                LazyOptional<IHeatExchanger> cap = be.getCapability(SCapabilities.HEAT);
+                LazyOptional<IHeatHandler> cap = be.getCapability(SCapabilities.HEAT);
                 if (cap.isPresent()) {
-                    IHeatExchanger otherHE = cap.orElseGet(null);
+                    IHeatHandler otherHE = cap.orElseGet(null);
                     if (otherHE.getTemperature() < heBE.heatManager.getTemperature()) { // other option is to make separate can give / receive heat
                         float tempChange = heBE.heatManager.exchangeHeat(otherHE, false);
                         otherHE.receiveHeat(tempChange);
@@ -124,7 +124,7 @@ public abstract class HeatExchangingBE extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    protected LazyOptional<IHeatExchanger> tmpCap = LazyOptional.of(() -> heatManager);
+    protected LazyOptional<IHeatHandler> tmpCap = LazyOptional.of(() -> heatManager);
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {

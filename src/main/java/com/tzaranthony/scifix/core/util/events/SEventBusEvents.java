@@ -1,7 +1,7 @@
 package com.tzaranthony.scifix.core.util.events;
 
 import com.tzaranthony.scifix.Scifix;
-import com.tzaranthony.scifix.api.handlers.IHeatExchanger;
+import com.tzaranthony.scifix.api.handlers.IHeatHandler;
 import com.tzaranthony.scifix.core.crafting.CrushingRecipe;
 import com.tzaranthony.scifix.core.crafting.GrindingRecipe;
 import net.minecraft.core.Registry;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 public class SEventBusEvents {
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.register(IHeatExchanger.class);
+        event.register(IHeatHandler.class);
     }
 
     @SubscribeEvent

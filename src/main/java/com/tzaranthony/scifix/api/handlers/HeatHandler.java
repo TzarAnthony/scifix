@@ -1,16 +1,21 @@
 package com.tzaranthony.scifix.api.handlers;
 
 import com.tzaranthony.scifix.api.helpers.Constants;
+import com.tzaranthony.scifix.core.network.EnergyS2CPacket;
+import com.tzaranthony.scifix.core.network.HeatS2CPacket;
+import com.tzaranthony.scifix.registries.SPackets;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class HeatExchanger implements IHeatExchanger, INBTSerializable<Tag> {
+public class HeatHandler implements IHeatHandler, INBTSerializable<Tag> {
     protected float temperature;
     protected float heatCapacity;
     protected float thermalConductivity;
 
-    public HeatExchanger(float heatCapacity, float conductivity, float temperature) {
+    public HeatHandler(float heatCapacity, float conductivity, float temperature) {
         this.heatCapacity = heatCapacity;
         this.thermalConductivity = conductivity;
         this.temperature = temperature;
@@ -28,7 +33,6 @@ public class HeatExchanger implements IHeatExchanger, INBTSerializable<Tag> {
         float temperatureChange = this.calculateTemperatureExchangePerTick(otherThermalConductivity, otherHeatCapacity, otherTemperature);
         if (!simulate) {
             this.temperature += temperatureChange;
-            this.onHeatChange();
         }
         return -temperatureChange;
     }
@@ -51,14 +55,12 @@ public class HeatExchanger implements IHeatExchanger, INBTSerializable<Tag> {
 
     public float setTemperature(float temperature) {
         this.temperature = temperature;
-        this.onHeatChange();
         return this.temperature;
     }
 
     public float consumeOrProduceHeat(float temperatureChange, boolean simulate) {
         if (simulate) return this.temperature + temperatureChange;
         this.temperature += temperatureChange;
-        this.onHeatChange();
         return this.temperature;
     }
 
@@ -73,6 +75,7 @@ public class HeatExchanger implements IHeatExchanger, INBTSerializable<Tag> {
         this.temperature = tag.getAsInt();
     }
 
-    public void onHeatChange() {
+    public void syncClient(Level level, BlockPos pos) {
+        if (!level.isClientSide()) SPackets.sendToClients(new HeatS2CPacket(this, pos));
     }
 }

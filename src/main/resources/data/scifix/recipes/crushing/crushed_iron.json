@@ -15,12 +15,6 @@
         "output": {
           "item": "scifix:crushed_nickel"
         }
-      },
-      {
-        "prob": 0.30,
-        "output": {
-          "item": "minecraft:gravel"
-        }
       }
     ]
   }

@@ -1,5 +1,7 @@
 package com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing;
 
+import com.tzaranthony.scifix.api.handlers.FluidHandler;
+import com.tzaranthony.scifix.api.handlers.IDirectional;
 import com.tzaranthony.scifix.api.helpers.BlockEntityUtils;
 import com.tzaranthony.scifix.api.helpers.Constants;
 import com.tzaranthony.scifix.api.properties.ThermalProperties;
@@ -17,14 +19,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class LiquidFuelHeaterBE extends HeatProducingBE {
-    protected FluidTank fluidHandler;
+    protected FluidHandler fluidHandler;
     protected final String FLUID_INV = "SCIFIX_Fluids";
 
     public LiquidFuelHeaterBE(BlockPos pos, BlockState state) {
@@ -53,25 +54,25 @@ public class LiquidFuelHeaterBE extends HeatProducingBE {
             }
         };
 
-        this.fluidHandler = new FluidTank(10000, fluid -> fluid.getFluid().is(SFluidTags.COMBUSTIBLE));
+        this.fluidHandler = new FluidHandler(10000, fluid -> fluid.getFluid().is(SFluidTags.COMBUSTIBLE), IDirectional.Direction.EITHER);
     }
 
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (fluidHandler != null) {
-            fluidHandler.readFromNBT(tag.getCompound(FLUID_INV));
+        if (this.fluidHandler != null) {
+            this.fluidHandler.deserializeNBT(tag.getCompound(FLUID_INV));
         }
     }
 
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        if (fluidHandler != null) {
-            tag.put(FLUID_INV, fluidHandler.writeToNBT(new CompoundTag()));
+        if (this.fluidHandler != null) {
+            tag.put(FLUID_INV, this.fluidHandler.serializeNBT());
         }
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LiquidFuelHeaterBE lqfhBE) {
-        BlockEntityUtils.transferToTank(lqfhBE.itemHandler, lqfhBE.fluidHandler, 0, 1);
+        BlockEntityUtils.transferToTank(lqfhBE.itemHandler, lqfhBE.fluidHandler, 0, 1, 0);
 
         boolean startedLit = lqfhBE.isLit();
         if (startedLit) {
@@ -112,12 +113,12 @@ public class LiquidFuelHeaterBE extends HeatProducingBE {
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
         if (fluidHandler != null) {
-            tag.put(FLUID_INV, fluidHandler.writeToNBT(new CompoundTag()));
+            tag.put(FLUID_INV, this.fluidHandler.serializeNBT());
         }
         return tag;
     }
 
-    protected LazyOptional<? extends FluidTank> fluidCap = LazyOptional.of(() -> fluidHandler);
+    protected LazyOptional<? extends FluidHandler> fluidCap = LazyOptional.of(() -> fluidHandler);
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {

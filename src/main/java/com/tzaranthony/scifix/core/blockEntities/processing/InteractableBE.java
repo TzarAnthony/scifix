@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public abstract class InteractableBE extends EnergyCraftingBE {
+public abstract class InteractableBE extends CraftingBE {
     public InteractableBE(BlockEntityType<?> type, BlockPos pos, BlockState state, RecipeType recipeType) {
         super(type, pos, state, recipeType);
     }
