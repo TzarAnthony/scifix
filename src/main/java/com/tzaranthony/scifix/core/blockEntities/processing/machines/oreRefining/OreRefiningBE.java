@@ -1,10 +1,9 @@
-package com.tzaranthony.scifix.core.blockEntities.processing.oreRefining;
+package com.tzaranthony.scifix.core.blockEntities.processing.machines.oreRefining;
 
 import com.tzaranthony.scifix.api.helpers.IAutoInserting;
 import com.tzaranthony.scifix.api.helpers.IAutoSucking;
 import com.tzaranthony.scifix.core.blockEntities.processing.BulkCraftingBE;
 import com.tzaranthony.scifix.core.crafting.AbstractOreRefiningRecipe;
-import com.tzaranthony.scifix.core.crafting.RfRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -57,14 +56,14 @@ public abstract class OreRefiningBE extends BulkCraftingBE implements IAutoInser
 
     protected boolean canCraft(Object recipe) {
         AbstractOreRefiningRecipe recipeOR = (AbstractOreRefiningRecipe) recipe;
-        int consumed = this.rfHandler.useEnergy(recipeOR.getRF() * this.tier, false);
-        return consumed == recipeOR.getRF();
+        int consumed = this.rfHandler.useEnergy(recipeOR.getRF() * this.processSize, false);
+        return consumed == recipeOR.getRF() * this.processSize;
     }
 
     protected void craft(Object recipe) {
         AbstractOreRefiningRecipe recipeOR = (AbstractOreRefiningRecipe) recipe;
         int craftAmount = Math.min(this.processSize, this.itemHandler.getStackInSlot(0).getCount());
-        this.itemHandler.extractItem(0, craftAmount, false);
+        this.itemHandler.extractItemDirectionless(0, craftAmount, false);
         ItemStack output = recipeOR.assemble();
         output.setCount(craftAmount * output.getCount());
         this.outputOrDropResult(output);

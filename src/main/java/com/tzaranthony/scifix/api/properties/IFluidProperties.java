@@ -6,7 +6,7 @@ public interface IFluidProperties {
     int getTransparency();
 
     default int getColorWithTransparency() {
-        return (this.getColor() & 0x00FFFFFF) | (this.getTransparency() << 24);
+        return this.getTransparency() > 0 ? ((this.getColor() & 0x00FFFFFF) | (this.getTransparency() << 24)) : this.getColor();
     }
 
     int getDensity();

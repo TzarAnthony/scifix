@@ -1,13 +1,13 @@
 package com.tzaranthony.scifix.registries;
 
 import com.tzaranthony.scifix.Scifix;
-import com.tzaranthony.scifix.core.blockEntities.processing.ElectricFurnaceBE;
+import com.tzaranthony.scifix.core.blockEntities.processing.machines.ElectricFurnaceBE;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.ConvectionHeaterBE;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.LiquidFuelHeaterBE;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.ResistanceHeaterBE;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.SolidFuelHeaterBE;
-import com.tzaranthony.scifix.core.blockEntities.processing.oreRefining.OreCrushingBE;
-import com.tzaranthony.scifix.core.blockEntities.processing.oreRefining.OreGrindingBE;
+import com.tzaranthony.scifix.core.blockEntities.processing.machines.oreRefining.OreCrushingBE;
+import com.tzaranthony.scifix.core.blockEntities.processing.machines.oreRefining.OreGrindingBE;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

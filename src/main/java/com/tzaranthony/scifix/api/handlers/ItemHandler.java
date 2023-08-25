@@ -65,12 +65,12 @@ public class ItemHandler extends ItemStackHandler {
     }
 
     @Nonnull
-    public ItemStack createItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+    public ItemStack insertItemDirectionless(int slot, @Nonnull ItemStack stack, boolean simulate) {
         return super.insertItem(slot, stack, simulate);
     }
 
     @Nonnull
-    public ItemStack consumeItem(int slot, int amount, boolean simulate) {
+    public ItemStack extractItemDirectionless(int slot, int amount, boolean simulate) {
         return super.extractItem(slot, amount, simulate);
     }
 

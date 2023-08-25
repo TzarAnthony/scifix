@@ -1,10 +1,12 @@
 package com.tzaranthony.scifix.core.blockEntities.processing;
 
+import com.tzaranthony.scifix.api.handlers.BEHelpers.FluidBE;
 import com.tzaranthony.scifix.api.handlers.FluidHandler;
 import com.tzaranthony.scifix.api.helpers.BlockEntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,7 +17,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public abstract class FluidCraftingBE extends CraftingBE {
+public abstract class FluidCraftingBE extends EnergyCraftingBE implements FluidBE {
     protected FluidHandler fluidHandler;
     protected final String FLUID_INV = "SCIFIX_Fluids";
 
@@ -45,6 +47,14 @@ public abstract class FluidCraftingBE extends CraftingBE {
         return tag;
     }
 
+    public void setFluidHandler(FluidHandler fh) {
+        this.fluidHandler = fh;
+    }
+
+    public FluidHandler getFluidHandler() {
+        return this.fluidHandler;
+    }
+
     protected LazyOptional<? extends FluidHandler> fluidCap = LazyOptional.of(() -> this.fluidHandler);
     protected Map<Direction, LazyOptional<BlockEntityUtils.SidedFluidHandler>> fluidDirectionHandler;
 
@@ -68,9 +78,7 @@ public abstract class FluidCraftingBE extends CraftingBE {
         this.fluidCap = LazyOptional.of(() -> this.fluidHandler);
     }
 
-    @Override
-    public void dropInventory() {
-        super.dropInventory();
-        BlockEntityUtils.dropFluidMultiple(this.fluidHandler, this.level, this.worldPosition);
+    public void dropFluids(ServerLevel level) {
+        BlockEntityUtils.dropFluidMultiple(this.fluidHandler, level, this.worldPosition);
     }
 }

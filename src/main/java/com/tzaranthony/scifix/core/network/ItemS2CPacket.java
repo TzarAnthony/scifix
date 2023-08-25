@@ -49,8 +49,8 @@ public class ItemS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof ItemBE iBE) {
-                iBE.setItemHandler(this.items);
+            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof ItemBE blockEntity) {
+                blockEntity.setItemHandler(this.items);
             }
         });
         return true;

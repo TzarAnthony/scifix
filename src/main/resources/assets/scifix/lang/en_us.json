@@ -10,13 +10,13 @@
   "block.scifix.uranium_ore": "Uranium Ore",
   "block.scifix.deepslate_uranium_ore": "Deepslate Uranium Ore",
 
-  "block.scifix.ore_crusher_mk0": "Iron Jaw Crusher",
-  "block.scifix.ore_crusher_mk1": "Steel Jaw Crusher",
-  "block.scifix.ore_crusher_mk2": "Hardened Steel Jaw Crusher",
-  "block.scifix.ore_crusher_mk3": "Tungsten Jaw Crusher",
-  "block.scifix.ore_grinder_mk0": "Steel Hammer Grinder",
-  "block.scifix.ore_grinder_mk1": "Hardened Steel Hammer Grinder",
-  "block.scifix.ore_grinder_mk2": "Tungsten Hammer Grinder",
+  "block.scifix.ore_crusher_mk0": "Rudimentary Jaw Crusher",
+  "block.scifix.ore_crusher_mk1": "Jaw Crusher",
+  "block.scifix.ore_crusher_mk2": "Industrial Steel Jaw Crusher",
+  "block.scifix.ore_crusher_mk3": "Engineered Jaw Crusher",
+  "block.scifix.ore_grinder_mk0": "Hammer Grinder",
+  "block.scifix.ore_grinder_mk1": "Industrial Steel Hammer Grinder",
+  "block.scifix.ore_grinder_mk2": "Engineered Hammer Grinder",
   "block.scifix.electric_furnace_mk0": "Rudimentary Electric Furnace",
   "block.scifix.electric_furnace_mk1": "Electric Furnace",
   "block.scifix.electric_furnace_mk2": "Industrial Electric Furnace",
@@ -313,5 +313,9 @@
   "item.scifix.ingot_thorium": "Thorium Ingot",
   "item.scifix.ingot_plutonium": "Plutonium Ingot",
   "item.scifix.ingot_titanium": "Titanium Ingot",
-  "item.scifix.ingot_zirconium": "Zirconium Ingot"
+  "item.scifix.ingot_zirconium": "Zirconium Ingot",
+
+  "container.scifix.crusher": "Crusher",
+  "container.scifix.grinder": "Grinder",
+  "container.scifix.electric_furnace": "Electric Furnace"
 }

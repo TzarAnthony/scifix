@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 public abstract class FluidRegistryHelper {
     private ForgeFlowingFluid.Properties makeProperties(IFluidProperties properties, int decreasePerBlock, ResourceLocation still, ResourceLocation flowing, ResourceLocation overlay) {
         FluidAttributes.Builder builder = FluidAttributes.builder(still, flowing).overlay(overlay)
-                .color(properties.getColor())
+                .color(properties.getColorWithTransparency())
                 .density(properties.getDensity())
                 .viscosity(properties.getViscosity())
                 .temperature(properties.getTemperature())
@@ -29,18 +29,18 @@ public abstract class FluidRegistryHelper {
                 .bucket(fluid_bucket);
     }
 
-    private RegistryObject<ForgeFlowingFluid.Source> fluid_source;
-    private RegistryObject<ForgeFlowingFluid.Flowing> fluid_flowing;
-    private RegistryObject<LiquidBlock> fluid_block;
-    private RegistryObject<BucketItem> fluid_bucket;
+    private static RegistryObject<ForgeFlowingFluid.Source> fluid_source;
+    private static RegistryObject<ForgeFlowingFluid.Flowing> fluid_flowing;
+    private static RegistryObject<LiquidBlock> fluid_block;
+    private static RegistryObject<BucketItem> fluid_bucket;
 
     public FluidRegistryHelper(String name, Boolean bucket, IFluidProperties properties, int decreasePerBlock, ResourceLocation still, ResourceLocation flowing, ResourceLocation overlay) {
         ForgeFlowingFluid.Properties FluidProps = makeProperties(properties, decreasePerBlock, still, flowing, overlay);
 
-        this.fluid_source = getFluidRegistry("fluid").register(name, () -> new ForgeFlowingFluid.Source(FluidProps));
-        this.fluid_flowing = getFluidRegistry("fluid").register(name + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidProps));
-        this.fluid_block = getBlockRegistry("block").register(name + "_block", () -> new LiquidBlock(fluid_source, getBlockProperties()));
-        this.fluid_bucket = getItemRegistry("item").register(name + "_bucket", () -> bucket ? new BucketItem(fluid_source, getItemProperties()) : new BucketItem(Fluids.EMPTY, getItemProperties()));
+        fluid_source = getFluidRegistry("fluid").register(name, () -> new ForgeFlowingFluid.Source(FluidProps));
+        fluid_flowing = getFluidRegistry("fluid").register(name + "_flowing", () -> new ForgeFlowingFluid.Flowing(FluidProps));
+        fluid_block = getBlockRegistry("block").register(name + "_block", () -> new LiquidBlock(fluid_source, getBlockProperties()));
+        fluid_bucket = getItemRegistry("item").register(name + "_bucket", () -> bucket ? new BucketItem(fluid_source, getItemProperties()) : new BucketItem(Fluids.EMPTY, getItemProperties()));
     }
 
     public RegistryObject<ForgeFlowingFluid.Source> getFluid_source() {

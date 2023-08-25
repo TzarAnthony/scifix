@@ -71,7 +71,7 @@ public class FluidProperties implements IFluidProperties {
 
     public static class Liquid extends FluidProperties {
         Liquid(int color, int density, int viscosity) {
-            super(color, 0, density, viscosity, 298, 0, false);
+            super(color, -1, density, viscosity, 298, 0, false);
         }
 
         Liquid(int color, int transparency, int density, int viscosity) {
@@ -95,7 +95,7 @@ public class FluidProperties implements IFluidProperties {
 
     public static class Molten extends FluidProperties {
         Molten(int density, int temperature) {
-            super(16776104, 0, density, 780, temperature, 15, false);
+            super(16776104, -1, density, 780, temperature, 15, false);
         }
     }
 
@@ -118,7 +118,6 @@ public class FluidProperties implements IFluidProperties {
     }
 
     public int getColor() {
-        if (this.transparency > 0) return getColorWithTransparency();
         return this.color;
     }
 

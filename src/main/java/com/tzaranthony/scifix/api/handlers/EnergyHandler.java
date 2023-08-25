@@ -1,12 +1,10 @@
 package com.tzaranthony.scifix.api.handlers;
 
-import com.tzaranthony.scifix.core.network.EnergyS2CPacket;
-import com.tzaranthony.scifix.registries.SPackets;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class EnergyHandler extends EnergyStorage {
+    protected static final String RF = "SCIFIX_RF";
+
     public EnergyHandler(int capacity, int maxReceive, int maxExtract) {
         super(capacity, maxReceive, maxExtract);
     }
@@ -28,8 +26,9 @@ public class EnergyHandler extends EnergyStorage {
     * */
     public int useEnergy(int consumeAmt, boolean simulate) {
         int rfUsed = Math.min(this.energy, consumeAmt);
-        if (!simulate)
+        if (!simulate) {
             this.energy -= rfUsed;
+        }
         return rfUsed;
     }
 
@@ -46,9 +45,5 @@ public class EnergyHandler extends EnergyStorage {
 
     public int getCapacity() {
         return this.capacity;
-    }
-
-    public void syncClient(Level level, BlockPos pos) {
-        if (!level.isClientSide()) SPackets.sendToClients(new EnergyS2CPacket(this, pos));
     }
 }

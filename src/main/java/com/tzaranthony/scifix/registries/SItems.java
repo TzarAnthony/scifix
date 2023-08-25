@@ -210,7 +210,7 @@ public class SItems {
     public static final RegistryObject<Item> INGOT_GALLIUM = reg.register("ingot_gallium", () -> new Item(STANDARD)); // electrolysis of red mud using carbon electrodes
     public static final RegistryObject<Item> INGOT_CHROMIUM = reg.register("ingot_chromium", () -> new Item(FIRE_RESISTANT)); // https://en.wikipedia.org/wiki/Chromium#Production
     // magnesium?
-    public static final RegistryObject<Item> INGOT_PLATINUM = reg.register("ingot_platinum", () -> new Item(FIRE_RESISTANT)); //need production process (rarely from copper / nickel electrorefining https://en.wikipedia.org/wiki/Platinum#Occurrence)
+    public static final RegistryObject<Item> INGOT_PLATINUM = reg.register("ingot_platinum", () -> new Item(FIRE_RESISTANT)); // need production process (rarely from copper / nickel electrorefining https://en.wikipedia.org/wiki/Platinum#Occurrence)
     public static final RegistryObject<Item> INGOT_STEEL = reg.register("ingot_steel", () -> new Item(STANDARD)); // 1 iron, 2 coal or 1 petcoke -- add an inefficient way for electric furnaces 2 iron 2 coal for 1 steel -- co & co2 & so2
     public static final RegistryObject<Item> INGOT_STAINLESS_STEEL = reg.register("ingot_stainless_steel", () -> new Item(STANDARD)); // 7:2:1 steel:chromium:nickel
     // silicon steel for magnets (motors/generators)

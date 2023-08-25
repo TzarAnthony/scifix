@@ -4,22 +4,12 @@ import com.mojang.logging.LogUtils;
 import com.tzaranthony.scifix.registries.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-
-import java.util.stream.Collectors;
 
 @Mod("scifix")
 public class Scifix {
@@ -61,9 +51,9 @@ public class Scifix {
 //        SSounds.reg.register(bus);
 //        SParticleTypes.reg.register(bus);
 //        SEffects.reg.register(bus);
-//        SMenus.reg.register(bus);
+        SMenus.reg.register(bus);
         SRecipes.reg.register(bus);
-//        SFluids.reg.register(bus);
+        SFluids.reg.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
 //        MinecraftForge.EVENT_BUS.register(new ServerEvents());
     }
@@ -77,7 +67,7 @@ public class Scifix {
 //        SBlocksRender.renderBlocks();
 //        SBlockEntityRender.renderBlockEntities();
 //        SItemsRender.renderItemProperties();
-//        SScreenRender.renderScreens();
+        SScreenRender.renderScreens();
 //        MinecraftForge.EVENT_BUS.register(new ClientEvents());
     }
 

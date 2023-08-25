@@ -54,7 +54,7 @@ public class TurbineBE extends BlockEntity {
         tag.putFloat(STEAM_KG, this.storedSteam);
     }
 
-    public static void clientTick(Level level, BlockPos pos, BlockState state, SteamProducingBE spBE) {
+    public static void clientTick(Level level, BlockPos pos, BlockState state, BoilerBE spBE) {
         if (spBE.ventSteam) {
             double i = pos.getX();
             double j = pos.getY();
@@ -65,7 +65,7 @@ public class TurbineBE extends BlockEntity {
         }
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, SteamProducingBE spBE) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, BoilerBE spBE) {
         BlockEntityUtils.transferToTank(spBE.itemHandler, spBE.fluidHandler, 0, 1, 0);
     }
 

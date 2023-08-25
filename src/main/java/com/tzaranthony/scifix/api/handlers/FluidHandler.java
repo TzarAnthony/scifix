@@ -84,7 +84,10 @@ public class FluidHandler implements IFluidHandler {
         int fillAmt = 0;
         for (DirectionalFluidTank tank : tanks) {
             fillAmt = tank.fill(resource, action);
-            if (fillAmt > 0) break;
+            if (fillAmt > 0) {
+                if (action == FluidAction.EXECUTE) onContentsChanged();
+                break;
+            }
         }
         return fillAmt;
     }
@@ -94,7 +97,10 @@ public class FluidHandler implements IFluidHandler {
         FluidStack fluid = FluidStack.EMPTY;
         for (DirectionalFluidTank tank : tanks) {
             fluid = tank.drain(resource, action);
-            if (!fluid.isEmpty()) break;
+            if (!fluid.isEmpty()) {
+                if (action == FluidAction.EXECUTE) onContentsChanged();
+                break;
+            }
         }
         return fluid;
     }
@@ -104,7 +110,10 @@ public class FluidHandler implements IFluidHandler {
         FluidStack fluid = FluidStack.EMPTY;
         for (DirectionalFluidTank tank : tanks) {
             fluid = tank.drain(maxDrain, action);
-            if (!fluid.isEmpty()) break;
+            if (!fluid.isEmpty()) {
+                if (action == FluidAction.EXECUTE) onContentsChanged();
+                break;
+            }
         }
         return fluid;
     }
@@ -114,7 +123,10 @@ public class FluidHandler implements IFluidHandler {
         FluidStack fluid = FluidStack.EMPTY;
         for (DirectionalFluidTank tank : tanks) {
             fluid = tank.consumeFluid(resource, action);
-            if (!fluid.isEmpty()) break;
+            if (!fluid.isEmpty()) {
+                if (action == FluidAction.EXECUTE) onContentsChanged();
+                break;
+            }
         }
         return fluid;
     }
@@ -124,7 +136,10 @@ public class FluidHandler implements IFluidHandler {
         int amt = 0;
         for (DirectionalFluidTank tank : tanks) {
             amt = tank.createFluid(resource, action);
-            if (amt > 0) break;
+            if (amt > 0) {
+                if (action == FluidAction.EXECUTE) onContentsChanged();
+                break;
+            }
         }
         return amt;
     }
@@ -165,7 +180,7 @@ public class FluidHandler implements IFluidHandler {
         }
     }
 
-    public void syncClient(Level level, BlockPos pos) {
-        if (!level.isClientSide()) SPackets.sendToClients(new FluidS2CPacket(this, pos));
+    protected void onContentsChanged() {
+
     }
 }

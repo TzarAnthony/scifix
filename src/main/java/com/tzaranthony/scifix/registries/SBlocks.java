@@ -80,7 +80,7 @@ public class SBlocks {
     public static final RegistryObject<Block> ELECTRIC_FURNACE_MK0 = registerBlockAndItem("electric_furnace_mk0", () -> new ElectricFurnaceBlock(MACHINE, 0)); // #X#,YZY,WWW -- # = heating coil, X = cable, Y = redstone, Z = chassis 0, W = graphite
     public static final RegistryObject<Block> ELECTRIC_FURNACE_MK1 = registerBlockAndItem("electric_furnace_mk1", () -> new ElectricFurnaceBlock(MACHINE, 1));
     public static final RegistryObject<Block> ELECTRIC_FURNACE_MK2 = registerBlockAndItem("electric_furnace_mk2", () -> new ElectricFurnaceBlock(MACHINE, 2));
-    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK3 = registerBlockAndItem("electric_furnace_mk3", () -> new ElectricFurnaceBlock(MACHINE, 3));
+    public static final RegistryObject<Block> ELECTRIC_FURNACE_MK3 = registerBlockAndItem("electric_furnace_mk3", () -> new ElectricFurnaceBlock(MACHINE, 4));
     //TODO: holds liquids (idk how much. 16k mb?), size upgrades
     public static final RegistryObject<Block> VAT_MK0 = registerBlockAndItem("vat_mk0", () -> new Block(MACHINE)); // #,X -- # = chassis 0, X = cauldron
     public static final RegistryObject<Block> VAT_MK1 = registerBlockAndItem("vat_mk1", () -> new Block(MACHINE));
@@ -497,6 +497,7 @@ public class SBlocks {
     // gene lab -- used to mix different aspects of mob genomes together (needs gene editing proteins CRISPR?)
     // Should I literally just add carbonite to freeze mobs like in star wars LOL
     // Cloning chamber: (some new drop from spawners required to speed it up or make advanced ones?)
+    //      Primarily for cloning mobs for their drops -- needs a base, cloning glass equivalent to the size of the mob (might look weird since wither looks 3x3, but is 1x3) and must be saturated with cloning fluid (waterlogged), and a top
     //      Fungi cell -- cloning fungi
     //      Plant cell -- cloning GM plants
     //      Mob cell -- cloning GM mobs
