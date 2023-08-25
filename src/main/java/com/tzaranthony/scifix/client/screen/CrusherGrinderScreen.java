@@ -19,7 +19,7 @@ public class CrusherGrinderScreen extends EnergyScreen<CrusherGrinderMenu> {
         int progX = 83;
         int progY = 43;
         int progXo = 176;
-        int progYo = 51;
+        int progYo = 33;
         int progH = 20;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

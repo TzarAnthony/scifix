@@ -20,7 +20,7 @@ public abstract class EnergyScreen<T extends ElectricMenu> extends BaseScreen<T>
     private int eXo = 176;
     private int eYo = 0;
     private int eW = 8;
-    private int eH = 50;
+    private int eH = 33;
 
     public EnergyScreen(T menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -60,12 +60,12 @@ public abstract class EnergyScreen<T extends ElectricMenu> extends BaseScreen<T>
 
     protected int getEnergyPercentage() {
         EnergyHandler eh = this.menu.getEnergyHandler();
-        return eh.getEnergyStored() * 50 / eh.getCapacity();
+        return eh.getEnergyStored() * (eH) / eh.getCapacity();
     }
 
     protected void renderEnergy(PoseStack poseStack, int i, int j) {
         int k = this.getEnergyPercentage();
-        this.blit(poseStack, i + eX, j + eY + eH - k, eXo, eH - k, eYo + eH + 1, k);
+        this.blit(poseStack, i + eX, j + eY + eH - k, eXo, eH - k, eYo + eH, k);
     }
 
     protected void setEnergyComponentCoordinates(int xBlank, int yBlank, int xFull, int yFull) {

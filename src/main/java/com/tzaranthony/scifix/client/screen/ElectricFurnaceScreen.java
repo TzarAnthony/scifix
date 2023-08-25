@@ -19,7 +19,7 @@ public class ElectricFurnaceScreen extends EnergyScreen<ElectricFurnaceMenu> {
         int progX = 79;
         int progY = 34;
         int progXo = 176;
-        int progYo = 51;
+        int progYo = 33;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

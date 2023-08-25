@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class ElectricFurnaceBE extends BulkCraftingBE {
-    protected final int consumptionPerTick;
+    protected final int consumptionPerTick = 40;
 
     public ElectricFurnaceBE(BlockPos pos, BlockState state) {
         this(pos, state, 0);
@@ -27,7 +27,6 @@ public class ElectricFurnaceBE extends BulkCraftingBE {
 
     public ElectricFurnaceBE(BlockPos pos, BlockState state, int tier) {
         super(SBlockEntities.E_FURNACE.get(), pos, state, RecipeType.SMELTING, tier, true);
-        this.consumptionPerTick = 40 * getTierCapacity(tier);
     }
 
     @Nullable
@@ -62,7 +61,7 @@ public class ElectricFurnaceBE extends BulkCraftingBE {
 
     protected boolean canCraft(Object recipe) {
         ItemStack simStack = this.itemHandler.insertItemDirectionless(1, ((SmeltingRecipe) recipe).getResultItem().copy(), true);
-        return simStack.isEmpty() && this.consumptionPerTick == this.rfHandler.useEnergy(this.consumptionPerTick, false);
+        return simStack.isEmpty() && this.consumptionPerTick * this.processSize == this.rfHandler.useEnergy(this.consumptionPerTick * this.processSize, false);
     }
 
     protected void craft(Object recipe) {

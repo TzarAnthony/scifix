@@ -95,7 +95,7 @@ public class SBlocks {
     public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK2 = registerBlockAndItem("electrolytic_vat_mk2", () -> new Block(MACHINE));
 
     // Intermediate Production --- these currently can't be sped up, should they be able to be sped up?
-    //TODO: makes plates or tubes or cables or rods from ingots given a specified mold (automatically matches conveyor direction? must be placed above a conveyor?)
+    //TODO: makes plates or tubes or cables or rods from ingots given a specified mold (automatically matches conveyor direction? must be placed above a conveyor?) --- change to press or make it a separate block???
     public static final RegistryObject<Block> MILLING_MACHINE = registerBlockAndItem("milling_machine", () -> new Block(ADV_MACHINE)); // #X#,YZY,WWW -- # = aluminum ingot, X = electric furnace, Y = piston, Z = chassis 1, W = steel ingot
     // Fluid injector to inject fluids into buckets and what not...
     //TODO: compresses gasses and liquids

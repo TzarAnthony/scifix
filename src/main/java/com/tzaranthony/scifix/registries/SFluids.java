@@ -40,7 +40,7 @@ public class SFluids {
     //      150 mb carbon dioxide + 50 mb hydrogen < catalytic reaction (crushed iron ore) < 100 mb carbon monoxide + 100 mb water
     //      300 mb hydrogen + 1 graphite powder < catalytic reaction (powdered nickle & alumina) < 500 mb methane
     //      200 mb ethylbenzene < catalytic reaction (aluminum chloride) < 270 mb ethylene (gas) + 100 mb benzene
-    //      100 mb styrene & 50 mb hydrogen < catalytic reaction (crushed iron ore) < 100 mb ethylbenzen
+    //      100 mb styrene & 50 mb hydrogen < catalytic reaction (crushed iron ore) < 100 mb ethylbenzene
     //      100 mb acrylic acid & 100 mb water < steam cracking < 100 mb propylene
     //      100 mb hydroxyethyl acrylate & 100 mb water < catalytic reaction (ground titanium) < 50 mb acrylic acid + 50 mb ethylene oxide
     public static final MultiFluidRegistry CRUDE_OIL = new MultiFluidRegistry("crude_oil", FluidProperties.CRUDE_OIL, 2);
