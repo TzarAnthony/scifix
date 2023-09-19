@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class FluidS2CPacket {
     private FluidHandler handler;
     private List<Integer> capacities;
+    private List<Boolean> canInsert;
     private BlockPos pos;
 
     public FluidS2CPacket(FluidHandler handler, BlockPos pos) {
@@ -40,24 +42,32 @@ public class FluidS2CPacket {
 
     public void read(FriendlyByteBuf buf) {
         this.capacities = buf.readCollection(ArrayList::new, FriendlyByteBuf::readInt);
-        List<FluidStack> fluids = buf.readCollection(ArrayList::new, FriendlyByteBuf::readFluidStack);
-        this.handler = new FluidHandler(this.capacities, NonNullList.withSize(this.capacities.size(), IDirectional.Direction.EITHER));
-        for (int i = 0; i < fluids.size(); i++) {
-            this.handler.setFluidInTank(i, fluids.get(i));
+        List<IDirectional.Direction> directions = (buf.readCollection(ArrayList::new, FriendlyByteBuf::readBoolean).stream().map(e -> e? IDirectional.Direction.INPUT : IDirectional.Direction.OUTPUT)).collect(Collectors.toList());
+        this.handler = new FluidHandler(this.capacities, directions);
+        int size = buf.readInt();
+        for (int i = 0; i < size; i++) {
+            List<FluidStack> fluids = buf.readCollection(ArrayList::new, FriendlyByteBuf::readFluidStack);
+            this.handler.setFluidsInTank(i, fluids);
         }
         this.pos = buf.readBlockPos();
     }
 
     public void write(FriendlyByteBuf buf) {
-        Collection<Integer> amounts = new ArrayList<>();
-        Collection<FluidStack> fluids = new ArrayList<>();
-        for(int i = 0; i < handler.getTanks(); i++) {
-            amounts.add(handler.getTankCapacity(i));
-            fluids.add(handler.getFluidInTank(i));
+        Collection<Integer> capacities = new ArrayList<>();
+        Collection<Collection<FluidStack>> allFluids = new ArrayList<>();
+        Collection<Boolean> insertable = new ArrayList<>();
+        for(int i = 0; i < this.handler.getTanks(); i++) {
+            capacities.add(this.handler.getTankCapacity(i));
+            allFluids.add(this.handler.getFluidsInTank(i));
+            insertable.add(this.handler.getTank(i).getDirection().canInput());
         }
-        buf.writeCollection(amounts, FriendlyByteBuf::writeInt);
-        buf.writeCollection(fluids, FriendlyByteBuf::writeFluidStack);
-        buf.writeBlockPos(pos);
+        buf.writeCollection(capacities, FriendlyByteBuf::writeInt);
+        buf.writeCollection(insertable, FriendlyByteBuf::writeBoolean);
+        buf.writeInt(allFluids.size());
+        for (Collection<FluidStack> fluids : allFluids) {
+            buf.writeCollection(fluids, FriendlyByteBuf::writeFluidStack);
+        }
+        buf.writeBlockPos(this.pos);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {

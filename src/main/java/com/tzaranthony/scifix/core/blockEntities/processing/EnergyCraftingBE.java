@@ -54,6 +54,8 @@ public abstract class EnergyCraftingBE extends CraftingBE implements EnergyBE {
         tag.put(RF_INV, this.rfHandler.serializeNBT());
     }
 
+    //TODO: add servertick energy transfer from item
+
     public void setEnergyHandler(EnergyHandler rfh) {
         this.rfHandler = rfh;
     }

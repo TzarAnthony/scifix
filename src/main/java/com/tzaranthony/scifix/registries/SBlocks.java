@@ -69,7 +69,7 @@ public class SBlocks {
     // Processing Machines!
     // Basic Production
     public static final RegistryObject<Block> ORE_CRUSHER_MK0 = registerBlockAndItem("ore_crusher_mk0", () -> new OreCrusherBlock(HEAVY_MACHINE, 0)); // #X#,YZY,W W -- # = copper wiring, X = hopper, Y = piston, Z = chassis 0, W = iron plate
-    public static final RegistryObject<Block> ORE_CRUSHER_MK1 = registerBlockAndItem("ore_crusher_mk1", () -> new OreCrusherBlock(HEAVY_MACHINE, 1)); // chassis 0 > chassis 1, hopper > crusher 1, iron > steel plate
+    public static final RegistryObject<Block> ORE_CRUSHER_MK1 = registerBlockAndItem("ore_crusher_mk1", () -> new OreCrusherBlock(HEAVY_MACHINE, 1)); // chassis 0 > chassis 1, hopper > crusher 1, iron > steel plate, wiring > capacitor 1
     public static final RegistryObject<Block> ORE_CRUSHER_MK2 = registerBlockAndItem("ore_crusher_mk2", () -> new OreCrusherBlock(HEAVY_MACHINE, 2)); // hardened steel plate
     public static final RegistryObject<Block> ORE_CRUSHER_MK3 = registerBlockAndItem("ore_crusher_mk3", () -> new OreCrusherBlock(HEAVY_MACHINE, 4)); // tungsten plate
 
@@ -81,16 +81,12 @@ public class SBlocks {
     public static final RegistryObject<Block> ELECTRIC_FURNACE_MK1 = registerBlockAndItem("electric_furnace_mk1", () -> new ElectricFurnaceBlock(MACHINE, 1));
     public static final RegistryObject<Block> ELECTRIC_FURNACE_MK2 = registerBlockAndItem("electric_furnace_mk2", () -> new ElectricFurnaceBlock(MACHINE, 2));
     public static final RegistryObject<Block> ELECTRIC_FURNACE_MK3 = registerBlockAndItem("electric_furnace_mk3", () -> new ElectricFurnaceBlock(MACHINE, 4));
-    //TODO: holds liquids (idk how much. 16k mb?), size upgrades
-    public static final RegistryObject<Block> VAT_MK0 = registerBlockAndItem("vat_mk0", () -> new Block(MACHINE)); // #,X -- # = chassis 0, X = cauldron
-    public static final RegistryObject<Block> VAT_MK1 = registerBlockAndItem("vat_mk1", () -> new Block(MACHINE));
-    public static final RegistryObject<Block> VAT_MK2 = registerBlockAndItem("vat_mk2", () -> new Block(MACHINE));
     //TODO: accepts multiple liquids and solids to output a liquid brine or some other mixture. Sometimes will require heat provided from some source (config for heat tolerance?)
-    public static final RegistryObject<Block> MIXING_VAT_MK0 = registerBlockAndItem("mixing_vat_mk0", () -> new Block(MACHINE)); // use a mixer on a vat --- needs to hold enough to fill at least 1 cast, probably several
+    public static final RegistryObject<Block> MIXING_VAT_MK0 = registerBlockAndItem("mixing_vat_mk0", () -> new Block(MACHINE)); // use a mixer on a cauldron --- needs to hold enough to fill at least 1 cast, probably several
     public static final RegistryObject<Block> MIXING_VAT_MK1 = registerBlockAndItem("mixing_vat_mk1", () -> new Block(MACHINE));
     public static final RegistryObject<Block> MIXING_VAT_MK2 = registerBlockAndItem("mixing_vat_mk2", () -> new Block(MACHINE));
     //TODO: accepts a liquid and returns multiple solids. Place a condenser above to collect gases
-    public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK0 = registerBlockAndItem("electrolytic_vat_mk0", () -> new Block(MACHINE)); // use an electrolysis apparatus on a vat
+    public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK0 = registerBlockAndItem("electrolytic_vat_mk0", () -> new Block(MACHINE)); // use an electrolysis apparatus on a cauldron
     public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK1 = registerBlockAndItem("electrolytic_vat_mk1", () -> new Block(MACHINE));
     public static final RegistryObject<Block> ELECTROLYTIC_VAT_MK2 = registerBlockAndItem("electrolytic_vat_mk2", () -> new Block(MACHINE));
 

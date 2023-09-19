@@ -16,9 +16,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -36,10 +39,9 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class BoilerBE extends HeatExchangingBE implements FluidBE, ItemBE {
-    protected ItemHandler itemHandler;
-    protected static final String ITEM_INV = "SCIFIX_Items";
+public class BoilerBE extends HeatExchangingBE implements FluidBE {
     protected FluidHandler fluidHandler;
     protected final String FLUID_INV = "SCIFIX_Fluids";
     protected float waterTemp = Constants.WaterBaseTemp;
@@ -48,25 +50,6 @@ public class BoilerBE extends HeatExchangingBE implements FluidBE, ItemBE {
 
     public BoilerBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.itemHandler = new ItemHandler(2) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                switch (slot) {
-                    case 0:
-                        return stack.getItem() instanceof BucketItem;
-                    default:
-                        return false;
-                }
-            }
-
-            @Override
-            protected void onContentsChanged(int slot) {
-                setChanged();
-                if(!level.isClientSide()) {
-                    SPackets.sendToClients(new ItemS2CPacket(this, worldPosition));
-                }
-            }
-        };
 
         this.fluidHandler = new FluidHandler(10000, fluid -> fluid.getFluid().isSame(Fluids.WATER), IDirectional.Direction.EITHER) {
             @Override
@@ -89,16 +72,19 @@ public class BoilerBE extends HeatExchangingBE implements FluidBE, ItemBE {
         };
     }
 
+    protected void setupItemHandler() {
+        this.itemHandler.setSize(2);
+        this.itemHandler.setValidators(List.of(e -> e.getItem() instanceof BucketItem, e -> false));
+    }
+
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.itemHandler.deserializeNBT(tag.getCompound(ITEM_INV));
         this.fluidHandler.deserializeNBT(tag.getCompound(FLUID_INV));
         this.waterTemp = tag.getFloat(WATER_TEMP);
     }
 
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put(ITEM_INV, this.itemHandler.serializeNBT());
         tag.put(FLUID_INV, this.fluidHandler.serializeNBT());
         tag.putFloat(WATER_TEMP, this.waterTemp);
     }
@@ -137,30 +123,18 @@ public class BoilerBE extends HeatExchangingBE implements FluidBE, ItemBE {
         exchangeHeat(level, pos, state, spBE);
     }
 
-    protected void update() {
-        setChanged();
-        getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
-    }
-
     public CompoundTag getUpdateTag() {
-        CompoundTag tag = new CompoundTag();
-        if (itemHandler != null) {
-            tag.put(ITEM_INV, itemHandler.serializeNBT());
-        }
+        CompoundTag tag = super.getUpdateTag();
         if (this.fluidHandler != null) {
             tag.put(FLUID_INV, this.fluidHandler.serializeNBT());
         }
         return tag;
     }
 
-    protected LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> itemHandler);
     protected LazyOptional<? extends FluidHandler> fluidCap = LazyOptional.of(() -> fluidHandler);
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-        if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return this.itemCap.cast();
-        }
         if (!this.remove && facing != null && capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return fluidCap.cast();
         }
@@ -170,18 +144,15 @@ public class BoilerBE extends HeatExchangingBE implements FluidBE, ItemBE {
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        this.itemCap.invalidate();
         this.fluidCap.invalidate();
     }
 
     @Override
     public void reviveCaps() {
         super.reviveCaps();
-        this.itemCap = LazyOptional.of(() -> itemHandler);
         this.fluidCap = LazyOptional.of(() -> fluidHandler);
     }
 
-    //TODO: might move this to other places
     public void setFluidHandler(FluidHandler fh) {
         this.fluidHandler = fh;
     }
@@ -190,27 +161,12 @@ public class BoilerBE extends HeatExchangingBE implements FluidBE, ItemBE {
         return this.fluidHandler;
     }
 
-    public void dropFluids(ServerLevel level) {
-        BlockEntityUtils.dropFluidMultiple(this.fluidHandler, level, this.worldPosition);
+    //TODO: menu stuff
+    protected AbstractContainerMenu createMenu(int id, Inventory inv) {
+        return null;
     }
 
-    public void setItemHandler(ItemHandler itemHandler) {
-        this.itemHandler = itemHandler;
-    }
-
-    public ItemHandler getItemHandler() {
-        return this.itemHandler;
-    }
-
-    public boolean stillValid(Player player) {
-        if (this.level.getBlockEntity(this.worldPosition) != this) {
-            return false;
-        } else {
-            return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;
-        }
-    }
-
-    public void dropInventory(ServerLevel level) {
-        Containers.dropContents(level, this.worldPosition, BlockEntityUtils.createContainer(this.itemHandler));
+    public Component getDisplayName() {
+        return null;
     }
 }

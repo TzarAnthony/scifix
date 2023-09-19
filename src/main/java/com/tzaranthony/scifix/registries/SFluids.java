@@ -28,7 +28,7 @@ public class SFluids {
     //      Hydrogen sulfide (1%) & ammonia (3%) & purified crude (96%) < crude + hydrogen at high temperature
     //      3% Nat Gas (>25 heat) & 18% (>60 heat) light naphtha & 16% (>140 heat) heavy naphtha & 11% (>232 heat) Kerosene & 21% (>296 heat) light fuel oil & 22% (>373 heat) heavy fuel oil & 9% (>467 heat) residual oil < fractional distillation < purified crude
     //      32% (low temp) 60% (high temp) ethylene & 40% (low temp) 17% (high temp) propylene & 15% butadiene & 4% benzene & 4% residual oils < steam cracking < naphtha (either)
-    //      45% natural gas & 29% Cyclopentane (refrigerant), Cyclohexane (if nylon) & 14% xylene & 9% benzene & 3% residual oils < catalytic reaction (Hydrogen Gas (medium) + Platinum Chloride (catalyst)) < heavy naphtha
+    //      45% natural gas & 29% Cyclopentane (refrigerant) (20% Cyclopentane, 19% Cyclohexane if I add nylon) & 14% xylene & 9% benzene & 3% residual oils < catalytic reaction (Hydrogen Gas (medium) + Platinum Chloride (catalyst)) < heavy naphtha
     //      19% methane & 32% (low temp) 54% (high temp) ethylene & 34% (low temp) 12% (high temp) propylene & 11% hydrogen & 4% benzene < steam cracking < natural gas
     //      150 mb ethylene oxide < catalytic reaction (ground silver) < 50 mb ethylene + 100 mb oxygen
     //      100 mb ethylene glycol < catalytic reaction (any acid) < 50 water + 50 ethylene oxide
@@ -74,7 +74,7 @@ public class SFluids {
     //      100 mb salt brine < 120 heat mixing < 300 mb water
     //      100 mb chlorine gas < electrolysis < 250 mb salt brine
     //      600 mb red mud & 4 aluminum hydroxide < 200 heat mixing < any aluminum ore + 400 mb sodium hydroxide
-    //      500 mb molten alumina brine < alloy < fluorite + alumina
+    //      500 mb molten alumina brine < mixing < fluorite + alumina
     //      100 mb carbon dioxide gas < electrolysis < molten alumina brine
     //TODO: Ammonia production
     //      liquid air < pressurize with cooling < nothing?

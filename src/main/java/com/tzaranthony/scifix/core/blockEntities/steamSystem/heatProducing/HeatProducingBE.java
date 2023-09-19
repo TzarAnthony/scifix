@@ -1,6 +1,7 @@
 package com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing;
 
 import com.tzaranthony.scifix.api.handlers.HeatHandler;
+import com.tzaranthony.scifix.api.handlers.ItemHandler;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.HeatExchangingBE;
 import com.tzaranthony.scifix.api.properties.ThermalProperties;
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 
 public abstract class HeatProducingBE extends HeatExchangingBE {
-    protected ItemStackHandler itemHandler;
+    protected ItemHandler itemHandler;
     protected static final String ITEM_INV = "SCIFIX_Items";
     int burnTime;
     int burnDuration;

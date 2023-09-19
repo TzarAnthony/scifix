@@ -30,7 +30,7 @@ public class Scifix {
     //  Expansion 0 (Scifix Decorations): decoration additions
     //  Expansion 1 (Scifix Nuclear Engineering Plus): nuclear engineering, particle accelerators, portal system, & quantum computers, nano tech?
     //  Expansion 2 (Scifix Biomodding): bio engineering, cybernetics, nano tech?
-    //  Expansion 3 (Scifix Intergalatic (Rockets sold separately)): space elevator for trading with alien species (energy and assembled products for exotic materials)
+    //  Expansion 3 (Scifix Intergalatic (Rockets sold separately)): space elevator for trading with alien species (give energy and assembled products receive exotic materials) - need currency
     //  Expansion 4 (Scifix Military Industrial Complex): defense
     //  Compatibility:
     //      Create: HSR & Maglevs, direct SU generation from turbines, heat compatibility, add ponders

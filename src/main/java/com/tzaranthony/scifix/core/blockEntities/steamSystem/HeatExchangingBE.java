@@ -5,6 +5,7 @@ import com.tzaranthony.scifix.api.handlers.IHeatHandler;
 import com.tzaranthony.scifix.api.handlers.SCapabilities;
 import com.tzaranthony.scifix.api.helpers.Constants;
 import com.tzaranthony.scifix.api.helpers.Maths;
+import com.tzaranthony.scifix.core.blockEntities.processing.BaseBE;
 import com.tzaranthony.scifix.core.util.tags.SBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,7 +21,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 
-public abstract class HeatExchangingBE extends BlockEntity {
+public abstract class HeatExchangingBE extends BaseBE {
     protected HeatHandler heatManager;
     protected static final String TEMPERATURE_C = "SCIFIX_Heat";
     protected float atmosphericTemp = 25F;

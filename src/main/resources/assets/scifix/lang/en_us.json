@@ -317,5 +317,6 @@
 
   "container.scifix.crusher": "Crusher",
   "container.scifix.grinder": "Grinder",
-  "container.scifix.electric_furnace": "Electric Furnace"
+  "container.scifix.electric_furnace": "Electric Furnace",
+  "container.scifix.mixer": "Mixer"
 }

@@ -7,6 +7,4 @@ public interface FluidBE {
     void setFluidHandler(FluidHandler fh);
 
     FluidHandler getFluidHandler();
-
-    void dropFluids(ServerLevel sLevel);
 }

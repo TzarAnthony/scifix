@@ -72,14 +72,6 @@ public abstract class BulkCraftingBE extends EnergyCraftingBE implements XpHoldi
         return this.xpHandler;
     }
 
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-        if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return itemCap.cast();
-        }
-        return super.getCapability(capability, facing);
-    }
-
     public static boolean processTick(Level level, BlockPos pos, BlockState state, BulkCraftingBE bcBE) {
         boolean flag = false;
         if (bcBE.itemHandler != null && bcBE.shouldCraft()) {
@@ -109,6 +101,14 @@ public abstract class BulkCraftingBE extends EnergyCraftingBE implements XpHoldi
     protected abstract void craft(Object recipe);
 
     protected abstract void playProcessingSound(BlockPos pos);
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+        if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return itemCap.cast();
+        }
+        return super.getCapability(capability, facing);
+    }
 
     protected void playSound(BlockPos pos, SoundEvent sound, float volume, float pitch) {
         this.level.playSound((Player) null, pos.getX(), pos.getY(), pos.getZ(), sound, SoundSource.BLOCKS, volume, pitch);

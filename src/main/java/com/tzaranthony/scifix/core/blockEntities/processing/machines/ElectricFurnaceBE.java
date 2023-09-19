@@ -44,13 +44,13 @@ public class ElectricFurnaceBE extends BulkCraftingBE {
         this.itemHandler.setDirections(List.of(IDirectional.Direction.INPUT, IDirectional.Direction.OUTPUT));
     }
 
-    public static void clientTick(Level level, BlockPos pos, BlockState state, ElectricFurnaceBE efBE) {
+    public static void clientTick(Level level, BlockPos pos, BlockState state, ElectricFurnaceBE pBE) {
         //TODO: add client side animation
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, ElectricFurnaceBE efBE) {
-        if (processTick(level, pos, state, efBE)) {
-            efBE.update();
+    public static void serverTick(Level level, BlockPos pos, BlockState state, ElectricFurnaceBE pBE) {
+        if (processTick(level, pos, state, pBE)) {
+            pBE.update();
             setChanged(level, pos, state);
         }
     }

@@ -64,6 +64,7 @@ public class CrushingRecipe extends AbstractOreRefiningRecipe {
             buffer.writeVarInt(recipe.getRF());
             recipe.getIngredient().toNetwork(buffer);
             buffer.writeItem(recipe.getResultItem());
+            CraftingHelper.secondaryMapToBuffer(recipe.getSecondaryProbMap(), buffer);
         }
     }
 }

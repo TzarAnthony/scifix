@@ -2,12 +2,14 @@ package com.tzaranthony.scifix.api.crafting;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.HashMap;
 
@@ -48,6 +50,21 @@ public class CraftingHelper {
             }
         }
         return nonnulllist;
+    }
+
+    public static NonNullList<FluidStack> fluidsFromJson(JsonArray array) {
+        NonNullList<FluidStack> nonnulllist = NonNullList.create();
+        for (int i = 0; i < array.size(); ++i) {
+            FluidStack fluid = FluidStack.CODEC.decode(JsonOps.INSTANCE, array.get(i).getAsJsonObject()).result().orElseThrow().getFirst();
+            if (!fluid.isEmpty()) {
+                nonnulllist.add(fluid);
+            }
+        }
+        return nonnulllist;
+    }
+
+    public static FluidStack getFluid(JsonObject json) {
+        return FluidStack.CODEC.decode(JsonOps.INSTANCE, json).result().orElseThrow().getFirst();
     }
 
     public static void secondaryMapToBuffer(HashMap<ItemStack, Float> secondaryProbMap, FriendlyByteBuf buffer) {

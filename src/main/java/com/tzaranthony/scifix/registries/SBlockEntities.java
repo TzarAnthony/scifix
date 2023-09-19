@@ -2,6 +2,7 @@ package com.tzaranthony.scifix.registries;
 
 import com.tzaranthony.scifix.Scifix;
 import com.tzaranthony.scifix.core.blockEntities.processing.machines.ElectricFurnaceBE;
+import com.tzaranthony.scifix.core.blockEntities.processing.machines.MixerBE;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.ConvectionHeaterBE;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.LiquidFuelHeaterBE;
 import com.tzaranthony.scifix.core.blockEntities.steamSystem.heatProducing.ResistanceHeaterBE;
@@ -25,6 +26,8 @@ public class SBlockEntities {
     public static final RegistryObject<BlockEntityType<ElectricFurnaceBE>> E_FURNACE = reg.register("e_furnace",
             () -> BlockEntityType.Builder.of(ElectricFurnaceBE::new, SBlocks.ELECTRIC_FURNACE_MK0.get(), SBlocks.ELECTRIC_FURNACE_MK1.get(), SBlocks.ELECTRIC_FURNACE_MK2.get(), SBlocks.ELECTRIC_FURNACE_MK3.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<MixerBE>> MIXER = reg.register("mixer",
+            () -> BlockEntityType.Builder.of(MixerBE::new, SBlocks.MIXING_VAT_MK0.get(), SBlocks.MIXING_VAT_MK1.get(), SBlocks.MIXING_VAT_MK2.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<SolidFuelHeaterBE>> SOLID_HEATER = reg.register("solid_heater",
             () -> BlockEntityType.Builder.of(SolidFuelHeaterBE::new, SBlocks.SOLID_FUEL_HEATER_MK0.get(), SBlocks.SOLID_FUEL_HEATER_MK1.get(), SBlocks.SOLID_FUEL_HEATER_MK2.get(), SBlocks.SOLID_FUEL_HEATER_MK3.get()).build(null));

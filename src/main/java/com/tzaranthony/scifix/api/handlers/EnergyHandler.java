@@ -10,14 +10,14 @@ public class EnergyHandler extends EnergyStorage {
     }
 
     @Override
-    public int receiveEnergy(int maxInputAmt, boolean simulate) {
-        int i = super.receiveEnergy(maxInputAmt, simulate);
+    public int receiveEnergy(int wanted, boolean simulate) {
+        int i = super.receiveEnergy(wanted, simulate);
         return i;
     }
 
     @Override
-    public int extractEnergy(int maxOutputAmt, boolean simulate) {
-        int i = super.extractEnergy(maxOutputAmt, simulate);
+    public int extractEnergy(int wanted, boolean simulate) {
+        int i = super.extractEnergy(wanted, simulate);
         return i;
     }
 

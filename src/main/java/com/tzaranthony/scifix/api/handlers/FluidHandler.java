@@ -1,8 +1,5 @@
 package com.tzaranthony.scifix.api.handlers;
 
-import com.tzaranthony.scifix.core.network.FluidS2CPacket;
-import com.tzaranthony.scifix.registries.SPackets;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -10,7 +7,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +17,7 @@ import java.util.function.Predicate;
 public class FluidHandler implements IFluidHandler {
     protected String SLOT = "SCIFIX_Fluid_Slot";
     protected String TANK_TAG = "SCIFIX_Fluid_Tanks";
-    protected NonNullList<DirectionalFluidTank> tanks;
+    protected NonNullList<DirectionalMultiFluidTank> tanks;
 
     public FluidHandler(int capacity, IDirectional.Direction direction) {
         this(NonNullList.withSize(1, capacity), NonNullList.withSize(1, fluid -> true), NonNullList.withSize(1, direction));
@@ -44,14 +40,14 @@ public class FluidHandler implements IFluidHandler {
         tanks = NonNullList.create();
 
         for (int i = 0; i < capacities.size(); ++i) {
-            tanks.add(new DirectionalFluidTank(capacities.get(i), validators.get(i), directions.get(i)));
+            tanks.add(new DirectionalMultiFluidTank(capacities.get(i), validators.get(i), directions.get(i)));
         }
     }
 
     public void addTanks(List<Integer> capacities, List<Predicate<FluidStack>> validators, List<IDirectional.Direction> directions) {
         assert capacities.size() == validators.size() && capacities.size() == directions.size();
         for (int i = 0; i < capacities.size(); ++i) {
-            tanks.add(new DirectionalFluidTank(capacities.get(i), validators.get(i), directions.get(i)));
+            tanks.add(new DirectionalMultiFluidTank(capacities.get(i), validators.get(i), directions.get(i)));
         }
     }
 
@@ -68,6 +64,15 @@ public class FluidHandler implements IFluidHandler {
         return tanks.get(slot).getFluid();
     }
 
+    @NotNull
+    public List<FluidStack> getFluidsInTank(int slot) {
+        return tanks.get(slot).getFluids();
+    }
+
+    public DirectionalMultiFluidTank getTank(int slot) {
+        return tanks.get(slot);
+    }
+
     public int getTankCapacity(int slot) {
         return tanks.get(slot).getCapacity();
     }
@@ -76,13 +81,13 @@ public class FluidHandler implements IFluidHandler {
         return tanks.get(slot).isFluidValid(stack);
     }
 
-    public void setFluidInTank(int tank, FluidStack stack) {
-        tanks.get(tank).setFluid(stack);
+    public void setFluidsInTank(int tank, List<FluidStack> stack) {
+        tanks.get(tank).setFluids(stack);
     }
 
     public int fill(FluidStack resource, FluidAction action) {
         int fillAmt = 0;
-        for (DirectionalFluidTank tank : tanks) {
+        for (DirectionalMultiFluidTank tank : tanks) {
             fillAmt = tank.fill(resource, action);
             if (fillAmt > 0) {
                 if (action == FluidAction.EXECUTE) onContentsChanged();
@@ -95,7 +100,7 @@ public class FluidHandler implements IFluidHandler {
     @NotNull
     public FluidStack drain(FluidStack resource, FluidAction action) {
         FluidStack fluid = FluidStack.EMPTY;
-        for (DirectionalFluidTank tank : tanks) {
+        for (DirectionalMultiFluidTank tank : tanks) {
             fluid = tank.drain(resource, action);
             if (!fluid.isEmpty()) {
                 if (action == FluidAction.EXECUTE) onContentsChanged();
@@ -108,7 +113,7 @@ public class FluidHandler implements IFluidHandler {
     @NotNull
     public FluidStack drain(int maxDrain, FluidAction action) {
         FluidStack fluid = FluidStack.EMPTY;
-        for (DirectionalFluidTank tank : tanks) {
+        for (DirectionalMultiFluidTank tank : tanks) {
             fluid = tank.drain(maxDrain, action);
             if (!fluid.isEmpty()) {
                 if (action == FluidAction.EXECUTE) onContentsChanged();
@@ -121,7 +126,7 @@ public class FluidHandler implements IFluidHandler {
     @NotNull
     public FluidStack consumeFluid(FluidStack resource, FluidAction action) {
         FluidStack fluid = FluidStack.EMPTY;
-        for (DirectionalFluidTank tank : tanks) {
+        for (DirectionalMultiFluidTank tank : tanks) {
             fluid = tank.consumeFluid(resource, action);
             if (!fluid.isEmpty()) {
                 if (action == FluidAction.EXECUTE) onContentsChanged();
@@ -132,14 +137,10 @@ public class FluidHandler implements IFluidHandler {
     }
 
     @NotNull
-    public int createFluid(FluidStack resource, FluidAction action) {
-        int amt = 0;
-        for (DirectionalFluidTank tank : tanks) {
-            amt = tank.createFluid(resource, action);
-            if (amt > 0) {
-                if (action == FluidAction.EXECUTE) onContentsChanged();
-                break;
-            }
+    public int createFluid(int tank, FluidStack resource, FluidAction action) {
+        int amt = this.tanks.get(tank).createFluid(resource, action);
+        if (amt > 0) {
+            if (action == FluidAction.EXECUTE) onContentsChanged();
         }
         return amt;
     }

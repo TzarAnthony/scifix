@@ -10,6 +10,9 @@ import com.tzaranthony.scifix.registries.SBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,6 +26,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class LiquidFuelHeaterBE extends HeatProducingBE {
     protected FluidHandler fluidHandler;
@@ -34,27 +38,12 @@ public class LiquidFuelHeaterBE extends HeatProducingBE {
 
     public LiquidFuelHeaterBE(BlockPos pos, BlockState state, ThermalProperties properties) {
         super(SBlockEntities.LIQUID_HEATER.get(), pos, state, properties);
-        this.itemHandler = new ItemStackHandler(2) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                switch (slot) {
-                    case 0:
-                        return stack.getItem() instanceof BucketItem;
-                    default:
-                        return false;
-                }
-            }
-
-            @Override
-            protected void onContentsChanged(int slot) {
-                setChanged();
-                if(!level.isClientSide()) {
-//                    SPackets.sendToClients(new ItemS2CPacket(this, worldPosition));
-                }
-            }
-        };
-
         this.fluidHandler = new FluidHandler(10000, fluid -> fluid.getFluid().is(SFluidTags.COMBUSTIBLE), IDirectional.Direction.EITHER);
+    }
+
+    protected void setupItemHandler() {
+        this.itemHandler.setSize(2);
+        this.itemHandler.setValidators(List.of(e -> e.getItem() instanceof BucketItem, e -> false));
     }
 
     public void load(CompoundTag tag) {
@@ -69,6 +58,11 @@ public class LiquidFuelHeaterBE extends HeatProducingBE {
         if (this.fluidHandler != null) {
             tag.put(FLUID_INV, this.fluidHandler.serializeNBT());
         }
+    }
+
+    @Override
+    protected AbstractContainerMenu createMenu(int id, Inventory inv) {
+        return null;
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, LiquidFuelHeaterBE lqfhBE) {
@@ -138,5 +132,10 @@ public class LiquidFuelHeaterBE extends HeatProducingBE {
     public void reviveCaps() {
         super.reviveCaps();
         this.fluidCap = LazyOptional.of(() -> fluidHandler);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return null;
     }
 }

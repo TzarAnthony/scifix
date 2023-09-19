@@ -1,6 +1,8 @@
 package com.tzaranthony.scifix.api.helpers;
 
+import com.tzaranthony.scifix.api.handlers.EnergyHandler;
 import com.tzaranthony.scifix.api.handlers.FluidHandler;
+import com.tzaranthony.scifix.api.handlers.ItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -18,30 +20,44 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BlockEntityUtils {
-    public static void transferToTank(ItemStackHandler itemHandler, FluidHandler fluidHandler, int inputSlot, int outputSlot, int tankSlot) {
-        ItemStack inputStack = itemHandler.getStackInSlot(inputSlot);
-        ItemStack outputStack = fluidHandler.fillOrEmptyItemUsingTank(inputStack, tankSlot);
+    public static void transferToTank(ItemHandler ih, FluidHandler fh, int inputSlot, int outputSlot, int tankSlot) {
+        ItemStack inputStack = ih.getStackInSlot(inputSlot);
+        ItemStack outputStack = fh.fillOrEmptyItemUsingTank(inputStack, tankSlot);
         if (inputStack.sameItem(outputStack)) {
-            itemHandler.extractItem(inputSlot, 1, false);
-            itemHandler.insertItem(outputSlot, outputStack, false);
+            ih.extractItem(inputSlot, 1, false);
+            ih.insertItem(outputSlot, outputStack, false);
         }
     }
 
-    public static Container createContainer(IItemHandler handler) {
-        Container container = new SimpleContainer(handler.getSlots());
-        for (int i = 0; i < handler.getSlots(); i++) {
-            container.setItem(i, handler.getStackInSlot(i));
+    public static void transferEnergyToBlock(ItemHandler ih, EnergyHandler eh, int itemSlot) {
+        ItemStack battery = ih.getStackInSlot(itemSlot);
+        if (battery.isEmpty()) return; //TODO: fix this when I make actual battery items
+        int transferred = eh.receiveEnergy(battery.getMaxDamage(), false);
+        battery.setDamageValue(battery.getMaxDamage() - transferred);
+    }
+
+    public static void transferEnergyFromBlock(ItemHandler ih, EnergyHandler eh, int itemSlot) {
+        ItemStack battery = ih.getStackInSlot(itemSlot);
+        if (battery.isEmpty()) return; //TODO: fix this when I make actual battery items
+        int transferred = eh.extractEnergy(battery.getMaxDamage(), false);
+        battery.setDamageValue(battery.getDamageValue() + transferred);
+    }
+
+    public static Container createContainer(ItemHandler ih) {
+        Container container = new SimpleContainer(ih.getSlots());
+        for (int i = 0; i < ih.getSlots(); i++) {
+            container.setItem(i, ih.getStackInSlot(i));
         }
         return container;
     }
 
 
-    public static void dropFluidMultiple(FluidHandler tanks, Level level, BlockPos pos) {
+    public static void dropFluidMultiple(FluidHandler fh, Level level, BlockPos pos) {
         int maxFluid = -1;
         FluidStack current = FluidStack.EMPTY;
-        for (int i = 0; i < tanks.getTanks(); i++) {
-            if (maxFluid < tanks.getFluidInTank(i).getAmount()) {
-                current = tanks.getFluidInTank(i);
+        for (int i = 0; i < fh.getTanks(); i++) {
+            if (maxFluid < fh.getFluidInTank(i).getAmount()) {
+                current = fh.getFluidInTank(i);
                 maxFluid = current.getAmount();
             }
         }
@@ -53,48 +69,5 @@ public class BlockEntityUtils {
 
     public static void dropFluid(FluidStack stack, Level level, BlockPos pos) {
         level.setBlock(pos, stack.getFluid().defaultFluidState().createLegacyBlock(), 11);
-    }
-
-
-    //TODO: since we now have fluid tanks with a specified input/output direction, do we need this? I don't think so
-    public static class SidedFluidHandler implements IFluidTank {
-
-        @NotNull
-        @Override
-        public FluidStack getFluid() {
-            return null;
-        }
-
-        @Override
-        public int getFluidAmount() {
-            return 0;
-        }
-
-        @Override
-        public int getCapacity() {
-            return 0;
-        }
-
-        @Override
-        public boolean isFluidValid(FluidStack stack) {
-            return false;
-        }
-
-        @Override
-        public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
-            return 0;
-        }
-
-        @NotNull
-        @Override
-        public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
-            return null;
-        }
-
-        @NotNull
-        @Override
-        public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) {
-            return null;
-        }
     }
 }

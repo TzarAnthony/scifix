@@ -39,13 +39,13 @@ public abstract class OreRefiningBE extends BulkCraftingBE implements IAutoInser
         this.saveCooldown(tag);
     }
 
-    public static void clientTick(Level level, BlockPos pos, BlockState state, OreRefiningBE oBE) {
+    public static void clientTick(Level level, BlockPos pos, BlockState state, OreRefiningBE pBE) {
         //TODO: add client side animation
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, OreRefiningBE oBE) {
-        if (processTick(level, pos, state, oBE) || IAutoSucking.pickupTick(level, oBE)) {
-            oBE.update();
+    public static void serverTick(Level level, BlockPos pos, BlockState state, OreRefiningBE pBE) {
+        if (processTick(level, pos, state, pBE) || IAutoSucking.pickupTick(level, pBE)) {
+            pBE.update();
             setChanged(level, pos, state);
         }
     }

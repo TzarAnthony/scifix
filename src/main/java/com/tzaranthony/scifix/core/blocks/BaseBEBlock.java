@@ -42,9 +42,9 @@ public abstract class BaseBEBlock extends BaseEntityBlock {
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state1, boolean huh) {
         if (!state.is(state1.getBlock())) {
             if (level instanceof ServerLevel sLevel) {
-                BlockEntity be = level.getBlockEntity(pos);
+                BlockEntity be = level.getBlockEntity(pos); // Maybe one day we'll store the contents and restore it as it was instead of dropping everything
                 if (be instanceof ItemBE ibe) ibe.dropInventory(sLevel);
-                if (be instanceof FluidBE fbe) fbe.dropFluids(sLevel);
+//                if (be instanceof FluidBE fbe) fbe.dropFluids(sLevel); // I decided that we won't drop fluids when breaking a block...
                 if (be instanceof XpHoldingBE xpbe) xpbe.dropXp(sLevel);
                 level.updateNeighbourForOutputSignal(pos, this);
             }
