@@ -4,6 +4,7 @@ import com.tzaranthony.scifix.api.handlers.DirectionalMultiFluidTank;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public abstract class FluidRecipe extends RfRecipe {
     protected final ResourceLocation id;
@@ -38,20 +39,35 @@ public abstract class FluidRecipe extends RfRecipe {
         return this.id;
     }
 
-    public boolean fluidsMatch(DirectionalMultiFluidTank tank) {
+    public boolean fluidsMatch(DirectionalMultiFluidTank tank, IFluidHandler.FluidAction action) {
         for (int i = 0; i < this.fluidInputs.size(); i++) {
             FluidStack ingStack = this.fluidInputs.get(i);
-            boolean breaker = false;
-            for (int j = 0; j < tank.getFluids().size(); ++j) {
-                FluidStack tankStack = tank.getFluids().get(j);
-                if (ingStack.isFluidEqual(tankStack) && tankStack.getAmount() >= ingStack.getAmount()) {
-                    breaker = true;
-                    break;
-                }
+//            boolean breaker = false;
+            FluidStack stack = tank.consumeFluid(ingStack, action);
+            if (stack.getAmount() == ingStack.getAmount()) {
+                break;
             }
-            if (breaker) break;
+//            for (int j = 0; j < tank.getFluids().size(); ++j) {
+//                FluidStack tankStack = tank.getFluids().get(j);
+//                if (ingStack.isFluidEqual(tankStack) && tankStack.getAmount() >= ingStack.getAmount()) {
+//                    breaker = true;
+//                    break;
+//                }
+//            }
+//            if (breaker) break;
             return false;
         }
         return true;
+    }
+
+    public int fluidsMatchTimes(DirectionalMultiFluidTank tank, int times) {
+        for (int i = 0; i < this.fluidInputs.size(); i++) {
+            FluidStack ingStack = this.fluidInputs.get(i);
+            FluidStack stack = tank.getFluid();
+            if (stack.getAmount() == ingStack.getAmount()) {
+                times = Math.min(times, stack.getAmount() / ingStack.getAmount());
+            }
+        }
+        return times;
     }
 }
